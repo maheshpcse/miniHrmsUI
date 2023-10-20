@@ -1,0 +1,180 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* admin sidemenu styles */
+/* @import '~bootstrap/css/bootstrap'; */
+/* @import '~@fortawesome/fontawesome-free/css/fontawesome';
+@import '~@fortawesome/fontawesome-free/css/solid';
+@import '~@fortawesome/fontawesome-free/css/regular'; */
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+body {
+    font-size: 0.9rem;
+}
+
+.page-wrapper.toggled .sidebar {
+    left: -300px;
+}
+
+.sidebar .ps.ps--scrolling-y>.ps__rail-y,
+.sidebar>.ps.ps--scrolling-x>.ps__rail-x,
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking {
+    background-color: transparent !important;
+}
+
+.sidebar .ps.ps--active-y>.ps__rail-y:hover,
+.sidebar>.ps.ps--active-y>.ps__rail-y.ps--clicking {
+    width: 10px !important;
+}
+
+.ps__thumb-y {
+    background-color: #fff !important;
+    width: 6px !important;
+    border-radius: 0px !important;
+    opacity: 0.5;
+}
+/* End */
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #dee2e6;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: lightslategray;
+}
+
+html,
+body {
+    background-color: #dee2ec;
+    /* background-color: white; */
+    height: 100%;
+
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+table th {
+    font-family: "Montserrat";
+    font-weight: 200;
+}
+
+p,
+span,
+a,
+ul li,
+table td,
+input,
+textarea,
+select,
+button {
+    font-family: "Nunito";
+    font-weight: 100;
+}
+
+/* input,
+  select,
+  textarea {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid crimson !important;
+  } */
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.required:after {
+    content: " *";
+    color: orangered;
+}
+
+.field-required:after {
+    content: " *";
+    color: orangered;
+}
+
+/* angular2-multiselect {
+      height: 50px;
+      padding: 10px;
+      font-size: 1em;
+      color: gray;
+  } */
+
+ng-multiselect-dropdown .dropdown-list {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    border: none !important;
+    border-radius: none !important;
+}
+
+.toast {
+    max-width: 30% !important;
+    color: white !important;
+    background-color: #7386d5 !important;
+    /* text-align: center !important; */
+    font-size: 1em !important;
+}
+
+/* css tooltip styles */
+.tooltip-inner {
+    margin-top: -20px;
+    padding: 15px;
+    color: seagreen;
+    text-align: center;
+    font-weight: 400;
+    background: #dee2e6;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+}
+
+.forgot-pwd-cmp ng-otp-input input {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 16px !important;
+}

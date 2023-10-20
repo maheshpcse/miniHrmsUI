@@ -1,0 +1,62 @@
+<div id="content" class="flex">
+    <div class="">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="card">
+                            <div class="card-header app-title">
+                                <h4>MiNi HRMS</h4>
+                                <strong>Login to your account</strong>
+                            </div>
+                            <div class="card-body">
+                                <form #loginForm="ngForm">
+                                    <div class="form-group">
+                                        <label class="text-muted" for="InputEmail">Username (or) Email address</label>
+                                        <input type="email" class="form-control" name="adminname" id="InputEmail" aria-describedby="emailHelp"
+                                            placeholder="Enter username or email address" [(ngModel)]="adminLoginName" #adminname="ngModel" required>
+                                        <!-- <small id="emailHelp" class="form-text text-muted">We don't share email with anyone</small> -->
+                                        <span class="error-msg" *ngIf="adminname?.invalid && (adminname?.dirty || adminname?.touched)">
+                                            <span *ngIf="adminname?.errors?.required">
+                                                <span class="err">ERROR :</span> Username (or) Email address is required.
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-muted" for="InputPassword">Password</label>
+                                        <input type="password" class="form-control" name="adminpassword" id="InputPassword" aria-describedby="passwordHelp" 
+                                            placeholder="Password" [(ngModel)]="adminPassword" #adminpassword="ngModel" required>
+                                        <!-- <small id="passwordHelp" class="form-text text-muted">Your password is saved in encrypted form</small> -->
+                                        <span class="error-msg" *ngIf="adminpassword?.invalid && (adminpassword?.dirty || adminpassword?.touched)">
+                                            <span *ngIf="adminpassword?.errors?.required">
+                                                <span class="err">ERROR :</span> Password is required.
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">Remember Me</label>
+                                        </div>
+                                    </div>
+                                    <div class="action-btn">
+                                        <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-baseline" 
+                                            [ngClass]= "spinner ? 'col-6' : 'col-4'" 
+                                            [disabled]="spinner || setFormValidation()" (click)="getAdminLogin()">
+                                            <!-- Login -->
+                                            <span *ngIf="!spinner"><i class="fas fa-sign-in-alt px-2"></i></span>
+                                            <span class="ml-2" *ngIf="!spinner">Login</span>
+                                            <span *ngIf="spinner"><i class="fas fa-spinner fa-spin px-2"></i></span>
+                                            <span class="ml-2" *ngIf="spinner">Validating...</span>
+                                        </button>
+                                        <a [routerLink]="['/admin/forgot-password']">Forgot Password ?</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,232 @@
+<nav id="sidebar" class="sidebar" [ngClass]="{'sidebar-bg' : hasBackgroundImage()}">
+    <div class="sidebar-content">
+        <perfect-scrollbar>
+            <div class="sidebar-header">
+                <a>Pro Sidebar</a>
+                <div id="close-sidebar" (click)="toggleSidebar()">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+
+            <div class="sidebar-profile">
+                <div class="user-pic">
+                    <img class="img-responsive img-rounded" src="../../../assets/images/user.jpg" alt="User picture">
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Jhon
+                        <strong>Smith</strong>
+                    </span>
+                    <span class="user-role">Administrator</span>
+                    <span class="user-status">
+                        <i class="fa fa-circle"></i>
+                        <span>Online</span>
+                    </span>
+                </div>
+            </div>
+            <div class="sidebar-search">
+                <div>
+                    <div class="input-group">
+                        <input type="text" class="form-control search-menu" placeholder="Search...">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li *ngFor="let menu of menus"
+                        [ngClass]="{'active': menu.active , 'sidebar-dropdown':menu.type === 'dropdown' , 'header-menu':menu.type === 'header'}">
+                        <span *ngIf="menu.type === 'header'">{{menu.title}}</span>
+                        <a *ngIf="menu.type !== 'header'" (click)='toggle(menu)'>
+                            <i class="{{menu.icon}}"></i>
+                            <span>{{menu.title}}</span>
+                            <span *ngIf="menu.badge" class="badge badge-pill"
+                                [ngClass]="menu.badge.class">{{menu.badge.text}}</span>
+                        </a>
+                        <div *ngIf="menu.type === 'dropdown'" class="sidebar-submenu" [@slide]="getState(menu)">
+                            <ul>
+                                <li *ngFor="let submenu of menu.submenus">
+                                    <a> {{submenu.title}}
+                                        <span *ngIf="submenu.badge" class="badge badge-pill"
+                                            [ngClass]="submenu.badge.class">{{submenu.badge.text}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </perfect-scrollbar>
+    </div>
+    <div class="sidebar-footer">
+        <div class="dropdown" dropdown>
+
+            <a dropdownToggle>
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-pill badge-warning notification">5</span>
+            </a>
+            <div class="dropdown-menu notifications" *dropdownMenu>
+                <div class="notifications-header">
+                    <i class="fa fa-bell"></i>
+                    Notifications
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item">
+                    <div class="notification-content">
+                        <div class="icon">
+                            <i class="fas fa-check text-success border border-success"></i>
+                        </div>
+                        <div class="content">
+                            <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. In totam explicabo</div>
+                            <div class="notification-time">
+                                6 minutes ago
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="dropdown-item">
+                    <div class="notification-content">
+                        <div class="icon">
+                            <i class="fas fa-exclamation text-info border border-info"></i>
+                        </div>
+                        <div class="content">
+                            <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. In totam explicabo</div>
+                            <div class="notification-time">
+                                Today
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="dropdown-item">
+                    <div class="notification-content">
+                        <div class="icon">
+                            <i class="fas fa-exclamation-triangle text-warning border border-warning"></i>
+                        </div>
+                        <div class="content">
+                            <div class="notification-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. In totam explicabo</div>
+                            <div class="notification-time">
+                                Yesterday
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-center">View all notifications</a>
+            </div>
+        </div>
+        <div class="dropdown" dropdown>
+            <a dropdownToggle>
+                <i class="fa fa-envelope"></i>
+                <span class="badge badge-pill badge-success notification">7</span>
+            </a>
+            <div class="dropdown-menu messages" *dropdownMenu>
+                <div class="messages-header">
+                    <i class="fa fa-envelope"></i>
+                    Messages
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item">
+                    <div class="message-content">
+                        <div class="pic">
+                            <img src="../../../assets/images/user.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <div class="message-title">
+                                <strong> Jhon doe</strong>
+                            </div>
+                            <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. In totam explicabo</div>
+                        </div>
+                    </div>
+
+                </a>
+                <a class="dropdown-item">
+                    <div class="message-content">
+                        <div class="pic">
+                            <img src="../../../assets/images/user.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <div class="message-title">
+                                <strong> Jhon doe</strong>
+                            </div>
+                            <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. In totam explicabo</div>
+                        </div>
+                    </div>
+
+                </a>
+                <a class="dropdown-item">
+                    <div class="message-content">
+                        <div class="pic">
+                            <img src="../../../assets/images/user.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <div class="message-title">
+                                <strong> Jhon doe</strong>
+                            </div>
+                            <div class="message-detail">Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit. In totam explicabo</div>
+                        </div>
+                    </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-center">View all messages</a>
+
+            </div>
+        </div>
+        <div class="dropdown" dropdown>
+            <a dropdownToggle>
+                <i class="fa fa-cog"></i>
+                <span class="badge-sonar"></span>
+            </a>
+            <div class="dropdown-menu" *dropdownMenu>
+                <a class="dropdown-item">My profile</a>
+                <a class="dropdown-item">Help</a>
+                <a class="dropdown-item">Setting</a>
+            </div>
+        </div>
+        <div>
+            <a data-toggle="modal" data-target="#adminLogoutModal">
+                <i class="fa fa-power-off"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Admin Logout Modal -->
+<div class="modal fade" id="adminLogoutModal" data-backdrop="static" data-keyboard="false" tabindex="-1" 
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pb-1">
+                <div class="modal-title d-flex align-items-baseline">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <h5 class="ml-2">Sign out confirmation</h5>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div>
+                <p class="text-muted mt-3">Are you sure you would like to sign out of your account ?</p>
+            </div>
+            <div class="modal-footer mt-1">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" [ngClass]= "spinner ? 'col-4' : ''" 
+                    [disabled]="spinner" (click)="adminLogout()">
+                    <!-- <span *ngIf="!spinner"><i class="fas fa-sign-out-alt px-2"></i></span> -->
+                    <span *ngIf="!spinner">Sign out</span>
+                    <span *ngIf="spinner"><i class="fas fa-spinner fa-spin px-2"></i></span>
+                    <span class="ml-2" *ngIf="spinner">Signing out...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
