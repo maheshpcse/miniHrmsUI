@@ -148,9 +148,11 @@ export class AdminSidebarService {
         },
         {
             title: 'Dashboard',
+            url: '/admin/dashboard',
             icon: 'fas fa-tachometer-alt',
             active: false,
-            type: 'simple'
+            type: 'simple',
+            submenus: []
         },
         {
             title: 'Employees',
@@ -160,9 +162,11 @@ export class AdminSidebarService {
             submenus: [
                 {
                     title: 'All Employees',
+                    active: false
                 },
                 {
-                    title: 'Login History'
+                    title: 'Login History',
+                    active: false
                 }
             ]
         },
@@ -174,21 +178,28 @@ export class AdminSidebarService {
             submenus: [
                 {
                     title: 'Login Encrypt',
+                    url: '/admin/forms/login-encrypt-decrypt',
+                    active: false
                 },
                 {
-                    title: 'Menus'
+                    title: 'Menus',
+                    active: false
                 },
                 {
                     title: 'Roles',
+                    active: false
                 },
                 {
-                    title: 'Permissions'
+                    title: 'Permissions',
+                    active: false
                 },
                 {
                     title: 'Attendance Types',
+                    active: false
                 },
                 {
                     title: 'Leave Types',
+                    active: false
                 }
             ]
         },
@@ -199,7 +210,8 @@ export class AdminSidebarService {
             type: 'dropdown',
             submenus: [
                 {
-                    title: 'All Requests'
+                    title: 'All Requests',
+                    active: false
                 }
             ]
         },
@@ -210,10 +222,12 @@ export class AdminSidebarService {
             type: 'dropdown',
             submenus: [
                 {
-                    title: 'All Notifications'
+                    title: 'All Notifications',
+                    active: false
                 },
                 {
-                    title: 'Send Notify'
+                    title: 'Send Notify',
+                    active: false
                     // Automatic/Manual Notifications will be send
                 }
             ]

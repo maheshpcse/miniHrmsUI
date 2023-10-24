@@ -25,7 +25,11 @@ export class AdminSidemenuComponent implements OnInit {
     menus = [];
     public adminLoginId: any = sessionStorage.getItem('adminLoginId');
     public auditLoginId: any = sessionStorage.getItem('auditLoginId');
+    public firstName: any = sessionStorage.getItem('firstName');
+    public lastName: any = sessionStorage.getItem('lastName');
+    public roleName: any = sessionStorage.getItem('roleName');
     public spinner: any = false;
+    public href: any = null;
 
     constructor(
         public adminSidebarService: AdminSidebarService,
@@ -35,9 +39,34 @@ export class AdminSidemenuComponent implements OnInit {
         public toastr: ToastrManager
     ) {
         this.menus = adminSidebarService.getMenuList();
+        // console.log('this.router.url isss:', this.router.url);
+        this.href = this.router.url;
+        this.roleName = this.roleName && this.roleName == 'admin' ? 'Administrator' : '';
     }
 
     ngOnInit(): void {
+        for (let item of this.menus) {
+            if (item['type'] !== 'header') {
+                if (item.hasOwnProperty('url')) {
+                    item['active'] = item['url'] == this.href;
+                } else {
+                    if (item.hasOwnProperty('submenus')) {
+                        for (let data of item['submenus']) {
+                            if (data['url'] == this.href) {
+                                data['active'] = true;
+                                item['active'] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // console.log('this.menus isss:', this.menus);
+    }
+
+    setMenuActive(item?: any, id?: any) {
+        // return this.href == currentUrl;
+        return item['url'] == this.href;
     }
 
     toggleSidebar() {
@@ -57,11 +86,24 @@ export class AdminSidemenuComponent implements OnInit {
                     element.active = false;
                 }
             });
+        } else {
+            this.menus.forEach(element => {
+                if (element != currentMenu) {
+                    element.active = false;
+                    if (element.hasOwnProperty('submenus')) {
+                        for (let data of element['submenus']) {
+                            data['active'] = false;
+                        }
+                    }
+                }
+            });
+        }
+        if (currentMenu && currentMenu.hasOwnProperty('url') && currentMenu['url'] !== this.href) {
+            this.router.navigate([currentMenu.url]);
         }
     }
 
     getState(currentMenu) {
-
         if (currentMenu.active) {
             return 'down';
         } else {

@@ -21,7 +21,8 @@ import { AdminChangePasswordComponent } from './access/admin-change-password/adm
 import { AdminHeaderComponent } from './layouts/admin-header/admin-header.component';
 import { AdminFooterComponent } from './layouts/admin-footer/admin-footer.component';
 import { AdminSidemenuComponent } from './layouts/admin-sidemenu/admin-sidemenu.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { LoginEncryptDecryptComponent } from './pages/forms/login-encrypt-decrypt/login-encrypt-decrypt.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -35,7 +36,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		AdminHeaderComponent,
 		AdminFooterComponent,
 		AdminSidemenuComponent,
-		AdminDashboardComponent
+		AdminDashboardComponent,
+		LoginEncryptDecryptComponent
 	],
 	imports: [
 		CommonModule,

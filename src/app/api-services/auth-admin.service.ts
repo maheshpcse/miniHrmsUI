@@ -19,7 +19,7 @@ export class AuthAdminService {
 	) { }
 
 	// ADMIN authentication API Service's
-    
+
     adminLogin(data?: any) {
         return this.http.post<any>(APIURL.ADMIN_LOGIN, data);
     }
@@ -37,8 +37,9 @@ export class AuthAdminService {
     }
 
 	// Common Service Methods
-    getLoginId(role?: any) {
-		return sessionStorage.getItem(`${role}_id`);
+
+    getLoginId() {
+		return sessionStorage.getItem('userId');
     }
 
     getLoginRole() {

@@ -431,6 +431,14 @@
     color: #fff;
 }
 
+.sidebar .sidebar-menu li .menu-active {
+    color: #fff !important;
+}
+
+.sidebar .sidebar-dropdown .sidebar-submenu li .submenu-active {
+    color: #fff !important;
+}
+
 .sidebar .sidebar-menu ul li a i,
 .sidebar .sidebar-menu .sidebar-dropdown div,
 .sidebar .sidebar-search input.search-menu,

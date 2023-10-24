@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AdminSidebarService } from 'src/app/api-services/admin-sidebar.service';
 
 @Component({
@@ -15,20 +15,8 @@ export class AdminDashboardComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    toggleSidebar() {
-        this.adminSidebarService.setSidebarState(!this.adminSidebarService.getSidebarState());
-    }
-
-    toggleBackgroundImage() {
-        this.adminSidebarService.hasBackgroundImage = !this.adminSidebarService.hasBackgroundImage;
-    }
-
     getSideBarState() {
         return this.adminSidebarService.getSidebarState();
-    }
-
-    hideSidebar() {
-        this.adminSidebarService.setSidebarState(true);
     }
 
 }

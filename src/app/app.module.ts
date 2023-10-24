@@ -23,6 +23,7 @@ import { AuthAdminService } from './api-services/auth-admin.service';
 import { AuthTokenInterceptorService } from './api-services/auth-token-interceptor.service';
 import { CommonService } from './api-services/common.service';
 import { SharedService } from './api-services/shared.service';
+import { AdminFormsService } from './api-services/admin-forms.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -56,6 +57,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		AuthAdminService,
 		CommonService,
 		SharedService,
+		AdminFormsService,
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptorService, multi: true },
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
 	],

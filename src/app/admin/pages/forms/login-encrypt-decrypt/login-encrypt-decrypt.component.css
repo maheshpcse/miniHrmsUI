@@ -1,0 +1,57 @@
+.add-update-form .card-title {
+    margin-bottom: 0;
+    padding: 10px 0 10px 0;
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+}
+
+.add-update-form .card-title span {
+    font-size: 1.1em;
+    letter-spacing: 1.1px;
+}
+
+.add-update-form .card-title span .fas {
+    cursor: pointer;
+}
+
+.add-update-form .card-body form .form-check-inline {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-update-form .card-body form .form-check-inline label {
+    cursor: pointer;
+}
+
+.add-update-form .card-body form .form-check-inline label input {
+    cursor: pointer;
+}
+
+.add-update-form .form-group input[type="text"] {
+    height: 45px;
+}
+
+.add-update-form .form-group input::placeholder {
+    color: #ccc;
+    opacity: 1;
+}
+
+.error-msg {
+    color: lightcoral;
+    font-size: 0.8em;
+}
+
+.error-msg .err {
+    color: indianred;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.disabled {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.5;
+}

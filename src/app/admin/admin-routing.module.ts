@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from '../api-services/auth-guard.service';
 import { AdminLoginComponent } from './access/admin-login/admin-login.component';
 import { AdminForgotPasswordComponent } from './access/admin-forgot-password/admin-forgot-password.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { LoginEncryptDecryptComponent } from './pages/forms/login-encrypt-decrypt/login-encrypt-decrypt.component';
 
 const routes: Routes = [
 	{
@@ -27,6 +28,16 @@ const routes: Routes = [
 		path: 'dashboard',
 		canActivate: [AuthGuardService],
 		component: AdminDashboardComponent
+	},
+	{
+		path: 'forms',
+		canActivate: [AuthGuardService],
+		children: [
+			{
+				path: 'login-encrypt-decrypt',
+				component: LoginEncryptDecryptComponent
+			}
+		]
 	}
 ];
 

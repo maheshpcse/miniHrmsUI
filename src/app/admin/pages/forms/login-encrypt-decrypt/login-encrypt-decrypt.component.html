@@ -1,0 +1,103 @@
+<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
+    <app-admin-header></app-admin-header>
+    <app-admin-sidemenu></app-admin-sidemenu>
+    <main class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card add-update-form" *ngIf="pageType == 'form'">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span><i class="fas fa-arrow-left"></i></span>
+                                <span class="ml-3">Add Login Encrypt</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form #loginEncryptForm="ngForm">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="logintype">Login Type</label>
+                                                <br>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label d-flex align-items-center">
+                                                        <input type="radio" class="form-check-input"name="optradio" value="1" 
+                                                            [(ngModel)]="loginType" required>Normal
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label d-flex align-items-center">
+                                                        <input type="radio" class="form-check-input" name="optradio" value="2" 
+                                                            [(ngModel)]="loginType" required>Settings
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label d-flex align-items-center">
+                                                        <input type="radio" class="form-check-input" name="optradio" value="3" 
+                                                            [(ngModel)]="loginType" required>Social
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="encryptkey">Encrypt Key</label>
+                                                <input type="text" class="form-control" name="encryptkeyname" id="encryptkeyid" placeholder="Enter Encrypt Key"
+                                                    [(ngModel)]="encryptKey" #encryptkeyname="ngModel" required>
+                                                <span class="error-msg" *ngIf="encryptkeyname?.invalid && (encryptkeyname?.dirty || encryptkeyname?.touched)">
+                                                    <span *ngIf="encryptkeyname?.errors?.required">
+                                                        <span class="err">ERROR :</span> Encrypt Key is required.
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="encrypttype">Encrypt Type</label>
+                                                <input type="text" class="form-control" name="encrypttypename" id="encrypttypeid" placeholder="Enter Encrypt Type"
+                                                    [(ngModel)]="encryptType" #encrypttypename="ngModel" required>
+                                                <span class="error-msg" *ngIf="encrypttypename?.invalid && (encrypttypename?.dirty || encrypttypename?.touched)">
+                                                    <span *ngIf="encrypttypename?.errors?.required">
+                                                        <span class="err">ERROR :</span> Encrypt Type is required.
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-end align-items-baseline mr-3">
+                                <button class="btn btn-outline-danger mr-2" (click)="resetForm()">
+                                    <span><i class="fas fa-undo-alt px-2"></i></span>
+                                    <span>Reset</span>
+                                </button>
+                                <button class="btn btn-outline-success" [disabled]="spinner || loginEncryptForm.invalid || setFormValidation()" 
+                                    (click)="saveLoginEncryptForm()">
+                                    <span *ngIf="!spinner"><i class="fas fa-save px-2"></i></span>
+                                    <span *ngIf="!spinner">Save</span>
+                                    <span *ngIf="spinner"><i class="fas fa-spinner fa-spin px-2"></i></span>
+                                    <span *ngIf="spinner">Saving...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card view-data" *ngIf="pageType == 'table'">
+                        <div class="card-header">
+                            <div class="card-title">Login Encrypt Details</div>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-admin-footer></app-admin-footer>
+        </div>
+    </main>
+</div>

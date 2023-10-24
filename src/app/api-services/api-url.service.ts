@@ -9,5 +9,7 @@ export const APIURL = {
 	ADMIN_LOGIN: environment.apiUrl + '/get_admin_login',
 	ADMIN_AND_SETTINGS_LOGOUT: environment.apiUrl + '/admin_and_settings_logout',
 	VALIDATE_ADMIN_EMAIL: environment.apiUrl + '/get_validate_admin_email',
-	UPDATE_ADMIN_PASSWORD: environment.apiUrl + '/update_admin_password'
+	UPDATE_ADMIN_PASSWORD: environment.apiUrl + '/update_admin_password',
+
+	SAVE_LOGIN_ENCRYPT_DATA: environment.apiUrl + '/save_login_encrypt_data',
 }
