@@ -5,11 +5,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card add-update-form" *ngIf="pageType == 'form'">
+                    <div class="card form-card" *ngIf="pageType == 'form'">
                         <div class="card-header">
-                            <div class="card-title">
-                                <span><i class="fas fa-arrow-left"></i></span>
-                                <span class="ml-3">Add Login Encrypt</span>
+                            <div class="card-title p-0">
+                                <!-- <span (click)="changePageType('table')" data-toggle="tooltip" data-placement="top"
+                                    title="Back">
+                                    <i class="fas fa-arrow-left"></i>
+                                </span> -->
+                                <span class="form-title">Add Login Encrypt</span>
+                                <span class="">
+                                    <button class="btn btn-outline-primary" (click)="changePageType('table')">
+                                        <span><i class="fas fa-arrow-left"></i></span>
+                                        <span class="ml-2">Back</span>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                         <div class="card-body">
@@ -22,20 +31,20 @@
                                                 <br>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label d-flex align-items-center">
-                                                        <input type="radio" class="form-check-input"name="optradio" value="1" 
-                                                            [(ngModel)]="loginType" required>Normal
+                                                        <input type="radio" class="form-check-input" name="optradio"
+                                                            value="1" [(ngModel)]="loginType" required>Normal
                                                     </label>
                                                 </div>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label d-flex align-items-center">
-                                                        <input type="radio" class="form-check-input" name="optradio" value="2" 
-                                                            [(ngModel)]="loginType" required>Settings
+                                                        <input type="radio" class="form-check-input" name="optradio"
+                                                            value="2" [(ngModel)]="loginType" required>Settings
                                                     </label>
                                                 </div>
                                                 <div class="form-check-inline">
                                                     <label class="form-check-label d-flex align-items-center">
-                                                        <input type="radio" class="form-check-input" name="optradio" value="3" 
-                                                            [(ngModel)]="loginType" required>Social
+                                                        <input type="radio" class="form-check-input" name="optradio"
+                                                            value="3" [(ngModel)]="loginType" required>Social
                                                     </label>
                                                 </div>
                                             </div>
@@ -43,9 +52,11 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="encryptkey">Encrypt Key</label>
-                                                <input type="text" class="form-control" name="encryptkeyname" id="encryptkeyid" placeholder="Enter Encrypt Key"
+                                                <input type="text" class="form-control" name="encryptkeyname"
+                                                    id="encryptkeyid" placeholder="Enter Encrypt Key"
                                                     [(ngModel)]="encryptKey" #encryptkeyname="ngModel" required>
-                                                <span class="error-msg" *ngIf="encryptkeyname?.invalid && (encryptkeyname?.dirty || encryptkeyname?.touched)">
+                                                <span class="error-msg"
+                                                    *ngIf="encryptkeyname?.invalid && (encryptkeyname?.dirty || encryptkeyname?.touched)">
                                                     <span *ngIf="encryptkeyname?.errors?.required">
                                                         <span class="err">ERROR :</span> Encrypt Key is required.
                                                     </span>
@@ -55,9 +66,11 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="encrypttype">Encrypt Type</label>
-                                                <input type="text" class="form-control" name="encrypttypename" id="encrypttypeid" placeholder="Enter Encrypt Type"
+                                                <input type="text" class="form-control" name="encrypttypename"
+                                                    id="encrypttypeid" placeholder="Enter Encrypt Type"
                                                     [(ngModel)]="encryptType" #encrypttypename="ngModel" required>
-                                                <span class="error-msg" *ngIf="encrypttypename?.invalid && (encrypttypename?.dirty || encrypttypename?.touched)">
+                                                <span class="error-msg"
+                                                    *ngIf="encrypttypename?.invalid && (encrypttypename?.dirty || encrypttypename?.touched)">
                                                     <span *ngIf="encrypttypename?.errors?.required">
                                                         <span class="err">ERROR :</span> Encrypt Type is required.
                                                     </span>
@@ -69,12 +82,13 @@
                             </form>
                         </div>
                         <div class="card-footer">
-                            <div class="d-flex justify-content-end align-items-baseline mr-3">
+                            <div class="d-flex justify-content-end align-items-baseline">
                                 <button class="btn btn-outline-danger mr-2" (click)="resetForm()">
                                     <span><i class="fas fa-undo-alt px-2"></i></span>
                                     <span>Reset</span>
                                 </button>
-                                <button class="btn btn-outline-success" [disabled]="spinner || loginEncryptForm.invalid || setFormValidation()" 
+                                <button class="btn btn-outline-success"
+                                    [disabled]="spinner || loginEncryptForm.invalid || setFormValidation()"
                                     (click)="saveLoginEncryptForm()">
                                     <span *ngIf="!spinner"><i class="fas fa-save px-2"></i></span>
                                     <span *ngIf="!spinner">Save</span>
@@ -84,15 +98,110 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card view-data" *ngIf="pageType == 'table'">
+                    <div class="card table-card" *ngIf="pageType == 'table'">
                         <div class="card-header">
-                            <div class="card-title">Login Encrypt Details</div>
+                            <div class="card-title p-0">
+                                <!-- <span (click)="changePageType('form')" data-toggle="tooltip" data-placement="top"
+                                    title="Add New">
+                                    <i class="fas fa-plus"></i>
+                                </span> -->
+                                <span class="table-title">Login Encrypt Details</span>
+                                <span class="">
+                                    <button class="btn btn-outline-primary" (click)="changePageType('form')">
+                                        <span><i class="fas fa-plus"></i></span>
+                                        <span class="ml-2">Add New</span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                         <div class="card-body">
-
+                            <table class="table table-borderless table-inverse"
+                                aria-describedby="login-encrypt-details">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th>Login Type</th>
+                                        <th>Encrypt Key</th>
+                                        <th>Encrypt Type</th>
+                                        <th>Status</th>
+                                        <th>Created By</th>
+                                        <th>Created On</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of loginEncryptDataList; let i=index;" [ngClass]="{'active': item.status == 0}">
+                                        <td>{{ item.loginTypeName }}</td>
+                                        <td>{{ item.encryptKey }}</td>
+                                        <td>{{ item.encryptType }}</td>
+                                        <td [ngClass]="{'active-td': item.status == 1, 'inactive-td': item.status == 0}">{{ item.statusName }}</td>
+                                        <td>{{ item.createdByName }}</td>
+                                        <td>{{ item.createdAt | date }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <span id="dropdownMenuButton" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-v"></i></span>
+                                                <div class="dropdown-menu dropdown-menu-right" style="padding: 0;" 
+                                                    aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" (click)="onEditItem(item, 'view')">View</a>
+                                                    <a class="dropdown-item" (click)="onEditItem(item, 'edit')">Edit</a>
+                                                    <a class="dropdown-item" (click)="onEditItem(item, 'delete')">Delete</a>
+                                                    <a class="dropdown-item" (click)="onEditItem(item, 'change')">Change Status</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!spinner && loginEncryptDataList?.length == 0">
+                                        <div class="no-data-found">
+                                            <span>No Data Found.</span>
+                                        </div>
+                                    </tr>
+                                    <tr *ngIf="spinner && loginEncryptDataList?.length == 0">
+                                        <div class="no-data-found">
+                                            <span><i class="fas fa-spinner fa-spin fa-lg"></i></span>
+                                            <span class="ml-4">Loading...</span>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="card-footer">
-
+                        <div class="card-footer pb-0" *ngIf="!spinner && loginEncryptDataList?.length > 0">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <span>Showing 10 out of 50 Records</span>
+                                <span class="table-pagination">
+                                    <!-- <ul class="list d-flex justify-content-between align-items-baseline">
+                                        <li class="list-group-item mr-3">
+                                            <span><i class="fas fa-angle-double-left"></i></span>
+                                        </li>
+                                        <li class="list-group-item mr-5">
+                                            <span><i class="fas fa-chevron-left"></i></span>
+                                        </li>
+                                        <li class="list-group-item active mr-2">1</li>
+                                        <li class="list-group-item mr-2">2</li>
+                                        <li class="list-group-item">3</li>
+                                        <li class="list-group-item ml-5">
+                                            <span><i class="fas fa-chevron-right"></i></span>
+                                        </li>
+                                        <li class="list-group-item ml-3">
+                                            <span><i class="fas fa-angle-double-right"></i></span>
+                                        </li>
+                                    </ul> -->
+                                    <ul class="list d-flex justify-content-between align-items-baseline">
+                                        <li class="list-group-item" *ngFor="let page of pages; let i=index;" [ngClass]="{'active': page == currentPage,'mr-3': i == 0,'mr-5': i == 1,
+                                            'mr-2': (page >= 1 && page < getPage() && page != '>' && page != '>>'),
+                                            'ml-5': page == '>','ml-3': page == '>>'}" (click)="setPage(page)"
+                                            [attr.data-toggle]="(page == '<<' || page == '<' || page == '>' || page == '>>') ? 'tooltip':''"
+                                            data-placement="top" [attr.title]="page == '<<' ? 'FIRST' : page == '<' ? 'PREVIOUS' : page == '>' ? 'NEXT' : 
+                                            page == '>>' ? 'LAST' : ''">
+                                            <span *ngIf="i == 0"><i class="fas fa-angle-double-left"></i></span>
+                                            <span *ngIf="i == 1"><i class="fas fa-chevron-left"></i></span>
+                                            <span *ngIf="i > 1 && page != '>' && page != '>>'">{{ page }}</span>
+                                            <span *ngIf="page == '>'"><i class="fas fa-chevron-right"></i></span>
+                                            <span *ngIf="page == '>>'"><i class="fas fa-angle-double-right"></i></span>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,4 +209,91 @@
             <app-admin-footer></app-admin-footer>
         </div>
     </main>
+</div>
+
+<!-- View Table Item Modal -->
+<div class="modal fade" id="viewItemModal" data-backdrop="static" data-keyboard="false" tabindex="-1" 
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pb-1">
+                <div class="modal-title d-flex align-items-baseline">
+                    <i class="fas fa-info"></i>
+                    <h5 class="ml-2">View Login Encrypt</h5>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetEditItem()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-1">
+                <div class="">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th style="width: 25%;">Login Type</th>
+                                <td style="width: 5%;">:</td>
+                                <td>{{ viewItem['loginTypeName'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Encrypt Key</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['encryptKey'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Encrypt Type</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['encryptType'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['statusName'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Created By</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['createdByName'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Created On</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['createdAt'] | date }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Table Item Status Modal -->
+<div class="modal fade" id="changeItemStatusModal" data-backdrop="static" data-keyboard="false" tabindex="-1" 
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pb-1">
+                <div class="modal-title d-flex align-items-baseline">
+                    <i class="fas fa-pen-square"></i>
+                    <h5 class="ml-2">Change status confirmation</h5>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetEditItem()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-1">
+                <p class="text-muted mt-3">Are you sure you would like to {{ viewItem['status'] == 0 ? 'activate' : 'deactivate'}} this item ?</p>
+            </div>
+            <div class="modal-footer mt-1">
+                <button type="button" class="btn btn-light" data-dismiss="modal" (click)="resetEditItem()">No</button>
+                <button type="button" class="btn btn-primary" [ngClass]= "statusSpinner ? 'col-4' : ''" [disabled]="statusSpinner" 
+                    (click)="changeLoginEncryptDataStatus()">
+                    <!-- <span *ngIf="!statusSpinner"><i class="fas fa-pen-square px-2"></i></span> -->
+                    <span *ngIf="!statusSpinner">Yes</span>
+                    <span *ngIf="statusSpinner"><i class="fas fa-spinner fa-spin px-2"></i></span>
+                    <span *ngIf="statusSpinner" class="ml-2">Updating...</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

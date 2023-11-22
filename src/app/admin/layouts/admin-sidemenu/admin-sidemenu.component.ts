@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import Swal from 'sweetalert2';
+import * as _ from 'underscore';
 import { AdminSidebarService } from 'src/app/api-services/admin-sidebar.service';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
 declare var $: any;
@@ -51,6 +52,10 @@ export class AdminSidemenuComponent implements OnInit {
                     item['active'] = item['url'] == this.href;
                 } else {
                     if (item.hasOwnProperty('submenus')) {
+                        // let activeMenuData: any = item['submenus'].map((ele: any) => {
+                        //     return ele.active == true;
+                        // });
+                        // console.log('activeMenuData isss:', activeMenuData);
                         for (let data of item['submenus']) {
                             if (data['url'] == this.href) {
                                 data['active'] = true;
@@ -148,7 +153,7 @@ export class AdminSidemenuComponent implements OnInit {
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             showCloseButton: true
         });

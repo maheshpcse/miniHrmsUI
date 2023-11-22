@@ -1,0 +1,163 @@
+<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
+    <app-admin-header></app-admin-header>
+    <app-admin-sidemenu></app-admin-sidemenu>
+    <main class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <div class="card-title p-0">
+                                <span class="table-title">Login History Details</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless table-inverse"
+                                aria-describedby="login-encrypt-details">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Employee ID</th>
+                                        <th>Login Type</th>
+                                        <th>Last Login Time</th>
+                                        <th>Last Logout Time</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of loginHistoryDataList; let i=index;">
+                                        <td>{{ item.empName }}</td>
+                                        <td>{{ item.empId }}</td>
+                                        <td>{{ item.loginTypeName }}</td>
+                                        <td>{{ item.lastLoginTime | date: 'medium' }}</td>
+                                        <td>{{ item.lastLogoutTime | date: 'medium' }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <span id="dropdownMenuButton" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false"><i
+                                                        class="fas fa-ellipsis-v"></i></span>
+                                                <div class="dropdown-menu dropdown-menu-right" style="padding: 0;" 
+                                                    aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" (click)="onEditItem(item, 'view')">View</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!spinner && loginHistoryDataList?.length == 0">
+                                        <div class="no-data-found">
+                                            <span>No Data Found.</span>
+                                        </div>
+                                    </tr>
+                                    <tr *ngIf="spinner && loginHistoryDataList?.length == 0">
+                                        <div class="no-data-found">
+                                            <span><i class="fas fa-spinner fa-spin fa-lg"></i></span>
+                                            <span class="ml-4">Loading...</span>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer pb-0" *ngIf="!spinner && loginHistoryDataList?.length > 0">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <span>Showing {{ loginHistoryDataList?.length }} out of {{ loginHistoryDataCount }} Records</span>
+                                <span class="table-pagination">
+                                    <!-- <ul class="list d-flex justify-content-between align-items-baseline">
+                                        <li class="list-group-item mr-3">
+                                            <span><i class="fas fa-angle-double-left"></i></span>
+                                        </li>
+                                        <li class="list-group-item mr-5">
+                                            <span><i class="fas fa-chevron-left"></i></span>
+                                        </li>
+                                        <li class="list-group-item active mr-2">1</li>
+                                        <li class="list-group-item mr-2">2</li>
+                                        <li class="list-group-item">3</li>
+                                        <li class="list-group-item ml-5">
+                                            <span><i class="fas fa-chevron-right"></i></span>
+                                        </li>
+                                        <li class="list-group-item ml-3">
+                                            <span><i class="fas fa-angle-double-right"></i></span>
+                                        </li>
+                                    </ul> -->
+                                    <ul class="list d-flex justify-content-between align-items-baseline">
+                                        <li class="list-group-item" *ngFor="let page of pages; let i=index;" [ngClass]="addClassToPage(page, i)" 
+                                            [attr.data-toggle]="(page == '<<' || page == '<' || page == '>' || page == '>>') ? 'tooltip':''"
+                                            data-placement="top" [attr.title]="page == '<<' ? 'FIRST' : page == '<' ? 'PREVIOUS' : page == '>' ? 'NEXT' : 
+                                            page == '>>' ? 'LAST' : ''" (click)="setPage(page)">
+                                            <span *ngIf="i == 0"><i class="fas fa-angle-double-left"></i></span>
+                                            <span *ngIf="i == 1"><i class="fas fa-chevron-left"></i></span>
+                                            <span *ngIf="i > 1 && page != '>' && page != '>>'">{{ page }}</span>
+                                            <span *ngIf="page == '>'"><i class="fas fa-chevron-right"></i></span>
+                                            <span *ngIf="page == '>>'"><i class="fas fa-angle-double-right"></i></span>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-admin-footer></app-admin-footer>
+        </div>
+    </main>
+</div>
+
+<!-- View Table Item Modal -->
+<div class="modal fade" id="viewItemModal" data-backdrop="static" data-keyboard="false" tabindex="-1" 
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pb-1">
+                <div class="modal-title d-flex align-items-baseline">
+                    <i class="fas fa-info"></i>
+                    <h5 class="ml-2">View Login History</h5>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetEditItem()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-1">
+                <div class="">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th style="width: 33%;">Login Type</th>
+                                <td style="width: 5%;">:</td>
+                                <td>{{ viewItem['empName'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Encrypt Key</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['empId'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Encrypt Type</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['loginTypeName'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Login Time</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['lastLoginTime'] | date:'MMMM d, y, h:mm:ss a' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Logout Time</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['lastLogoutTime'] | date:'MMMM d, y, h:mm:ss a' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Session Time</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['duration'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>IP Address</th>
+                                <td class="ml-3">:</td>
+                                <td>{{ viewItem['ipAddress'] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

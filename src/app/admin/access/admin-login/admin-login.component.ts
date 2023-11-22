@@ -13,8 +13,8 @@ import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
 export class AdminLoginComponent implements OnInit {
 
 	@ViewChild('loginForm', { static: false }) loginFormRef: NgForm;
-	public adminLoginName: any = null;
-	public adminPassword: any = null;
+	public adminLoginName: any = 'adminmahesh';
+	public adminPassword: any = '1234';
 	public spinner: any = false;
 
 	constructor(
@@ -74,7 +74,7 @@ export class AdminLoginComponent implements OnInit {
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             showCloseButton: true
         });

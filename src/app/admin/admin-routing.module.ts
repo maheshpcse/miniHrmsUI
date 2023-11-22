@@ -4,6 +4,7 @@ import { AuthGuardService } from '../api-services/auth-guard.service';
 import { AdminLoginComponent } from './access/admin-login/admin-login.component';
 import { AdminForgotPasswordComponent } from './access/admin-forgot-password/admin-forgot-password.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { LoginHistoryComponent } from './pages/employees/login-history/login-history.component';
 import { LoginEncryptDecryptComponent } from './pages/forms/login-encrypt-decrypt/login-encrypt-decrypt.component';
 
 const routes: Routes = [
@@ -28,6 +29,16 @@ const routes: Routes = [
 		path: 'dashboard',
 		canActivate: [AuthGuardService],
 		component: AdminDashboardComponent
+	},
+	{
+		path: 'employees',
+		canActivate: [AuthGuardService],
+		children: [
+			{
+				path: 'login-history',
+				component: LoginHistoryComponent
+			}
+		]
 	},
 	{
 		path: 'forms',

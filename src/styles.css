@@ -246,15 +246,15 @@ ng-multiselect-dropdown .dropdown-list {
 /* css tooltip styles */
 .tooltip-inner {
     margin-top: -20px;
-    padding: 15px;
-    color: seagreen;
+    padding: 10px;
+    color: #212529;
     text-align: center;
-    font-weight: 400;
-    background: #dee2e6;
+    font-weight: 600;
+    background: white;
     border: 1px solid #dee2e6;
-    border-radius: 2px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 
 .forgot-pwd-cmp ng-otp-input input {

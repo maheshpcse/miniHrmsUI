@@ -186,9 +186,9 @@
                 <span class="badge-sonar"></span>
             </a>
             <div class="dropdown-menu" *dropdownMenu>
-                <a class="dropdown-item">My profile</a>
+                <a class="dropdown-item">My Account</a>
                 <a class="dropdown-item">Help</a>
-                <a class="dropdown-item">Setting</a>
+                <a class="dropdown-item">Settings</a>
             </div>
         </div>
         <div>
@@ -214,17 +214,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div>
+            <div class="modal-body p-1">
                 <p class="text-muted mt-3">Are you sure you would like to sign out of your account ?</p>
             </div>
             <div class="modal-footer mt-1">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" [ngClass]= "spinner ? 'col-4' : ''" 
-                    [disabled]="spinner" (click)="adminLogout()">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" [ngClass]= "spinner ? 'col-4' : ''" [disabled]="spinner" 
+                    (click)="adminLogout()">
                     <!-- <span *ngIf="!spinner"><i class="fas fa-sign-out-alt px-2"></i></span> -->
                     <span *ngIf="!spinner">Sign out</span>
                     <span *ngIf="spinner"><i class="fas fa-spinner fa-spin px-2"></i></span>
-                    <span class="ml-2" *ngIf="spinner">Signing out...</span>
+                    <span *ngIf="spinner" class="ml-2">Signing out...</span>
                 </button>
             </div>
         </div>

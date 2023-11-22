@@ -166,6 +166,7 @@ export class AdminSidebarService {
                 },
                 {
                     title: 'Login History',
+                    url: '/admin/employees/login-history',
                     active: false
                 }
             ]

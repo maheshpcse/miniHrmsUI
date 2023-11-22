@@ -176,7 +176,7 @@ export class AdminForgotPasswordComponent implements OnInit {
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             showCloseButton: true
         });

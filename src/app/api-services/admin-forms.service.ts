@@ -23,4 +23,12 @@ export class AdminFormsService {
     saveLoginEncryptData(data?: any) {
         return this.http.post<any>(APIURL.SAVE_LOGIN_ENCRYPT_DATA, data);
     }
+
+	getLoginEncryptData(data?: any) {
+        return this.http.post<any>(APIURL.GET_LOGIN_ENCRYPT_DATA, data);
+    }
+
+    updateLoginEncryptDataStatus(data?: any) {
+        return this.http.put<any>(APIURL.UPDATE_LOGIN_ENCRYPT_DATA_STATUS, data);
+    }
 }
