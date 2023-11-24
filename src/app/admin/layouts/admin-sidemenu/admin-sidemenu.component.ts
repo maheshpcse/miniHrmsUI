@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import * as _ from 'underscore';
 import { AdminSidebarService } from 'src/app/api-services/admin-sidebar.service';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
+import { SharedService } from 'src/app/api-services/shared.service';
 declare var $: any;
 
 @Component({
@@ -37,6 +38,7 @@ export class AdminSidemenuComponent implements OnInit {
         public router: Router,
         public route: ActivatedRoute,
         public authAdminService: AuthAdminService,
+        public sharedService: SharedService,
         public toastr: ToastrManager
     ) {
         this.menus = adminSidebarService.getMenuList();
@@ -134,32 +136,17 @@ export class AdminSidemenuComponent implements OnInit {
             if (response && response.success) {
                 setTimeout(() => {
                     $('#adminLogoutModal').modal('hide');
-                    this.getAlertMessage('success', response.message);
+                    this.sharedService.getAlertMessage('success', response.message);
                     this.spinner = false;
                     this.authAdminService.isLoggedOut();
                 }, 1000);
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
                 this.spinner = false;
             }
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
             this.spinner = false;
-        });
-    }
-
-    getAlertMessage(status?: any, message?: any) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            showCloseButton: true
-        });
-        Toast.fire({
-            icon: status,
-            title: message
         });
     }
 

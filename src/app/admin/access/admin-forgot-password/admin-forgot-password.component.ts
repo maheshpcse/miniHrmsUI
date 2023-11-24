@@ -6,6 +6,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
+import { SharedService } from 'src/app/api-services/shared.service';
 
 @Component({
     selector: 'app-admin-forgot-password',
@@ -38,6 +39,7 @@ export class AdminForgotPasswordComponent implements OnInit {
         public router: Router,
         public route: ActivatedRoute,
         public authAdminService: AuthAdminService,
+        public sharedService: SharedService,
         public toastr: ToastrManager
     ) { }
 
@@ -60,18 +62,18 @@ export class AdminForgotPasswordComponent implements OnInit {
         this.authAdminService.validateAdminEmail(emailPayload).subscribe(async (response: any) => {
             console.log('Get validate admin email data response isss:', response);
             if (response && response.success) {
-                this.getAlertMessage('success', response.message);
+                this.sharedService.getAlertMessage('success', response.message);
                 this.getStartOTPTimer();
                 this.otpMail = response['data']['otp'] || null;
                 this.isValidEmail = true;
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
                 this.formStep = 1;
                 this.isValidEmail = false;
             }
             this.spinner = false;
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
             this.spinner = false;
             this.formStep = 1;
             this.isValidEmail = false;
@@ -88,7 +90,7 @@ export class AdminForgotPasswordComponent implements OnInit {
 				clearInterval(this.startTime);
 				this.startTime = null;
 				this.setTime = '10:00';
-                this.getAlertMessage('warning', 'OTP expired!');
+                this.sharedService.getAlertMessage('warning', 'OTP expired!');
                 this.formStep = 1;
                 this.isValidEmail = false;
                 this.emailFormRef.reset();
@@ -125,7 +127,7 @@ export class AdminForgotPasswordComponent implements OnInit {
             }, 1000);
         } else {
             setTimeout(() => {
-                this.getAlertMessage('error', 'Invalid OTP entered.');
+                this.sharedService.getAlertMessage('error', 'Invalid OTP entered.');
                 this.formStep = 1;
                 this.spinner = false;
             }, 1000);
@@ -152,16 +154,16 @@ export class AdminForgotPasswordComponent implements OnInit {
         this.authAdminService.updateAdminPassword(passwordPayload).subscribe(async (response: any) => {
             console.log('Get update admin password data response isss:', response);
             if (response && response.success) {
-                this.getAlertMessage('success',response.message);
+                this.sharedService.getAlertMessage('success',response.message);
                 this.router.navigate(['/admin/login']);
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
                 this.formStep = 2;
                 this.isValidEmail = false;
             }
             this.spinner = false;
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
             this.spinner = false;
             this.formStep = 2;
         });
@@ -170,21 +172,6 @@ export class AdminForgotPasswordComponent implements OnInit {
     setFormValidation() {
 		return !this.newPassword || !this.confirmPassword ? true : false;
 	}
-
-	getAlertMessage(status?: any, message?: any) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            showCloseButton: true
-        });
-        Toast.fire({
-            icon: status,
-            title: message
-        });
-    }
 
     ngOnDestroy(): void {
 		//Called once, before the instance is destroyed.

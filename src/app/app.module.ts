@@ -25,6 +25,7 @@ import { CommonService } from './api-services/common.service';
 import { SharedService } from './api-services/shared.service';
 import { AdminFormsService } from './api-services/admin-forms.service';
 import { AdminEmployeesService } from './api-services/admin-employees.service';
+import { EmojiDirective } from './api-services/emoji.directive';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -32,7 +33,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		EmojiDirective
 	],
 	imports: [
 		// CommonModule,

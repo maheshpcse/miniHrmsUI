@@ -167,7 +167,9 @@
                         </div>
                         <div class="card-footer pb-0" *ngIf="!spinner && loginEncryptDataList?.length > 0">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span>Showing 10 out of 50 Records</span>
+                                <span>
+                                    Showing {{ (pageCount * 10) + 1 }} to {{ ((currentPage * 10) - 10) + loginEncryptDataList?.length }} out of {{ loginEncryptDataCount }} Records
+                                </span>
                                 <span class="table-pagination">
                                     <!-- <ul class="list d-flex justify-content-between align-items-baseline">
                                         <li class="list-group-item mr-3">
@@ -187,12 +189,10 @@
                                         </li>
                                     </ul> -->
                                     <ul class="list d-flex justify-content-between align-items-baseline">
-                                        <li class="list-group-item" *ngFor="let page of pages; let i=index;" [ngClass]="{'active': page == currentPage,'mr-3': i == 0,'mr-5': i == 1,
-                                            'mr-2': (page >= 1 && page < getPage() && page != '>' && page != '>>'),
-                                            'ml-5': page == '>','ml-3': page == '>>'}" (click)="setPage(page)"
+                                        <li class="list-group-item" *ngFor="let page of pages; let i=index;" [ngClass]="sharedService.addClassToPage(page, i)" 
                                             [attr.data-toggle]="(page == '<<' || page == '<' || page == '>' || page == '>>') ? 'tooltip':''"
                                             data-placement="top" [attr.title]="page == '<<' ? 'FIRST' : page == '<' ? 'PREVIOUS' : page == '>' ? 'NEXT' : 
-                                            page == '>>' ? 'LAST' : ''">
+                                            page == '>>' ? 'LAST' : ''" (click)="setPage(page)">
                                             <span *ngIf="i == 0"><i class="fas fa-angle-double-left"></i></span>
                                             <span *ngIf="i == 1"><i class="fas fa-chevron-left"></i></span>
                                             <span *ngIf="i > 1 && page != '>' && page != '>>'">{{ page }}</span>

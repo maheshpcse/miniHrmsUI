@@ -112,9 +112,9 @@
     height: 70vh;
 }
 
-.table-card .card-body table {
+/* .table-card .card-body table {
     overflow-y: scroll;
-}
+} */
 
 .table-card .card-body table tbody tr.active {
     opacity: 0.5;

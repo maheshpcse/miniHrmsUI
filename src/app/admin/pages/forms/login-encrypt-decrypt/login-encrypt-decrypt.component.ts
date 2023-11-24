@@ -7,6 +7,7 @@ import * as _ from 'underscore';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
 import { AdminSidebarService } from 'src/app/api-services/admin-sidebar.service';
 import { AdminFormsService } from 'src/app/api-services/admin-forms.service';
+import { SharedService } from 'src/app/api-services/shared.service';
 declare var $: any;
 
 @Component({
@@ -27,8 +28,12 @@ export class LoginEncryptDecryptComponent implements OnInit {
 	public pageType: any = 'table';
 	public loginEncryptDataList: any = [];
 	public loginEncryptDataCount: any = 0;
-	public pages: any = ['<<','<',1,2,3,'>','>>'];
+	public limit: any = 10;
 	public currentPage: any = 1;
+	public pages: any = [];
+    public pageSet: any = {};
+    public pageCount: any = -1;
+	public pageSetCount: any = 0;
 	public viewItem: any = {};
 
 	constructor(
@@ -37,6 +42,7 @@ export class LoginEncryptDecryptComponent implements OnInit {
         public route: ActivatedRoute,
         public authAdminService: AuthAdminService,
 		public adminFormsService: AdminFormsService,
+        public sharedService: SharedService,
         public toastr: ToastrManager
 	) { }
 
@@ -54,66 +60,77 @@ export class LoginEncryptDecryptComponent implements OnInit {
 	changePageType(view?: any) {
 		this.pageType = view;
 		this.resetForm();
+		if (view == 'table') {
+			this.resetPage();
+		}
 	}
 
 	getPage(page?: any) {
 		return this.pages[this.pages.indexOf('>') - 1];
 	}
 
-	getAllPages() {
-		// this.pages = ['<<','<',1,2,3,'>','>>'];
-		this.pages = ['<<','<'];
-
-		let allPages = [];
-		for (let i = 0; i < this.loginEncryptDataCount; i += 1) {
-			allPages.push(i);
-		}
-		// console.log('allPages isss:', allPages);
-
-		let chunksData: any = [];
-		for (let i = 0; i < this.loginEncryptDataCount; i += 10) {
-			let chunk: any = allPages.slice(i, i + 10);
-			chunksData.push(chunk);
-		}
-		// chunksData = _.chunk(allPages, 10);
-		// console.log('chunksData isss:', chunksData);
-
-		for (let i = 0; i < chunksData.length; i += 1) {
-			this.pages.push(i + 1);
-		}
-		this.pages.push('>');
-		this.pages.push('>>');
-		// console.log('this.pages isss:', this.pages);
-		this.setPage(1);
+	setPage(page?: any) {
+		this.setAllPages(page);
 	}
 
-	setPage(page?: any) {
+	getAllPages() {
+		let { pages, pageSet, pageSetCount }: any = this.sharedService.getAllPages(this.loginEncryptDataCount);
+		console.log('pages isss:', pages);
+		console.log('pageSet isss:', pageSet);
+		console.log('pageSetCount isss:', pageSetCount);
+		this.pages = pages;
+		this.pageSet = pageSet;
+		this.pageSetCount = pageSetCount;
+		this.setAllPages(-1);
+	}
+
+	setAllPages(page?: any) {
 		console.log('page isss:', page);
-		this.currentPage = page;
+		let { pageCount, currentPage }: any = this.sharedService.setAllPages(page);
+		console.log('pageCount isss:', pageCount);
+        console.log('currentPage isss:', currentPage);
+		this.pageCount = pageCount;
+		this.currentPage = currentPage;
+		if (page != -1) {
+			this.getLoginEncryptDetails();
+		}
 	}
 
 	resetPage() {
 		this.pageType = 'table';
-		this.loginEncryptDataList = [];
-		this.loginEncryptDataCount = 0;
-		this.pages = [];
+		// this.loginEncryptDataList = [];
+		// this.loginEncryptDataCount = 0;
+		// this.pages = [];
+		// this.pageSet = {};
+		// this.pageCount = -1;
+		// this.pageSetCount = 0;
+		// this.currentPage = 1;
 		this.getLoginEncryptDetails();
 	}
 
 	getLoginEncryptDetails() {
 		this.spinner = true;
-		this.adminFormsService.getLoginEncryptData({}).subscribe(async (response: any) => {
+		const searchPayload = {
+			limit: Number(this.limit),
+			offset: Number(this.currentPage)
+		}
+		console.log('Get login encrypt data searchPayload isss:', searchPayload);
+
+		this.adminFormsService.getLoginEncryptData(searchPayload).subscribe(async (response: any) => {
             console.log('Get login encrypt data response isss:', response);
             if (response && response.success) {
 				this.loginEncryptDataList = response.data['list'];
 				this.loginEncryptDataCount = response.data['count'];
-				this.getAllPages();
+				if(this.pageCount == -1) {
+					this.getAllPages();
+				}
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
+				this.loginEncryptDataList = [];
             }
 			this.spinner = false;
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
 			this.spinner = false;
         });
 	}
@@ -164,15 +181,15 @@ export class LoginEncryptDecryptComponent implements OnInit {
 		this.adminFormsService.saveLoginEncryptData(loginEncryptPayload).subscribe(async (response: any) => {
             console.log('Get saved login encrypt data response isss:', response);
             if (response && response.success) {
-                this.getAlertMessage('success', response.message);
+                this.sharedService.getAlertMessage('success', response.message);
 				this.resetForm();
 				this.resetPage();
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
             }
             this.spinner = false;
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
             this.spinner = false;
         });
 	}
@@ -189,16 +206,16 @@ export class LoginEncryptDecryptComponent implements OnInit {
 		this.adminFormsService.updateLoginEncryptDataStatus(loginEncryptStatusPayload).subscribe(async (response: any) => {
             console.log('Get updated login encrypt data status response isss:', response);
             if (response && response.success) {
-                this.getAlertMessage('success', response.message);
+                this.sharedService.getAlertMessage('success', response.message);
 				$("#changeItemStatusModal").modal('hide');
 				this.resetEditItem();
 				this.getLoginEncryptDetails();
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
             }
             this.statusSpinner = false;
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
             this.statusSpinner = false;
         });
 	}
@@ -217,20 +234,5 @@ export class LoginEncryptDecryptComponent implements OnInit {
 		this.encryptKey = null;
 		this.encryptType = null;
 	}
-
-	getAlertMessage(status?: any, message?: any) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            showCloseButton: true
-        });
-        Toast.fire({
-            icon: status,
-            title: message
-        });
-    }
 
 }

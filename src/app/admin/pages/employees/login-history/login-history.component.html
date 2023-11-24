@@ -30,7 +30,15 @@
                                         <td>{{ item.empId }}</td>
                                         <td>{{ item.loginTypeName }}</td>
                                         <td>{{ item.lastLoginTime | date: 'medium' }}</td>
+                                        <!-- <td style="display: grid;">
+                                            <span>{{ item.lastLoginTime | date: 'longDate' }}</span>
+                                            <span style="font-size: 0.9em;color: darkgray;">{{ item.lastLoginTime | date: 'mediumTime' }}</span>
+                                        </td> -->
                                         <td>{{ item.lastLogoutTime | date: 'medium' }}</td>
+                                        <!-- <td style="display: grid;">
+                                            <span>{{ item.lastLogoutTime | date: 'longDate' }}</span>
+                                            <span style="font-size: 0.9em;color: darkgray;">{{ item.lastLogoutTime | date: 'mediumTime' }}</span>
+                                        </td> -->
                                         <td>
                                             <div class="dropdown">
                                                 <span id="dropdownMenuButton" data-toggle="dropdown"
@@ -59,7 +67,9 @@
                         </div>
                         <div class="card-footer pb-0" *ngIf="!spinner && loginHistoryDataList?.length > 0">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span>Showing {{ loginHistoryDataList?.length }} out of {{ loginHistoryDataCount }} Records</span>
+                                <span>
+                                    Showing {{ (pageCount * 10) + 1 }} to {{ ((currentPage * 10) - 10) + loginHistoryDataList?.length }} out of {{ loginHistoryDataCount }} Records
+                                </span>
                                 <span class="table-pagination">
                                     <!-- <ul class="list d-flex justify-content-between align-items-baseline">
                                         <li class="list-group-item mr-3">
@@ -79,7 +89,7 @@
                                         </li>
                                     </ul> -->
                                     <ul class="list d-flex justify-content-between align-items-baseline">
-                                        <li class="list-group-item" *ngFor="let page of pages; let i=index;" [ngClass]="addClassToPage(page, i)" 
+                                        <li class="list-group-item" *ngFor="let page of pages; let i=index;" [ngClass]="sharedService.addClassToPage(page, i)" 
                                             [attr.data-toggle]="(page == '<<' || page == '<' || page == '>' || page == '>>') ? 'tooltip':''"
                                             data-placement="top" [attr.title]="page == '<<' ? 'FIRST' : page == '<' ? 'PREVIOUS' : page == '>' ? 'NEXT' : 
                                             page == '>>' ? 'LAST' : ''" (click)="setPage(page)">

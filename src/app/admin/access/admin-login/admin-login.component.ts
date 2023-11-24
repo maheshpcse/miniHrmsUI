@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import Swal from 'sweetalert2';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
+import { SharedService } from 'src/app/api-services/shared.service';
 
 @Component({
 	selector: 'app-admin-login',
@@ -14,13 +15,14 @@ export class AdminLoginComponent implements OnInit {
 
 	@ViewChild('loginForm', { static: false }) loginFormRef: NgForm;
 	public adminLoginName: any = 'adminmahesh';
-	public adminPassword: any = '1234';
+	public adminPassword: any = '123';
 	public spinner: any = false;
 
 	constructor(
 		public router: Router,
         public route: ActivatedRoute,
         public authAdminService: AuthAdminService,
+        public sharedService: SharedService,
         public toastr: ToastrManager
 	) { }
 
@@ -51,16 +53,16 @@ export class AdminLoginComponent implements OnInit {
                     localStorage.setItem(key, newItem);
                     sessionStorage.setItem(key, newItem);
                 }
-                this.getAlertMessage('success', response.message);
+                this.sharedService.getAlertMessage('success', response.message);
                 setTimeout(() => {
                     this.router.navigate(['/admin/dashboard']);
                 }, 1000);
             } else {
-                this.getAlertMessage('error', response.message);
+                this.sharedService.getAlertMessage('error', response.message);
             }
             this.spinner = false;
         }, (error: any) => {
-            this.getAlertMessage('warning', 'Network failed, Please try again.');
+            this.sharedService.getAlertMessage('warning', 'Network failed, Please try again.');
             this.spinner = false;
         });
 	}
@@ -68,20 +70,5 @@ export class AdminLoginComponent implements OnInit {
 	setFormValidation() {
 		return !this.adminLoginName || !this.adminPassword ? true : false;
 	}
-
-	getAlertMessage(status?: any, message?: any) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            showCloseButton: true
-        });
-        Toast.fire({
-            icon: status,
-            title: message
-        });
-    }
 
 }
