@@ -162,6 +162,7 @@ export class AdminSidebarService {
             submenus: [
                 {
                     title: 'All Employees',
+                    url: '/admin/employees/all-employees',
                     active: false
                 },
                 {

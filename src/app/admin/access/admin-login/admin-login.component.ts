@@ -15,7 +15,7 @@ export class AdminLoginComponent implements OnInit {
 
 	@ViewChild('loginForm', { static: false }) loginFormRef: NgForm;
 	public adminLoginName: any = 'adminmahesh';
-	public adminPassword: any = '123';
+	public adminPassword: any = '1234';
 	public spinner: any = false;
 
 	constructor(

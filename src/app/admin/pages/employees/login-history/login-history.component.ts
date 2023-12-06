@@ -58,8 +58,8 @@ export class LoginHistoryComponent implements OnInit {
 		this.setAllPages(page);
 	}
 
-	getAllPages() {
-		let { pages, pageSet, pageSetCount }: any = this.sharedService.getAllPages(this.loginHistoryDataCount);
+	getAllPages(page?: any) {
+		let { pages, pageSet, pageSetCount }: any = this.sharedService.getAllPages(this.loginHistoryDataCount, page);
 		console.log('pages isss:', pages);
 		console.log('pageSet isss:', pageSet);
 		console.log('pageSetCount isss:', pageSetCount);
@@ -95,7 +95,7 @@ export class LoginHistoryComponent implements OnInit {
 				this.loginHistoryDataList = response.data['list'];
 				this.loginHistoryDataCount = response.data['count'];
 				if(this.pageCount == -1) {
-					this.getAllPages();
+					this.getAllPages(-1);
 				}
             } else {
                 this.sharedService.getAlertMessage('error', response.message);

@@ -17,5 +17,9 @@ export const APIURL = {
 	UPDATE_LOGIN_ENCRYPT_DATA_STATUS: environment.apiUrl + '/update_login_encrypt_data_status',
 
 	// Admin Employees
-	GET_LOGIN_HISTORY_DATA: environment.apiUrl + '/get_login_history_data',
+	SAVE_EMPLOYEE_DATA: environment.apiUrl + '/save_employee_data',
+	GET_ALL_EMPLOYEES_DATA: environment.apiUrl + '/get_all_employees_data',
+	GET_EMPLOYEE_DATA_BY_ID: environment.apiUrl + '/get_employee_data_by_id',
+	UPDATE_EMPLOYEE_DATA_STATUS: environment.apiUrl + '/update_employee_data_status',
+	GET_LOGIN_HISTORY_DATA: environment.apiUrl + '/get_login_history_data'
 }

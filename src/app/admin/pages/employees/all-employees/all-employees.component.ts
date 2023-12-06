@@ -6,28 +6,28 @@ import Swal from 'sweetalert2';
 import * as _ from 'underscore';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
 import { AdminSidebarService } from 'src/app/api-services/admin-sidebar.service';
-import { AdminFormsService } from 'src/app/api-services/admin-forms.service';
+import { AdminEmployeesService } from 'src/app/api-services/admin-employees.service';
 import { SharedService } from 'src/app/api-services/shared.service';
 declare var $: any;
 
 @Component({
-	selector: 'app-login-encrypt-decrypt',
-	templateUrl: './login-encrypt-decrypt.component.html',
-	styleUrls: ['./login-encrypt-decrypt.component.css']
+    selector: 'app-all-employees',
+    templateUrl: './all-employees.component.html',
+    styleUrls: ['./all-employees.component.css']
 })
-export class LoginEncryptDecryptComponent implements OnInit {
+export class AllEmployeesComponent implements OnInit {
 
-	@ViewChild('loginEncryptForm', { static: false }) loginEncryptFormRef: NgForm;
-	public loginEncDecDetailId: any = null;
+    @ViewChild('employeeForm', { static: false }) employeeFormRef: NgForm;
+	public userId: any = null;
 	public loginType: any = null;
 	public encryptKey: any = null;
 	public encryptType: any = null;
 	public spinner: any = false;
 	public statusSpinner: any = false;
 	public pageType: any = 'table';
-	
-	public loginEncryptDataList: any = [];
-	public loginEncryptDataCount: any = 0;
+
+    public allEmployeesList: any = [];
+	public allEmployeesCount: any = 0;
 	public limit: any = 10;
 	public currentPage: any = 1;
 	public pages: any = [];
@@ -36,28 +36,28 @@ export class LoginEncryptDecryptComponent implements OnInit {
 	public pageSetCount: any = 0;
 	public viewItem: any = {};
 
-	constructor(
-		public adminSidebarService: AdminSidebarService,
+    constructor(
+        public adminSidebarService: AdminSidebarService,
 		public router: Router,
         public route: ActivatedRoute,
         public authAdminService: AuthAdminService,
-		public adminFormsService: AdminFormsService,
-        public sharedService: SharedService,
+		public adminEmployeesService: AdminEmployeesService,
+		public sharedService: SharedService,
         public toastr: ToastrManager
-	) { }
+    ) { }
 
-	ngOnInit(): void {
-		$(function () {
+    ngOnInit(): void {
+        $(function () {
 			$('[data-toggle="tooltip"]').tooltip();
 		});
-		this.getLoginEncryptDetails();
-	}
+		this.getAllEmployeesDetails();
+    }
 
     getSideBarState() {
         return this.adminSidebarService.getSidebarState();
     }
 
-	changePageType(view?: any) {
+    changePageType(view?: any) {
 		this.pageType = view;
 		this.resetForm();
 		if (view == 'table') {
@@ -65,7 +65,7 @@ export class LoginEncryptDecryptComponent implements OnInit {
 		}
 	}
 
-	getPage(page?: any) {
+    getPage(page?: any) {
 		return this.pages[this.pages.indexOf('>') - 1];
 	}
 
@@ -74,7 +74,7 @@ export class LoginEncryptDecryptComponent implements OnInit {
 	}
 
 	getAllPages(page?: any) {
-		let { pages, pageSet, pageSetCount }: any = this.sharedService.getAllPages(this.loginEncryptDataCount, page);
+		let { pages, pageSet, pageSetCount }: any = this.sharedService.getAllPages(this.allEmployeesCount, page);
 		console.log('pages isss:', pages);
 		console.log('pageSet isss:', pageSet);
 		console.log('pageSetCount isss:', pageSetCount);
@@ -92,41 +92,41 @@ export class LoginEncryptDecryptComponent implements OnInit {
 		this.pageCount = pageCount;
 		this.currentPage = currentPage;
 		if (page != -1) {
-			this.getLoginEncryptDetails();
+			this.getAllEmployeesDetails();
 		}
 	}
 
-	resetPage() {
+    resetPage() {
 		this.pageType = 'table';
-		// this.loginEncryptDataList = [];
-		// this.loginEncryptDataCount = 0;
+		// this.allEmployeesList = [];
+		// this.allEmployeesCount = 0;
 		// this.pages = [];
 		// this.pageSet = {};
 		// this.pageCount = -1;
 		// this.pageSetCount = 0;
 		// this.currentPage = 1;
-		this.getLoginEncryptDetails();
+		this.getAllEmployeesDetails();
 	}
 
-	getLoginEncryptDetails() {
+	getAllEmployeesDetails() {
 		this.spinner = true;
 		const searchPayload = {
 			limit: Number(this.limit),
 			offset: Number(this.currentPage)
 		}
-		console.log('Get login encrypt data searchPayload isss:', searchPayload);
+		console.log('Get all employees data searchPayload isss:', searchPayload);
 
-		this.adminFormsService.getLoginEncryptData(searchPayload).subscribe(async (response: any) => {
-            console.log('Get login encrypt data response isss:', response);
+		this.adminEmployeesService.getAllEmployeesData(searchPayload).subscribe(async (response: any) => {
+            console.log('Get all employees data response isss:', response);
             if (response && response.success) {
-				this.loginEncryptDataList = response.data['list'];
-				this.loginEncryptDataCount = response.data['count'];
+				this.allEmployeesList = response.data['list'];
+				this.allEmployeesCount = response.data['count'];
 				if(this.pageCount == -1) {
 					this.getAllPages(-1);
 				}
             } else {
                 this.sharedService.getAlertMessage('error', response.message);
-				this.loginEncryptDataList = [];
+				this.allEmployeesList = [];
             }
 			this.spinner = false;
         }, (error: any) => {
@@ -135,7 +135,11 @@ export class LoginEncryptDecryptComponent implements OnInit {
         });
 	}
 
-	onEditItem(item?: any, type?: any) {
+	getEmployeeProfile(item?: any) {
+		return item ? JSON.parse(item['profile'])['Image'] : '../../../../../assets/images/emp-pic.png';
+	}
+
+    onEditItem(item?: any, type?: any) {
 		console.log('selected item isss:', item);
 		let rowItem: any = item ? Object.assign(item, {}) : {};
 		if (type == 'view') {
@@ -143,7 +147,7 @@ export class LoginEncryptDecryptComponent implements OnInit {
 			$("#viewItemModal").modal('show');
 		} else if (type == 'edit') {
 			this.pageType = 'form';
-			this.loginEncDecDetailId = rowItem['loginEncDecDetailId'];
+			this.userId = rowItem['userId'];
 			this.loginType = rowItem['loginType'].toString();
 			this.encryptKey = rowItem['encryptKey'];
 			this.encryptType = rowItem['encryptType'];
@@ -155,13 +159,13 @@ export class LoginEncryptDecryptComponent implements OnInit {
 
 	resetEditItem() {
 		this.viewItem = {};
-		this.loginEncDecDetailId = null;
+		this.userId = null;
 		this.loginType = null;
 		this.encryptKey = null;
 		this.encryptType = null;
 	}
 
-	saveLoginEncryptForm() {
+	saveEmployeeForm() {
 		this.spinner = true;
 
 		if (this.setFormValidation()) {
@@ -169,17 +173,17 @@ export class LoginEncryptDecryptComponent implements OnInit {
             return this.toastr.errorToastr('Please fill the required fields.');
 		}
 
-		const loginEncryptPayload = {
-			loginEncDecDetailId: this.loginEncDecDetailId || null,
+		const employeePayload = {
+			userId: this.userId || null,
 			loginType: Number(this.loginType),
 			encryptKey: this.encryptKey,
 			encryptType: this.encryptType,
 			createdBy: Number(this.authAdminService.getLoginId())
 		}
-		console.log('Get loginEncryptPayload data isss:', loginEncryptPayload);
+		console.log('Get employeePayload data isss:', employeePayload);
 
-		this.adminFormsService.saveLoginEncryptData(loginEncryptPayload).subscribe(async (response: any) => {
-            console.log('Get saved login encrypt data response isss:', response);
+		this.adminEmployeesService.saveEmployeeData(employeePayload).subscribe(async (response: any) => {
+            console.log('Get saved employee data response isss:', response);
             if (response && response.success) {
                 this.sharedService.getAlertMessage('success', response.message);
 				this.resetForm();
@@ -194,22 +198,22 @@ export class LoginEncryptDecryptComponent implements OnInit {
         });
 	}
 
-	changeLoginEncryptDataStatus() {
+	changeEmployeeDataStatus() {
 		this.statusSpinner = true;
 
-		const loginEncryptStatusPayload = {
-			loginEncDecDetailId: this.viewItem['loginEncDecDetailId'],
+		const employeeStatusPayload = {
+			userId: this.viewItem['userId'],
 			status: this.viewItem['status'] == 1 ? 0 : 1
 		}
-		console.log('Get loginEncryptStatusPayload data isss:', loginEncryptStatusPayload);
+		console.log('Get employeeStatusPayload data isss:', employeeStatusPayload);
 
-		this.adminFormsService.updateLoginEncryptDataStatus(loginEncryptStatusPayload).subscribe(async (response: any) => {
-            console.log('Get updated login encrypt data status response isss:', response);
+		this.adminEmployeesService.updateEmployeeDataStatus(employeeStatusPayload).subscribe(async (response: any) => {
+            console.log('Get updated employee data status response isss:', response);
             if (response && response.success) {
                 this.sharedService.getAlertMessage('success', response.message);
 				$("#changeItemStatusModal").modal('hide');
 				this.resetEditItem();
-				this.getLoginEncryptDetails();
+				this.getAllEmployeesDetails();
             } else {
                 this.sharedService.getAlertMessage('error', response.message);
             }
@@ -225,11 +229,11 @@ export class LoginEncryptDecryptComponent implements OnInit {
 	}
 
 	resetForm() {
-		if (this.loginEncryptFormRef) {
-			this.loginEncryptFormRef.reset();
+		if (this.employeeFormRef) {
+			this.employeeFormRef.reset();
 		}
 		this.viewItem = {};
-		this.loginEncDecDetailId = null;
+		this.userId = null;
 		this.loginType = null;
 		this.encryptKey = null;
 		this.encryptType = null;

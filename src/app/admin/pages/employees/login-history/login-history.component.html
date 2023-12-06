@@ -17,7 +17,7 @@
                                 <thead class="thead-inverse">
                                     <tr>
                                         <th>Employee Name</th>
-                                        <th>Employee ID</th>
+                                        <!-- <th>Employee ID</th> -->
                                         <th>Login Type</th>
                                         <th>Last Login Time</th>
                                         <th>Last Logout Time</th>
@@ -26,26 +26,38 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let item of loginHistoryDataList; let i=index;">
-                                        <td>{{ item.empName }}</td>
-                                        <td>{{ item.empId }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <span><img src="../../../../../assets/images/emp-pic.png" class="rounded-circle" alt="_empPic" width="40" height="40"></span>
+                                                <span class="ml-2" style="display: grid;">
+                                                    <span>{{ item.empName }}</span>
+                                                    <span style="font-weight: 400;font-size: 0.85em;color: #ccc;">{{ item.empId }}</span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <!-- <td>{{ item.empName }}</td> -->
+                                        <!-- <td>{{ item.empId }}</td> -->
                                         <td>{{ item.loginTypeName }}</td>
-                                        <td>{{ item.lastLoginTime | date: 'medium' }}</td>
-                                        <!-- <td style="display: grid;">
-                                            <span>{{ item.lastLoginTime | date: 'longDate' }}</span>
-                                            <span style="font-size: 0.9em;color: darkgray;">{{ item.lastLoginTime | date: 'mediumTime' }}</span>
-                                        </td> -->
-                                        <td>{{ item.lastLogoutTime | date: 'medium' }}</td>
-                                        <!-- <td style="display: grid;">
-                                            <span>{{ item.lastLogoutTime | date: 'longDate' }}</span>
-                                            <span style="font-size: 0.9em;color: darkgray;">{{ item.lastLogoutTime | date: 'mediumTime' }}</span>
-                                        </td> -->
+                                        <!-- <td>{{ item.lastLoginTime | date: 'medium' }}</td> -->
+                                        <td>
+                                            <div style="display: grid;">
+                                                <span>{{ item.lastLoginTime | date: 'longDate' }}</span>
+                                                <span style="font-size: 0.9em;color: darkgray;">{{ item.lastLoginTime | date: 'mediumTime' }}</span>
+                                            </div>
+                                        </td>
+                                        <!-- <td>{{ item.lastLogoutTime | date: 'medium' }}</td> -->
+                                        <td>
+                                            <div style="display: grid;">
+                                                <span>{{ item.lastLogoutTime | date: 'longDate' }}</span>
+                                                <span style="font-size: 0.9em;color: darkgray;">{{ item.lastLogoutTime | date: 'mediumTime' }}</span>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="dropdown">
-                                                <span id="dropdownMenuButton" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false"><i
-                                                        class="fas fa-ellipsis-v"></i></span>
-                                                <div class="dropdown-menu dropdown-menu-right" style="padding: 0;" 
-                                                    aria-labelledby="dropdownMenuButton">
+                                                <span id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right" style="padding: 0;" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" (click)="onEditItem(item, 'view')">View</a>
                                                 </div>
                                             </div>
@@ -130,29 +142,41 @@
                     <table class="table table-borderless">
                         <tbody>
                             <tr>
-                                <th style="width: 33%;">Login Type</th>
+                                <th style="width: 33%;">Employee Name</th>
                                 <td style="width: 5%;">:</td>
                                 <td>{{ viewItem['empName'] }}</td>
                             </tr>
                             <tr>
-                                <th>Encrypt Key</th>
+                                <th>Employee ID</th>
                                 <td class="ml-3">:</td>
-                                <td>{{ viewItem['empId'] }}</td>
+                                <td style="font-weight: 400;font-size: 0.85em;color: #ccc;">{{ viewItem['empId'] }}</td>
                             </tr>
                             <tr>
-                                <th>Encrypt Type</th>
+                                <th>Login Type</th>
                                 <td class="ml-3">:</td>
                                 <td>{{ viewItem['loginTypeName'] }}</td>
                             </tr>
                             <tr>
                                 <th>Last Login Time</th>
                                 <td class="ml-3">:</td>
-                                <td>{{ viewItem['lastLoginTime'] | date:'MMMM d, y, h:mm:ss a' }}</td>
+                                <!-- <td>{{ viewItem['lastLoginTime'] | date:'MMMM d, y, h:mm:ss a' }}</td> -->
+                                <td>
+                                    <div style="display: grid;">
+                                        <span>{{ viewItem['lastLoginTime'] | date: 'longDate' }}</span>
+                                        <span style="font-size: 0.9em;color: darkgray;">{{ viewItem['lastLoginTime'] | date: 'mediumTime' }}</span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Last Logout Time</th>
                                 <td class="ml-3">:</td>
-                                <td>{{ viewItem['lastLogoutTime'] | date:'MMMM d, y, h:mm:ss a' }}</td>
+                                <!-- <td>{{ viewItem['lastLogoutTime'] | date:'MMMM d, y, h:mm:ss a' }}</td> -->
+                                <td>
+                                    <div style="display: grid;">
+                                        <span>{{ viewItem['lastLogoutTime'] | date: 'longDate' }}</span>
+                                        <span style="font-size: 0.9em;color: darkgray;">{{ viewItem['lastLogoutTime'] | date: 'mediumTime' }}</span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Session Time</th>

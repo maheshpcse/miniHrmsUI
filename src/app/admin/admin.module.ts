@@ -24,6 +24,8 @@ import { AdminSidemenuComponent } from './layouts/admin-sidemenu/admin-sidemenu.
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { LoginEncryptDecryptComponent } from './pages/forms/login-encrypt-decrypt/login-encrypt-decrypt.component';
 import { LoginHistoryComponent } from './pages/employees/login-history/login-history.component';
+import { AllEmployeesComponent } from './pages/employees/all-employees/all-employees.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -39,7 +41,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		AdminSidemenuComponent,
 		AdminDashboardComponent,
 		LoginEncryptDecryptComponent,
-		LoginHistoryComponent
+		LoginHistoryComponent,
+		AllEmployeesComponent,
+		NotFoundPageComponent
 	],
 	imports: [
 		CommonModule,

@@ -54,7 +54,7 @@ export class SharedService {
 		return this.pages[this.pages.indexOf('>') - 1];
 	}
 
-	getAllPages(totalCount: any) {
+	getAllPages(totalCount?: any, page?: any) {
 		// this.pages = ['<<','<',1,2,3,'>','>>'];
 		this.pages = ['<<','<'];
 
@@ -68,6 +68,7 @@ export class SharedService {
 		// console.log('allPages isss:', allPages);
 
 		let chunksData: any = [];
+		this.pageSet = {};
 		for (let i = 0; i <= Number(this.pageSetCount); i += Number(this.pageLimit)) {
 			let chunk: any = allPages.slice(i, i + Number(this.pageLimit));
 			chunksData.push(chunk);
@@ -84,7 +85,9 @@ export class SharedService {
 		this.pages.push('>');
 		this.pages.push('>>');
 		// console.log('this.pages isss:', this.pages);
-		// this.setAllPages(-1);
+		// if (page == -1) {
+		// 	this.setAllPages(-1);
+		// }
 		return {
 			pages: this.pages,
 			pageSet: this.pageSet,
@@ -97,6 +100,7 @@ export class SharedService {
 		// this.currentPage = page;
         if (['<<', '<', '>', '>>', -1].includes(page)) {
             if (page == '>' || page == -1) {
+				console.log('inside if page isss:', page, this.pageCount);
 				this.pageCount += 1;
 				this.currentPage = this.pageCount + 1;
 				if (this.pageSet.hasOwnProperty(this.pageCount)) {
@@ -114,9 +118,10 @@ export class SharedService {
 						this.pages.push('>');
 						this.pages.push('>>');
 					}
-				} else {
-					this.currentPage = this.pageCount + 1;
-				}
+				} 
+				// else {
+				// 	this.currentPage = this.pageCount + 1;
+				// }
 			} else if (page == '<') {
 				this.pageCount -= 1;
 				this.currentPage = this.pageCount + 1;
@@ -135,9 +140,10 @@ export class SharedService {
 						this.pages.push('>');
 						this.pages.push('>>');
 					}
-				} else {
-					this.currentPage = this.pageCount + 1;
-				}
+				} 
+				// else {
+				// 	this.currentPage = this.pageCount + 1;
+				// }
 			} else if (page == '<<') {
 				this.pageCount = 0;
 				this.currentPage = 1;
@@ -171,8 +177,8 @@ export class SharedService {
 				this.pages.push('>>');
 			}
         } else {
-            this.currentPage = page;
             this.pageCount = page - 1;
+            this.currentPage = page;
         }
         // console.log('pageCount isss:', this.pageCount);
         // console.log('currentPage isss:', this.currentPage);
