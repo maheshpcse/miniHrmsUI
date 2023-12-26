@@ -148,8 +148,9 @@ html,
 body {
     background-color: #dee2ec;
     /* background-color: white; */
+    /* background-image: url('./assets/images/hrms_full_logo.jpg');
+    background-size: cover; */
     height: 100%;
-
 }
 
 body {

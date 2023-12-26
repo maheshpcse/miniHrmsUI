@@ -26,6 +26,8 @@ import { SharedService } from './api-services/shared.service';
 import { AdminFormsService } from './api-services/admin-forms.service';
 import { AdminEmployeesService } from './api-services/admin-employees.service';
 import { EmojiDirective } from './api-services/emoji.directive';
+import { NotFoundPageComponent } from './admin/pages/not-found-page/not-found-page.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -34,6 +36,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
 	declarations: [
 		AppComponent,
+		NotFoundPageComponent,
 		EmojiDirective
 	],
 	imports: [
@@ -53,7 +56,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     	Ng2SearchPipeModule,
 		NgOtpInputModule,
 		BsDropdownModule.forRoot(),
-    	PerfectScrollbarModule
+    	PerfectScrollbarModule,
+		HighchartsChartModule
 	],
 	providers: [
 		AuthGuardService,

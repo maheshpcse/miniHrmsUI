@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundPageComponent } from './admin/pages/not-found-page/not-found-page.component';
+import { DynamicOrgChartComponent } from './admin/pages/dynamic-org-chart/dynamic-org-chart.component';
 
 const routes: Routes = [
 	{
@@ -16,6 +17,12 @@ const routes: Routes = [
 	},
 
 	// *********** Employee Routes ***************
+
+	{
+		path: 'user-hierarchy',
+		// component: UserHierarchyComponent
+		component: DynamicOrgChartComponent
+	},
 
 	{
 		path: '**',

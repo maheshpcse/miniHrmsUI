@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminLoginComponent } from './access/admin-login/admin-login.component';
@@ -25,7 +26,8 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { LoginEncryptDecryptComponent } from './pages/forms/login-encrypt-decrypt/login-encrypt-decrypt.component';
 import { LoginHistoryComponent } from './pages/employees/login-history/login-history.component';
 import { AllEmployeesComponent } from './pages/employees/all-employees/all-employees.component';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { UserHierarchyComponent } from './pages/user-hierarchy/user-hierarchy.component';
+import { DynamicOrgChartComponent } from './pages/dynamic-org-chart/dynamic-org-chart.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -43,7 +45,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		LoginEncryptDecryptComponent,
 		LoginHistoryComponent,
 		AllEmployeesComponent,
-		NotFoundPageComponent
+		UserHierarchyComponent,
+		DynamicOrgChartComponent,
 	],
 	imports: [
 		CommonModule,
@@ -59,10 +62,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     	Ng2SearchPipeModule,
 		NgOtpInputModule,
 		BsDropdownModule.forRoot(),
-    	PerfectScrollbarModule
+    	PerfectScrollbarModule,
+		HighchartsChartModule
 	],
 	providers: [
 		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
-	]
+	],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminModule { }

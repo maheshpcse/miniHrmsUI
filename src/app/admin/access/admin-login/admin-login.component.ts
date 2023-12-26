@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -9,7 +9,8 @@ import { SharedService } from 'src/app/api-services/shared.service';
 @Component({
 	selector: 'app-admin-login',
 	templateUrl: './admin-login.component.html',
-	styleUrls: ['./admin-login.component.css']
+	styleUrls: ['./admin-login.component.css'],
+	// encapsulation: ViewEncapsulation.None
 })
 export class AdminLoginComponent implements OnInit {
 

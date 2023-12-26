@@ -20,7 +20,9 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "allowedCommonJsDependencies": [
-              "angular2-multiselect-dropdown"
+              "angular2-multiselect-dropdown",
+              "highcharts",
+              "highcharts-custom-events"
             ],
             "assets": [
               "src/favicon.ico",

@@ -1,3 +1,5 @@
+const path = require('path');
+
 const config = {
     mode: 'production', // "production" | "development" | "none"
     resolve: {
@@ -7,6 +9,7 @@ const config = {
         rules: [
             {
                 test: /\.mjs$/,
+                use: 'raw-loader',
                 include: /node_modules/,
                 type: 'javascript/auto'
             }

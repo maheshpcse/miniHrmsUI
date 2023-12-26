@@ -14,10 +14,10 @@ body {
     text-align: center;
 }
 
-.profile-img img {
+/* .profile-img img {
     width: 70%;
     height: 100%;
-}
+} */
 
 .profile-img .file {
     position: relative;
@@ -68,7 +68,7 @@ body {
 }
 
 .profile-head .nav-tabs {
-    margin-bottom: 5%;
+    margin-bottom: 3%;
 }
 
 .profile-head .nav-tabs .nav-link {
@@ -104,11 +104,103 @@ body {
     list-style: none;
 }
 
-.profile-tab label {
+.detail-tabs label {
     font-weight: 600;
 }
 
-.profile-tab p {
+.detail-tabs p {
     font-weight: 600;
     color: #0062cc;
+}
+
+.address {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.address p {
+    border: 1px solid #ddd;
+    width: max-content;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+/* .tab-pane .no-data-found {
+    height: 50vh;
+} */
+
+.tab-pane .no-data-found span {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+}
+
+/* Payments */
+.atmcards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.atmcards p {
+    border: 1px solid #ddd;
+    width: max-content;
+    padding: 3px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.atmcards p .payment-icon {
+    font-size: 40px;
+    /* color: #d1dade; */
+}
+
+.payment-card {
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid #e7eaec;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.payment-icon-big {
+    font-size: 60px;
+    color: #d1dade;
+}
+
+.text-navy {
+    color: #1ab394 !important;
+}
+
+.text-success {
+    color: #1c84c6 !important;
+}
+
+.text-warning {
+    color: #f8ac59 !important;
+}
+
+.text-danger {
+    color: #ed5565 !important;
+}
+
+.text-default {
+    color: #6c757d !important;
+}
+
+.atmcardinfo {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.atmcardinfo .card-title .btn {
+    color: #ccc;
+    border-color: #ccc;
+}
+
+.atmcardinfo .card-title .btn:hover {
+    color: white;
+    background-color: #ccc;
 }

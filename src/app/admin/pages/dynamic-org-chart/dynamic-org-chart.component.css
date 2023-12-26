@@ -1,0 +1,17 @@
+#container {
+    min-width: 300px;
+    max-width: 1200px;
+    margin: 1em auto;
+    border: 1px solid silver;
+}
+
+#container h4 {
+    text-transform: none;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#container p {
+    font-size: 13px;
+    line-height: 16px;
+}
