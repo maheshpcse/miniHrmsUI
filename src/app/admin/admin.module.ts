@@ -26,8 +26,9 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { LoginEncryptDecryptComponent } from './pages/forms/login-encrypt-decrypt/login-encrypt-decrypt.component';
 import { LoginHistoryComponent } from './pages/employees/login-history/login-history.component';
 import { AllEmployeesComponent } from './pages/employees/all-employees/all-employees.component';
-import { UserHierarchyComponent } from './pages/user-hierarchy/user-hierarchy.component';
-import { DynamicOrgChartComponent } from './pages/dynamic-org-chart/dynamic-org-chart.component';
+import { ViewEmployeeComponent } from './pages/employees/all-employees/view-employee/view-employee.component';
+// import { UserHierarchyComponent } from './pages/user-hierarchy/user-hierarchy.component';
+// import { DynamicOrgChartComponent } from './pages/dynamic-org-chart/dynamic-org-chart.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -45,8 +46,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		LoginEncryptDecryptComponent,
 		LoginHistoryComponent,
 		AllEmployeesComponent,
-		UserHierarchyComponent,
-		DynamicOrgChartComponent,
+		ViewEmployeeComponent,
+		// UserHierarchyComponent,
+		// DynamicOrgChartComponent,
 	],
 	imports: [
 		CommonModule,

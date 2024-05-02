@@ -1,0 +1,622 @@
+<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
+    <app-admin-header></app-admin-header>
+    <app-admin-sidemenu></app-admin-sidemenu>
+    <main class="page-content">
+        <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                target="_blank">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                    alt="_empPic" width="270" height="170" />
+                            </a>
+                            <!-- <a [href]="employeeInfo['profile']['Image']" target="_blank">
+                                <img [src]="employeeInfo['profile']['Image']" alt="_empPic" width="270" height="170" />
+                            </a> -->
+                            <!-- <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file" />
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <h5>
+                                {{ employeeInfo['empName'] }}
+                            </h5>
+                            <h6>
+                                Web Developer and Designer
+                            </h6>
+                            <p class="proile-rating">
+                                <span>Profile Status</span>
+                                <span class="ml-2">:</span>
+                                <span class="ml-2">Incomplete</span>
+                            </p>
+                            <p>
+                                <span>Role Name</span>
+                                <span class="ml-2">:</span>
+                                <span class="ml-2">{{ employeeInfo['roleName'] }}</span>
+                            </p>
+                            <p>
+                                <span>Status</span>
+                                <span class="ml-2">:</span>
+                                <span class="ml-2">{{ employeeInfo['statusName'] }}</span>
+                            </p>
+                            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="emp-tab" data-toggle="tab" href="#empinfo" role="tab"
+                                        aria-controls="empinfo" aria-selected="true">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="basic-tab" data-toggle="tab" href="#basicinfo" role="tab"
+                                        aria-controls="profile" aria-selected="false">Timeline</a>
+                                </li>
+                            </ul> -->
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <!-- <div class="col-md-4">
+                        <div class="profile-work">
+                            <p>WORK LINK</p>
+                            <a href="">Website Link</a><br />
+                            <a href="">Bootsnipp Profile</a><br />
+                            <a href="">Bootply Profile</a>
+                            <p>SKILLS</p>
+                            <a href="">Web Designer</a><br />
+                            <a href="">Web Developer</a><br />
+                            <a href="">WordPress</a><br />
+                            <a href="">WooCommerce</a><br />
+                            <a href="">PHP, .Net</a><br />
+                        </div>
+                    </div> -->
+                    <div class="col-md-12">
+                        <div class="profile-head">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" (click)="getEmployeeTabsData(0);">
+                                    <a class="nav-link" id="emp-tab" data-toggle="tab" href="#empinfo" role="tab"
+                                        aria-controls="empinfo" aria-selected="false">Employee Details</a>
+                                </li>
+                                <li class="nav-item" (click)="getEmployeeTabsData(1);">
+                                    <a class="nav-link" id="basic-tab" data-toggle="tab" href="#basicinfo" role="tab"
+                                        aria-controls="basicinfo" aria-selected="false">Basic Details</a>
+                                </li>
+                                <li class="nav-item" (click)="getEmployeeTabsData(2);">
+                                    <a class="nav-link" id="bank-tab" data-toggle="tab" href="#bankinfo" role="tab"
+                                        aria-controls="bankinfo" aria-selected="false">Bank Details</a>
+                                </li>
+                                <li class="nav-item" (click)="getEmployeeTabsData(3);">
+                                    <a class="nav-link active" id="onboarding-tab" data-toggle="tab"
+                                        href="#onboardinginfo" role="tab" aria-controls="onboardinginfo"
+                                        aria-selected="true">Onboarding Details</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="tab-content detail-tabs" id="myTabContent">
+                            <div class="tab-pane fade" id="empinfo" role="tabpanel" aria-labelledby="emp-tab">
+                                <div class="container"
+                                    *ngIf="!spinner && getEmpData(employeeInfo); else noEmpInfoDataFound;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Employee ID</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ employeeInfo['empId'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>First Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ employeeInfo['firstName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Last Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ employeeInfo['lastName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Username</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ employeeInfo['userName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ employeeInfo['email'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Address</label>
+                                        </div>
+                                        <div class="col-md-9 address">
+                                            <p>
+                                                <span>Address</span>
+                                                <span class="ml-2">:</span>
+                                                <span class="ml-2">{{ employeeInfo['address']['Address'] }}</span>
+                                            </p>
+                                            <p class="ml-2">
+                                                <span>City</span>
+                                                <span class="ml-2">:</span>
+                                                <span class="ml-2">{{ employeeInfo['address']['City'] }}</span>
+                                            </p>
+                                            <p class="ml-2">
+                                                <span>State</span>
+                                                <span class="ml-2">:</span>
+                                                <span class="ml-2">{{ employeeInfo['address']['State'] }}</span>
+                                            </p>
+                                            <p class="ml-2">
+                                                <span>Country</span>
+                                                <span class="ml-2">:</span>
+                                                <span class="ml-2">{{ employeeInfo['address']['Country'] }}</span>
+                                            </p>
+                                            <p>
+                                                <span>Zip Code</span>
+                                                <span class="ml-2">:</span>
+                                                <span class="ml-2">{{ employeeInfo['address']['Pincode'] }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Mobile</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ employeeInfo['profile']['Mobile'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Date of Birth</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>
+                                                {{ employeeInfo['profile']['DateOfBirth'] != 'N/A' ?
+                                                (employeeInfo['profile']['DateOfBirth'] | date:'MMMM dd, yyyy') : 'N/A'
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #noEmpInfoDataFound>
+                                    <div class="container">
+                                        <div class="row no-data-found" *ngIf="!spinner && !getEmpData(employeeInfo)">
+                                            <span>No Data Found.</span>
+                                        </div>
+                                        <div class="row no-data-found" *ngIf="spinner">
+                                            <span><i class="fas fa-spinner fa-spin fa-lg"></i></span>
+                                            <span class="ml-4">Loading...</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div class="tab-pane fade" id="basicinfo" role="tabpanel" aria-labelledby="basic-tab">
+                                <div class="container"
+                                    *ngIf="!spinner && getEmpData(empBasicInfo); else noBasicInfoDataFound;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Studies</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBasicInfo['studyInfo'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Family</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBasicInfo['familyInfo'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Personal</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBasicInfo['personalInfo'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Backup</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBasicInfo['backupInfo'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Social Media</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBasicInfo['socialMediaInfo'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #noBasicInfoDataFound>
+                                    <div class="container">
+                                        <div class="row no-data-found" *ngIf="!spinner && !getEmpData(empBasicInfo)">
+                                            <span>No Data Found.</span>
+                                        </div>
+                                        <div class="row no-data-found" *ngIf="spinner">
+                                            <span><i class="fas fa-spinner fa-spin fa-lg"></i></span>
+                                            <span class="ml-4">Loading...</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div class="tab-pane fade" id="bankinfo" role="tabpanel" aria-labelledby="bank-tab">
+                                <div class="container"
+                                    *ngIf="!spinner && getEmpData(empBankInfo) && !getAtmCardInfo(atmCardInfo) && !getBankInfo(bankInfo); else noBankInfoDataFound;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Bank Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['bankName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Account Number</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['accountNumber'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>IFSC Code</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['ifscCode'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Branch Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['branchName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Benificiary Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['benificiaryName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Account Holder Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['accountHolderName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Account Type</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['accountTypeName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Is Card Active</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empBankInfo['isCardActiveName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>ATM Card Info</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="container-fluid p-0">
+                                                <div class="row">
+                                                    <div class="col-md-3 atmcards"
+                                                        *ngFor="let item of empBankInfo['atmCardInfo']; let i=index;">
+                                                        <p class="d-flex align-items-center">
+                                                            <span *ngIf="item['cardName'] == 'Visa'">
+                                                                <i class="fab fa-cc-visa payment-icon text-success"></i>
+                                                            </span>
+                                                            <span *ngIf="item['cardName'] == 'Mastercard'">
+                                                                <i
+                                                                    class="fab fa-cc-mastercard payment-icon text-navy"></i>
+                                                            </span>
+                                                            <span class="ml-2" style="cursor: pointer !important;"
+                                                                (click)="atmCardInfo = item;">
+                                                                View Details
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Personal Banks Info</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="container-fluid p-0">
+                                                <div class="row">
+                                                    <div class="col-md-3 atmcards"
+                                                        *ngFor="let item of empBankInfo['personalBanksInfo']; let i=index;">
+                                                        <p class="d-flex align-items-center">
+                                                            <span>
+                                                                <i
+                                                                    class="fas fa-money-check payment-icon text-default"></i>
+                                                            </span>
+                                                            <span class="ml-2" style="cursor: pointer !important;"
+                                                                (click)="bankInfo = item;">
+                                                                {{ item['displayName'] }}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ATM Card Info -->
+                                <div class="container" *ngIf="getAtmCardInfo(atmCardInfo)">
+                                    <!-- <div class="row">
+                                        <div class="col-md-10"></div>
+                                        <div class="col-md-2 atmcardinfo">
+                                            <button class="btn btn-outline-primary">
+                                                <span><i class="fas fa-arrow-left"></i></span>
+                                                <span class="ml-2">Back</span>
+                                            </button>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>ATM Card Logo</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="container-fluid p-0">
+                                                <div class="row">
+                                                    <div class="col-md-6"
+                                                        *ngFor="let item of [atmCardInfo]; let i=index;">
+                                                        <div class="payment-card">
+                                                            <i *ngIf="item['cardName'] == 'Visa'"
+                                                                class="fab fa-cc-visa payment-icon-big text-success"></i>
+                                                            <i *ngIf="item['cardName'] == 'Mastercard'"
+                                                                class="fab fa-cc-mastercard payment-icon-big text-navy"></i>
+                                                            <h2>
+                                                                <!-- **** **** **** 1060 -->
+                                                                {{ setAtmCardNumber(item['cardNumber']) }}
+                                                            </h2>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <small>
+                                                                        <strong>Expiry date:</strong>
+                                                                        {{ item['cardExpiryDate'] | date: 'MM' }}/{{
+                                                                        item['cardExpiryDate'] | date: 'yy' }}
+                                                                    </small>
+                                                                </div>
+                                                                <div class="col-sm-6 text-right">
+                                                                    <small>
+                                                                        <strong>Name:</strong> {{ item['cardHolderName']
+                                                                        }}
+                                                                    </small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Card Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cardName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Card Type</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cardType'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Card Holder Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cardHolderName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Card Number</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cardNumber'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Card Issuer Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cardIssuerDate'] | date: 'MMMM dd, yyyy' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Card Expiry Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cardExpiryDate'] | date: 'MMMM dd, yyyy' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>CVV Number</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ atmCardInfo['cvvNumber'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Personal Bank Info -->
+                                <div class="container" *ngIf="getBankInfo(bankInfo)">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Bank Logo</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <a href="../../../../assets/images/SBI-Logo.png" target="_blank"
+                                                *ngIf="bankInfo['displayName'] == 'SBI'">
+                                                <img src="../../../../assets/images/SBI-Logo.png" alt="_bankLogo"
+                                                    width="259" height="150">
+                                            </a>
+                                            <a href="../../../../assets/images/HDFC-Bank-logo.jpg" target="_blank"
+                                                *ngIf="bankInfo['displayName'] == 'HDFC'">
+                                                <img src="../../../../assets/images/HDFC-Bank-logo.jpg" alt="_bankLogo"
+                                                    width="250" height="150">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Bank Name</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ bankInfo['bankName'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Account Type</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ bankInfo['accountType'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #noBankInfoDataFound>
+                                    <div class="container">
+                                        <div class="row no-data-found" *ngIf="!spinner && !getEmpData(empBankInfo)">
+                                            <span>No Data Found.</span>
+                                        </div>
+                                        <div class="row no-data-found" *ngIf="spinner">
+                                            <span><i class="fas fa-spinner fa-spin fa-lg"></i></span>
+                                            <span class="ml-4">Loading...</span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div class="tab-pane fade show active" id="onboardinginfo" role="tabpanel"
+                                aria-labelledby="onboarding-tab">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- <app-user-hierarchy [EmpOrgData]="empOnboardingInfo" [EmpProcessData]="empProcessInfo" *ngIf="!spinner"></app-user-hierarchy> -->
+                                            <app-dynamic-org-chart [EmpOrgData]="empOnboardingInfo"
+                                                [EmpProcessData]="empProcessInfo"
+                                                *ngIf="!spinner"></app-dynamic-org-chart>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="container" *ngIf="!spinner && getEmpData(empOnboardingInfo); else noOnboardingInfoDataFound;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Onboarding Start Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>
+                                                {{ empOnboardingInfo['onBoardStartDate'] != 'N/A' ? 
+                                                (empOnboardingInfo['onBoardStartDate'] | date:'MMMM dd, yyyy') : 'N/A' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Approved Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>
+                                                {{ empOnboardingInfo['approvedDate'] != 'N/A' ? 
+                                                (empOnboardingInfo['approvedDate'] | date:'MMMM dd, yyyy') : 'N/A' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Joining Date</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>
+                                                {{ empOnboardingInfo['joiningDate'] != 'N/A' ? 
+                                                (empOnboardingInfo['joiningDate'] | date:'MMMM dd, yyyy') : 'N/A' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Approved By</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empOnboardingInfo['approvedBy'] }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Remarks</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p>{{ empOnboardingInfo['remarks'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #noOnboardingInfoDataFound>
+                                    <div class="container">
+                                        <div class="row no-data-found" *ngIf="!spinner && !getEmpData(empOnboardingInfo)">
+                                            <span>No Data Found.</span>
+                                        </div>
+                                        <div class="row no-data-found" *ngIf="spinner">
+                                            <span><i class="fas fa-spinner fa-spin fa-lg"></i></span>
+                                            <span class="ml-4">Loading...</span>
+                                        </div>
+                                    </div>
+                                </ng-template> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>

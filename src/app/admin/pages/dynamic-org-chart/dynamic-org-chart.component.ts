@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+declare var require: any;
+let sankey = require("highcharts/modules/sankey");
+let organization = require("highcharts/modules/organization");
+sankey(Highcharts);
+organization(Highcharts);
 
 @Component({
     selector: 'app-dynamic-org-chart',
@@ -7,6 +12,9 @@ import * as Highcharts from 'highcharts';
     styleUrls: ['./dynamic-org-chart.component.css']
 })
 export class DynamicOrgChartComponent implements OnInit {
+
+    @Input() EmpOrgData: any = {};
+	@Input() EmpProcessData: any = [];
 
     // Highcharts: typeof Highcharts = Highcharts;
     // chartOptions: Highcharts.Options = {
@@ -27,42 +35,85 @@ export class DynamicOrgChartComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        this.getOrgChart();
+        console.log('Get employee organization data isss:', this.EmpOrgData, this.EmpProcessData);
+        this.BindEmpOrgData();
+        // this.getOrgChart();
     }
 
-    getOrgChart() {
-        console.log('Highcharts isss:', this.highcharts);
+    BindEmpOrgData() {
+        let seriesData: any = [];
+        for (let item of this.EmpProcessData) {
+            seriesData.push([0, item['approvedUserId']]);
+        }
+        for (let item of this.EmpProcessData) {
+            if (item['approvedRoleName'] == 'pm') {
+                seriesData.push([item['approvedUserId'], 'rm,pm']);
+                seriesData.push([item['approvedUserId'], 'pm']);
+            } else {
+                seriesData.push([item['approvedUserId'], item['approvedRoleName']]);
+            }
+        }
+        // console.log('Final seriesData isss:', seriesData);
+
+        let seriesNodesRowOne: any = [
+            {
+                id: 0,
+                title: "SDE-1",
+                name: this.EmpOrgData['employeeInfo']['empFullName'],
+                image: this.EmpOrgData['employeeInfo']['empImage']
+            }
+        ];
+        for (let item of this.EmpProcessData) {
+            seriesNodesRowOne.push({
+                id: item['approvedUserId'],
+                title: item['approvedRoleName'] == 'hr' ? 'HR Manager' : item['approvedRoleName'] == 'rm' ? 'Reporting Manager' : item['approvedRoleName'] == 'pm' 
+                ? 'Product Architect' : item['approvedRoleName'] == 'ceo' ? 'CEO' : item['approvedRoleName'] == 'director' ? 'Director' : '',
+                name: item['approvedFullName'],
+                column: 1,
+                image: item['approvedImage'],
+                layout: "hanging"
+            });
+        }
+        // console.log('Final seriesNodesRowOne isss:', seriesNodesRowOne);
+
+        this.getOrgChart(seriesData, seriesNodesRowOne);
+    }
+
+    getOrgChart(seriesData?: any, seriesNodesRowOne?: any) {
+        // console.log('Highcharts isss:', this.highcharts);
+        // CodePen.io - Organization Chart Demo code
         this.highcharts.chart("container", {
             chart: {
+                type: "organization",
                 height: 600,
                 inverted: true
             },
 
             title: {
-                text: "Highcharts Org Chart"
+                text: "Employee Onboarding Process"
             },
 
             series: [
                 {
                     type: "organization",
-                    name: "Highsoft",
+                    name: "H R M S",
                     keys: ["from", "to"],
-                    data: [
-                        [26, 35],
-                        [26, 48],
-                        [26, 11],
-                        [26, 50],
-                        [48, "Product"],
-                        [48, "Web"],
-                        [11, "Sales"],
-                        [11, "vor"],
-                        [50, "Market"],
-                        ["Web", 49]
-                    ],
+                    // data: [
+                    //     [0, 1],
+                    //     [0, 2],
+                    //     [0, 3],
+                    //     [0, 4],
+                    //     [1, "HR"],
+                    //     [2, "RM"],
+                    //     [3, "RM,PM"],
+                    //     [3, "PM"],
+                    //     [4, "CEO"]
+                    // ],
+                    data: seriesData,
                     levels: [
                         {
                             level: 0,
-                            color: "silver",
+                            color: "#dee2ec",
                             dataLabels: {
                                 color: "black"
                             },
@@ -86,79 +137,79 @@ export class DynamicOrgChartComponent implements OnInit {
                         }
                     ],
                     nodes: [
+                        // {
+                        //     id: 0,
+                        //     title: "Managing Partner",
+                        //     name: "John Bell",
+                        //     image:
+                        //         "http://www.frgrisk.com/wp-content/uploads/2017/12/JohnBell.jpg"
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title: "Partner - Sales",
+                        //     name: "Mike Forno",
+                        //     column: 1,
+                        //     image:
+                        //         "http://www.frgrisk.com/wp-content/uploads/2017/12/MichaelForno.jpg",
+                        //     layout: "hanging"
+                        // },
+                        // {
+                        //     id: 2,
+                        //     title: "Partner - Solution Services",
+                        //     name: "Tim Weeks",
+                        //     column: 1,
+                        //     image:
+                        //         "http://www.frgrisk.com/wp-content/uploads/2017/12/TimWeeks.jpg",
+                        //     layout: "hanging"
+                        // },
+                        // {
+                        //     id: 3,
+                        //     title: "Technology Director",
+                        //     name: "Chuck Beck",
+                        //     column: 1,
+                        //     image:
+                        //         "http://www.frgrisk.com/wp-content/uploads/2017/12/ChuckBeck.jpg",
+                        //     layout: "hanging"
+                        // },
+                        // {
+                        //     id: 4,
+                        //     title: "Operations Manager",
+                        //     name: "Wendy Cutler",
+                        //     column: 1,
+                        //     image:
+                        //         "http://www.frgrisk.com/wp-content/uploads/2017/12/WendyCutler-1.jpg",
+                        //     layout: "hanging"
+                        // },
+                        ...seriesNodesRowOne,
                         {
-                            id: 26,
-                            title: "Managing Partner",
-                            name: "John Bell",
-                            image:
-                                "http://www.frgrisk.com/wp-content/uploads/2017/12/JohnBell.jpg"
-                        },
-                        {
-                            id: 35,
-                            title: "Partner - Sales",
-                            name: "Mike Forno",
-                            column: 1,
-                            image:
-                                "http://www.frgrisk.com/wp-content/uploads/2017/12/MichaelForno.jpg",
-                            layout: "hanging"
-                        },
-                        {
-                            id: 48,
-                            title: "Partner - Solution Services",
-                            name: "Tim Weeks",
-                            column: 1,
-                            image:
-                                "http://www.frgrisk.com/wp-content/uploads/2017/12/TimWeeks.jpg",
-                            layout: "hanging"
-                        },
-                        {
-                            id: 11,
-                            title: "Technology Director",
-                            name: "Chuck Beck",
-                            column: 1,
-                            image:
-                                "http://www.frgrisk.com/wp-content/uploads/2017/12/ChuckBeck.jpg",
-                            layout: "hanging"
-                        },
-                        {
-                            id: 50,
-                            title: "Operations Manager",
-                            name: "Wendy Cutler",
-                            column: 1,
-                            image:
-                                "http://www.frgrisk.com/wp-content/uploads/2017/12/WendyCutler-1.jpg",
-                            layout: "hanging"
-                        },
-                        {
-                            id: "Product",
-                            name: "Data Team",
+                            id: "hr",
+                            name: "HR Department",
                             column: 2
                         },
                         {
-                            id: "Web",
-                            name: "Solution Services",
+                            id: "rm",
+                            name: "Technical Department",
                             column: 2
                         },
                         {
-                            id: "Sales",
-                            name: "IT Department",
+                            id: "rm,pm",
+                            name: "Technical Lead",
                             column: 2
                         },
                         {
-                            id: "vor",
-                            name: "VoR Platform",
+                            id: "pm",
+                            name: "Architect",
                             column: 2
                         },
                         {
-                            id: "Market",
+                            id: "ceo",
                             name: "Operations Team",
                             column: 2
                         },
                         {
-                            id: 49,
-                            name: "Valerie Cooper",
-                            column: 3,
-                            layout: "hanging"
+                            id: "director",
+                            name: "Board Member",
+                            column: 2
                         }
                     ],
                     colorByPoint: false,

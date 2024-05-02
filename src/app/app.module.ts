@@ -15,6 +15,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +28,8 @@ import { AdminFormsService } from './api-services/admin-forms.service';
 import { AdminEmployeesService } from './api-services/admin-employees.service';
 import { EmojiDirective } from './api-services/emoji.directive';
 import { NotFoundPageComponent } from './admin/pages/not-found-page/not-found-page.component';
-import { HighchartsChartModule } from 'highcharts-angular';
+import { UserHierarchyComponent } from './admin/pages/user-hierarchy/user-hierarchy.component';
+import { DynamicOrgChartComponent } from './admin/pages/dynamic-org-chart/dynamic-org-chart.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -37,6 +39,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	declarations: [
 		AppComponent,
 		NotFoundPageComponent,
+		UserHierarchyComponent,
+		DynamicOrgChartComponent,
 		EmojiDirective
 	],
 	imports: [

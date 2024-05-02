@@ -7,15 +7,16 @@ import * as _ from 'underscore';
 import { AuthAdminService } from 'src/app/api-services/auth-admin.service';
 import { AdminEmployeesService } from 'src/app/api-services/admin-employees.service';
 import { SharedService } from 'src/app/api-services/shared.service';
+import { AdminSidebarService } from 'src/app/api-services/admin-sidebar.service';
 declare var $: any;
 
 @Component({
-    selector: 'app-not-found-page',
-    templateUrl: './not-found-page.component.html',
-    styleUrls: ['./not-found-page.component.css']
+    selector: 'app-view-employee',
+    templateUrl: './view-employee.component.html',
+    styleUrls: ['./view-employee.component.css']
 })
-export class NotFoundPageComponent implements OnInit {
-    
+export class ViewEmployeeComponent implements OnInit {
+
     public spinner: any = false;
     public empData: any = {};
     public employeeInfo: any = {};
@@ -28,6 +29,7 @@ export class NotFoundPageComponent implements OnInit {
     public bankInfo: any = {};
 
     constructor(
+        public adminSidebarService: AdminSidebarService,
 		public router: Router,
         public route: ActivatedRoute,
         public authAdminService: AuthAdminService,
@@ -37,14 +39,21 @@ export class NotFoundPageComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getEmployeeDataByIdDetails();
+        this.route.params.subscribe((data?: any) => {
+            console.log('params data isss:', data);
+            this.getEmployeeDataByIdDetails(data['empId']);
+        });
     }
 
-    getEmployeeDataByIdDetails() {
+    getSideBarState() {
+        return this.adminSidebarService.getSidebarState();
+    }
+
+    getEmployeeDataByIdDetails(empId?: any) {
         this.spinner = true;
 
 		const employeePayload = {
-			empId: 'EMP008'
+			empId: empId
 		}
 		console.log('Get employee data by id employeePayload isss:', employeePayload);
 
@@ -56,7 +65,7 @@ export class NotFoundPageComponent implements OnInit {
 				// this.empBankInfo = response.data['empBankInfo'] || {};
 				// this.empOnboardingInfo = response.data['empOnboardingInfo'] || {};
                 this.empData = response.data;
-                this.getEmployeeTabsData(3);
+                this.getEmployeeTabsData(0);
                 // this.employeeInfo = this.setNoDataToEmployee(response.data['employeeInfo']);
 				// this.empBasicInfo = this.setNoDataToEmployee(response.data['empBasicInfo']);
 				// this.empBankInfo = this.setNoDataToEmployee(response.data['empBankInfo']);

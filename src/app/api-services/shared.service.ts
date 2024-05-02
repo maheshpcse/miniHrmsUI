@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import * as _ from 'underscore';
 
 @Injectable({
     providedIn: 'root'
@@ -67,14 +68,20 @@ export class SharedService {
 		}
 		// console.log('allPages isss:', allPages);
 
-		let chunksData: any = [];
+		let chunksData: any = _.chunk(allPages, Number(this.pageLimit)) || [];
 		this.pageSet = {};
-		for (let i = 0; i <= Number(this.pageSetCount); i += Number(this.pageLimit)) {
-			let chunk: any = allPages.slice(i, i + Number(this.pageLimit));
-			chunksData.push(chunk);
-            this.pageSet[i] = chunk;
+		let id: any = 0;
+		for (let chunk of chunksData) {
+			this.pageSet[id * chunk.length] = chunk;
+			id = id + 1;
 		}
-		// chunksData = _.chunk(allPages, Number(this.pageLimit));
+		// With this for loop, empty array is pushing into last pageSet
+		// for (let i = 0; i <= Number(this.pageSetCount); i += Number(this.pageLimit)) {
+		// 	let chunk: any = allPages.slice(i, i + Number(this.pageLimit));
+		// 	chunksData.push(chunk);
+        //     this.pageSet[i] = chunk;
+		// }
+		// End
 		// console.log('chunksData isss:', chunksData);
         // console.log('pageSet isss:', this.pageSet);
 
@@ -84,7 +91,7 @@ export class SharedService {
 		}
 		this.pages.push('>');
 		this.pages.push('>>');
-		// console.log('this.pages isss:', this.pages);
+		console.log('this.pages isss:', this.pages);
 		// if (page == -1) {
 		// 	this.setAllPages(-1);
 		// }
@@ -101,6 +108,7 @@ export class SharedService {
         if (['<<', '<', '>', '>>', -1].includes(page)) {
             if (page == '>' || page == -1) {
 				console.log('inside if page isss:', page, this.pageCount);
+				// if (page == -1) this.pageCount = -1;
 				this.pageCount += 1;
 				this.currentPage = this.pageCount + 1;
 				if (this.pageSet.hasOwnProperty(this.pageCount)) {
@@ -118,7 +126,7 @@ export class SharedService {
 						this.pages.push('>');
 						this.pages.push('>>');
 					}
-				} 
+				}
 				// else {
 				// 	this.currentPage = this.pageCount + 1;
 				// }

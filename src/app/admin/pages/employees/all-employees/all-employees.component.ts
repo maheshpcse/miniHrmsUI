@@ -144,7 +144,8 @@ export class AllEmployeesComponent implements OnInit {
 		let rowItem: any = item ? Object.assign(item, {}) : {};
 		if (type == 'view') {
 			this.viewItem = rowItem;
-			$("#viewItemModal").modal('show');
+			// $("#viewItemModal").modal('show');
+			this.router.navigate(['/admin/employees/view-employee',item.empId]);
 		} else if (type == 'edit') {
 			this.pageType = 'form';
 			this.userId = rowItem['userId'];

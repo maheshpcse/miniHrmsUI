@@ -7,12 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class UserHierarchyComponent implements OnInit {
 
-	@Input() EmpOrgData: any = [];
+	@Input() EmpOrgData: any = {};
+	@Input() EmpProcessData: any = [];
 
 	constructor() { }
 
 	ngOnInit(): void {
-		console.log('Get employee organization data isss:', this.EmpOrgData);
+		console.log('Get employee organization data isss:', this.EmpOrgData, this.EmpProcessData);
 	}
 
 }

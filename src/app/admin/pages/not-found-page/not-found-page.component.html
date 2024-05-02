@@ -517,7 +517,8 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <app-user-hierarchy [EmpOrgData]="empOnboardingInfo" *ngIf="!spinner"></app-user-hierarchy>
+                                    <!-- <app-user-hierarchy [EmpOrgData]="empOnboardingInfo" [EmpProcessData]="empProcessInfo" *ngIf="!spinner"></app-user-hierarchy> -->
+                                    <app-dynamic-org-chart [EmpOrgData]="empOnboardingInfo" [EmpProcessData]="empProcessInfo" *ngIf="!spinner"></app-dynamic-org-chart>
                                 </div>
                             </div>
                         </div>
