@@ -1,0 +1,184 @@
+<div class="auth-layout" [class.auth-signup]="mode === 'signup'">
+  <section class="auth-form-side">
+    <a routerLink="/admin/login" class="brand"
+      ><span class="brand-mark">m<span>·</span></span
+      ><span
+        >mini<span class="brand-light">hrms</span
+        ><small>HUMAN RESOURCE MANAGEMENT</small></span
+      ></a
+    >
+    <div class="auth-form-content">
+      <span class="eyebrow"
+        ><span class="small-dot"></span> PEOPLE FIRST. ALWAYS.</span
+      >
+      <h1>{{ title }}</h1>
+      <p class="lead-copy">{{ description }}</p>
+      <div *ngIf="error" class="notice error" role="alert">{{ error }}</div>
+      <div *ngIf="message" class="notice success" role="status">
+        <ui-icon name="check"></ui-icon>{{ message }}
+      </div>
+      <form
+        #authForm="ngForm"
+        (ngSubmit)="submit(authForm)"
+        *ngIf="step === 1"
+        novalidate
+      >
+        <div class="form-grid" *ngIf="mode === 'signup'">
+          <label
+            >First name<input
+              name="firstName"
+              [(ngModel)]="name"
+              required
+              maxlength="50"
+              autocomplete="given-name"
+              placeholder="Your first name" /></label
+          ><label
+            >Last name<input
+              name="lastName"
+              [(ngModel)]="lastName"
+              maxlength="50"
+              autocomplete="family-name"
+              placeholder="Your last name"
+          /></label>
+        </div>
+        <label *ngIf="mode === 'signup' || mode === 'forgot'"
+          >Work email<input
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            email
+            required
+            maxlength="100"
+            autocomplete="email"
+            placeholder="you@company.com"
+        /></label>
+        <label *ngIf="mode === 'login' || mode === 'signup'"
+          >{{ mode === "login" ? "Username or employee ID" : "Username"
+          }}<input
+            name="username"
+            [(ngModel)]="username"
+            required
+            maxlength="50"
+            autocomplete="username"
+            placeholder="Enter your username"
+        /></label>
+        <label *ngIf="mode === 'reset'"
+          >Verification code<input
+            name="code"
+            [(ngModel)]="code"
+            required
+            pattern="[0-9]{6}"
+            maxlength="6"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            placeholder="6-digit code from your email"
+          /><small
+            >Codes expire after 10 minutes.
+            <a routerLink="/admin/forgot-password">Request a new code</a></small
+          ></label
+        >
+        <label *ngIf="mode !== 'forgot'"
+          >{{ mode === "reset" ? "New password" : "Password"
+          }}<span class="password-input"
+            ><input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="password"
+              required
+              [minlength]="mode === 'login' ? 1 : 10"
+              maxlength="72"
+              [attr.autocomplete]="
+                mode === 'login' ? 'current-password' : 'new-password'
+              "
+              placeholder="Enter your password" /><button
+              type="button"
+              class="icon-button"
+              (click)="showPassword = !showPassword"
+              [attr.aria-label]="
+                showPassword ? 'Hide password' : 'Show password'
+              "
+            >
+              <ui-icon name="eye"></ui-icon></button></span
+          ><small *ngIf="mode !== 'login'"
+            >Use 10–72 characters with a mix of letters, numbers and
+            symbols.</small
+          ></label
+        >
+        <label *ngIf="mode === 'signup' || mode === 'reset'"
+          >Confirm password<input
+            type="password"
+            name="confirmation"
+            [(ngModel)]="confirmation"
+            required
+            minlength="10"
+            maxlength="72"
+            autocomplete="new-password"
+            placeholder="Enter your password again"
+        /></label>
+        <div class="form-between" *ngIf="mode === 'login'">
+          <span class="muted"
+            ><ui-icon name="shield"></ui-icon> Your session stays private</span
+          ><a routerLink="/admin/forgot-password">Forgot password?</a>
+        </div>
+        <button class="button primary full" [disabled]="busy" type="submit">
+          <span class="loader light" *ngIf="busy"></span
+          >{{
+            busy
+              ? "Please wait…"
+              : mode === "login"
+              ? "Sign in to your workspace"
+              : mode === "signup"
+              ? "Create my account"
+              : mode === "forgot"
+              ? "Send verification code"
+              : "Update password"
+          }}<ui-icon name="arrow" *ngIf="!busy"></ui-icon>
+        </button>
+      </form>
+      <p class="auth-switch" *ngIf="mode === 'login'">
+        New around here?
+        <a routerLink="/admin/signup">Create an account <span>↗</span></a>
+      </p>
+      <p class="auth-switch" *ngIf="mode !== 'login'">
+        <a routerLink="/admin/login">← Back to sign in</a>
+      </p>
+      <div class="auth-trust">
+        <ui-icon name="shield"></ui-icon
+        ><span>A secure space for your people and their possibilities.</span>
+      </div>
+    </div>
+    <p class="auth-bottom">Built around people. Designed for better work.</p>
+  </section>
+  <section class="auth-art-side" aria-label="A welcoming team workspace">
+    <div class="auth-orbit orbit-one"></div>
+    <div class="auth-orbit orbit-two"></div>
+    <div class="art-topline">
+      <span class="pill">A WORKSPACE THAT FEELS LIKE YOU</span
+      ><span class="tiny-star">✳</span>
+    </div>
+    <div class="auth-art-heading">
+      <h2>Good people.<br />Great things.</h2>
+      <p>One connected space to work,<br />grow, and bring out your best.</p>
+    </div>
+    <img
+      src="assets/art/people-at-work.png"
+      alt="Three smiling colleagues collaborating around a laptop"
+      class="auth-people"
+      fetchpriority="high"
+    />
+    <div class="floating-note note-one">
+      <span class="note-icon"><ui-icon name="heart"></ui-icon></span>
+      <div>
+        <strong>People, at the heart.</strong
+        ><small>A little more connected.</small>
+      </div>
+    </div>
+    <div class="floating-note note-two">
+      <span class="small-dot"></span> Room for everyone to grow
+      <ui-icon name="arrow"></ui-icon>
+    </div>
+    <div class="art-footer">
+      <span>LESS FRICTION. MORE HUMAN.</span><span>01 / 03</span>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Find a page",
+    "styles": {
+      "border": "0px",
+      "shadow": "none",
+      "outline": "none"
+    },
+    "focus": "2px"
+  },
+  {
+    "name": "Search records",
+    "styles": {
+      "border": "0px",
+      "shadow": "none",
+      "outline": "none"
+    },
+    "focus": "2px"
+  }
+]

@@ -72,7 +72,7 @@ export class SharedService {
 		this.pageSet = {};
 		let id: any = 0;
 		for (let chunk of chunksData) {
-			this.pageSet[id * chunk.length] = chunk;
+			this.pageSet[id * Number(this.pageLimit)] = chunk;
 			id = id + 1;
 		}
 		// With this for loop, empty array is pushing into last pageSet
@@ -91,7 +91,7 @@ export class SharedService {
 		}
 		this.pages.push('>');
 		this.pages.push('>>');
-		console.log('this.pages isss:', this.pages);
+		// console.log('this.pages isss:', this.pages);
 		// if (page == -1) {
 		// 	this.setAllPages(-1);
 		// }
@@ -108,13 +108,16 @@ export class SharedService {
         if (['<<', '<', '>', '>>', -1].includes(page)) {
             if (page == '>' || page == -1) {
 				console.log('inside if page isss:', page, this.pageCount);
-				// if (page == -1) this.pageCount = -1;
+				if (page == -1) this.pageCount = -1;
 				this.pageCount += 1;
 				this.currentPage = this.pageCount + 1;
 				if (this.pageSet.hasOwnProperty(this.pageCount)) {
 					this.pages.pop();
 					this.pages.pop();
-					for (let i = 2; i < this.pages.length; i += 1) {
+					// for (let i = 2; i < this.pages.length; i += 1) {
+					// 	this.pages.pop();
+					// }
+					for (let i = this.pages.length; i > 2; i -= 1) {
 						this.pages.pop();
 					}
 					if (this.pageSet[this.pageCount]) {
@@ -136,7 +139,10 @@ export class SharedService {
 				if (this.pageSet.hasOwnProperty(this.currentPage)) {
 					this.pages.pop();
 					this.pages.pop();
-					for (let i = 2; i < this.pages.length; i += 1) {
+					// for (let i = 2; i < this.pages.length; i += 1) {
+					// 	this.pages.pop();
+					// }
+					for (let i = this.pages.length; i > 2; i -= 1) {
 						this.pages.pop();
 					}
 					if (this.pageSet[this.currentPage - Number(this.pageLimit)]) {
@@ -157,7 +163,10 @@ export class SharedService {
 				this.currentPage = 1;
 				this.pages.pop();
 				this.pages.pop();
-				for (let i = 2; i < this.pages.length; i += 1) {
+				// for (let i = 2; i < this.pages.length; i += 1) {
+				// 	this.pages.pop();
+				// }
+				for (let i = this.pages.length; i > 2; i -= 1) {
 					this.pages.pop();
 				}
 				let id: any = 2;
@@ -172,7 +181,7 @@ export class SharedService {
 				this.currentPage = this.pageSetCount;
 				this.pages.pop();
 				this.pages.pop();
-				for (let i = 2; i < this.pages.length; i += 1) {
+				for (let i = this.pages.length; i > 2; i -= 1) {
 					this.pages.pop();
 				}
 				let lastPageArr: any = Object.keys(this.pageSet);
@@ -188,6 +197,7 @@ export class SharedService {
             this.pageCount = page - 1;
             this.currentPage = page;
         }
+		// console.log('pages isss:', this.pages);
         // console.log('pageCount isss:', this.pageCount);
         // console.log('currentPage isss:', this.currentPage);
 		return {

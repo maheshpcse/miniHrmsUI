@@ -1,79 +1,12 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
-import { ToastrModule } from 'ng6-toastr-notifications';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgOtpInputModule } from 'ng-otp-input';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { HighchartsChartModule } from 'highcharts-angular';
-
+import { FormsModule } from '@angular/forms';
+import { UiModule } from './ui/ui.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuardService } from './api-services/auth-guard.service';
-import { AuthAdminService } from './api-services/auth-admin.service';
 import { AuthTokenInterceptorService } from './api-services/auth-token-interceptor.service';
-import { CommonService } from './api-services/common.service';
-import { SharedService } from './api-services/shared.service';
-import { AdminFormsService } from './api-services/admin-forms.service';
-import { AdminEmployeesService } from './api-services/admin-employees.service';
-import { EmojiDirective } from './api-services/emoji.directive';
 import { NotFoundPageComponent } from './admin/pages/not-found-page/not-found-page.component';
-import { UserHierarchyComponent } from './admin/pages/user-hierarchy/user-hierarchy.component';
-import { DynamicOrgChartComponent } from './admin/pages/dynamic-org-chart/dynamic-org-chart.component';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-	suppressScrollX: true
-};
-
-@NgModule({
-	declarations: [
-		AppComponent,
-		NotFoundPageComponent,
-		UserHierarchyComponent,
-		DynamicOrgChartComponent,
-		EmojiDirective
-	],
-	imports: [
-		// CommonModule,
-		// ApplicationModule,
-		BrowserModule,
-		BrowserAnimationsModule,
-		AppRoutingModule,
-		HttpClientModule,
-		FormsModule,
-		ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-		CalendarModule,
-		ToastrModule.forRoot(),
-		AngularMultiSelectModule,
-		NgMultiSelectDropDownModule.forRoot(),
-		SweetAlert2Module.forRoot(),
-    	Ng2SearchPipeModule,
-		NgOtpInputModule,
-		BsDropdownModule.forRoot(),
-    	PerfectScrollbarModule,
-		HighchartsChartModule
-	],
-	providers: [
-		AuthGuardService,
-		AuthAdminService,
-		CommonService,
-		SharedService,
-		AdminFormsService,
-		AdminEmployeesService,
-		{ provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptorService, multi: true },
-		{ provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
-	],
-	bootstrap: [AppComponent],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class AppModule { }
+@NgModule({declarations:[AppComponent,NotFoundPageComponent],imports:[BrowserModule,BrowserAnimationsModule,HttpClientModule,FormsModule,UiModule,AppRoutingModule],providers:[{provide:HTTP_INTERCEPTORS,useClass:AuthTokenInterceptorService,multi:true}],bootstrap:[AppComponent]})
+export class AppModule {}

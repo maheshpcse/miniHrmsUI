@@ -1,0 +1,333 @@
+<ng-container *ngIf="config"
+  ><div class="page-heading">
+    <div>
+      <span class="eyebrow">{{ config.eyebrow }}</span>
+      <h1>{{ config.title }}</h1>
+      <p>{{ config.description }}</p>
+    </div>
+    <div class="heading-actions">
+      <button
+        class="button secondary"
+        (click)="exportCsv()"
+        [disabled]="!rows.length"
+      >
+        <ui-icon name="arrow"></ui-icon>Export page</button
+      ><button class="button primary" *ngIf="canWrite" (click)="start()">
+        <ui-icon name="plus"></ui-icon>Add {{ config.singular }}
+      </button>
+    </div>
+  </div>
+  <div class="notice success" *ngIf="message" role="status">
+    <ui-icon name="check"></ui-icon>{{ message }}
+  </div>
+  <section class="panel" *ngIf="editing" aria-labelledby="resource-form-title">
+    <div class="panel-heading">
+      <div>
+        <span class="eyebrow">MAKE IT YOURS</span>
+        <h2 id="resource-form-title" tabindex="-1">
+          {{ model.id ? "Edit" : "Add" }} {{ config.singular }}
+        </h2>
+      </div>
+      <button
+        class="icon-button"
+        (click)="cancel()"
+        aria-label="Close form"
+        [disabled]="saving"
+      >
+        <ui-icon name="close"></ui-icon>
+      </button>
+    </div>
+    <div class="notice error" *ngIf="formError" role="alert">
+      {{ formError }}
+    </div>
+    <form #resourceForm="ngForm" (ngSubmit)="save(resourceForm)" novalidate>
+      <div class="form-grid three">
+        <label
+          *ngFor="let field of config.fields"
+          [class.span-two]="field.type === 'textarea'"
+          >{{ field.label }}
+          <span class="muted" *ngIf="!field.required">(optional)</span
+          ><input
+            *ngIf="field.type !== 'select' && field.type !== 'textarea'"
+            [type]="field.type"
+            [name]="field.key"
+            [(ngModel)]="model[field.key]"
+            [required]="field.required"
+            [attr.maxlength]="
+              field.type === 'password'
+                ? 512
+                : field.key === 'email'
+                ? 100
+                : field.key === 'permissions'
+                ? 1000
+                : 255
+            "
+            [readonly]="
+              !!model.id && (field.key === 'empId' || field.key === 'code')
+            "
+            [attr.min]="field.type === 'number' ? 0 : null"
+            [attr.max]="field.type === 'number' ? 366 : null"
+            [attr.autocomplete]="
+              field.type === 'password' ? 'new-password' : 'off'
+            "
+          /><select
+            *ngIf="field.type === 'select'"
+            [name]="field.key"
+            [(ngModel)]="model[field.key]"
+            [required]="field.required"
+          >
+            <option value="" disabled>Choose an option</option>
+            <option *ngFor="let option of field.options" [value]="option.value">
+              {{ option.label }}
+            </option></select
+          ><textarea
+            *ngIf="field.type === 'textarea'"
+            [name]="field.key"
+            [(ngModel)]="model[field.key]"
+            [required]="field.required"
+            maxlength="4000"
+            rows="3"
+          ></textarea
+          ><small *ngIf="field.key === 'encryptKey'"
+            >Leave empty when editing to retain the existing secret.</small
+          ></label
+        >
+      </div>
+      <div class="form-actions">
+        <button
+          type="button"
+          class="button secondary"
+          (click)="cancel()"
+          [disabled]="saving"
+        >
+          Cancel</button
+        ><button type="submit" class="button primary" [disabled]="saving">
+          <span class="loader light" *ngIf="saving"></span
+          >{{ saving ? "Saving…" : "Save changes"
+          }}<ui-icon name="check" *ngIf="!saving"></ui-icon>
+        </button>
+      </div>
+    </form>
+  </section>
+  <section class="panel">
+    <div class="toolbar">
+      <label class="search-field"
+        ><ui-icon name="search"></ui-icon
+        ><input
+          [(ngModel)]="query"
+          (ngModelChange)="search()"
+          placeholder="Search this directory…"
+          aria-label="Search records"
+      /></label>
+      <div class="toolbar-actions">
+        <select
+          [(ngModel)]="status"
+          (change)="filter()"
+          aria-label="Filter by status"
+          *ngIf="kind === 'employees'"
+        >
+          <option value="">All statuses</option>
+          <option value="1">Active</option>
+          <option value="2">Pending</option>
+          <option value="0">Inactive</option>
+          <option value="3">Notice period</option>
+        </select>
+        <div class="segmented" *ngIf="kind === 'employees'">
+          <button
+            (click)="view = 'table'"
+            [class.selected]="view === 'table'"
+            [attr.aria-pressed]="view === 'table'"
+            aria-label="Table view"
+          >
+            <ui-icon name="menu"></ui-icon></button
+          ><button
+            (click)="view = 'grid'"
+            [class.selected]="view === 'grid'"
+            [attr.aria-pressed]="view === 'grid'"
+            aria-label="Card view"
+          >
+            <ui-icon name="grid"></ui-icon>
+          </button>
+        </div>
+        <button
+          class="icon-button"
+          aria-label="Refresh records"
+          (click)="load()"
+          [disabled]="loading"
+        >
+          <ui-icon name="clock"></ui-icon>
+        </button>
+      </div>
+    </div>
+    <ui-state
+      [loading]="loading"
+      [error]="error"
+      [empty]="!rows.length"
+      title="Nothing here just yet"
+      [description]="
+        query
+          ? 'Try a different search or clear your filters.'
+          : 'Your records will appear here as your workspace grows.'
+      "
+      (retry)="load()"
+    ></ui-state>
+    <div *ngIf="!loading && !error && rows.length">
+      <div
+        class="table-scroll"
+        *ngIf="view === 'table' || kind !== 'employees'"
+      >
+        <table>
+          <thead>
+            <tr>
+              <th *ngIf="kind !== 'login-history'">
+                <button
+                  (click)="order(kind === 'employees' ? 'firstName' : 'name')"
+                >
+                  {{ kind === "employees" ? "Employee" : "Name" }} ↕
+                </button>
+              </th>
+              <th *ngFor="let column of config.columns">
+                <button (click)="order(column[0])">{{ column[1] }} ↕</button>
+              </th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rows">
+              <td *ngIf="kind !== 'login-history'">
+                <div class="person-cell">
+                  <span class="avatar small" *ngIf="kind === 'employees'">{{
+                    initials(row)
+                  }}</span>
+                  <div>
+                    <strong>{{
+                      kind === "employees"
+                        ? row.firstName + " " + (row.lastName || "")
+                        : row.name ||
+                          row.attendanceName ||
+                          "Configuration " + row.id
+                    }}</strong
+                    ><small *ngIf="kind === 'employees'"
+                      >@{{ row.userName }}</small
+                    >
+                  </div>
+                </div>
+              </td>
+              <td *ngFor="let column of config.columns">
+                <span
+                  *ngIf="column[0] === 'status'"
+                  class="tag"
+                  [ngClass]="display(row, column[0]).toLowerCase()"
+                  >{{ display(row, column[0]) }}</span
+                ><span *ngIf="column[0] !== 'status'">{{
+                  display(row, column[0])
+                }}</span>
+              </td>
+              <td>
+                <div class="table-actions">
+                  <a
+                    class="icon-button"
+                    *ngIf="kind === 'employees'"
+                    [routerLink]="['/admin/employees/view-employee', row.empId]"
+                    [attr.aria-label]="'View ' + row.firstName"
+                    ><ui-icon name="arrow"></ui-icon></a
+                  ><button
+                    class="icon-button"
+                    *ngIf="canWrite && kind !== 'requests'"
+                    (click)="start(row)"
+                    aria-label="Edit record"
+                  >
+                    <ui-icon name="edit"></ui-icon></button
+                  ><button
+                    class="icon-button"
+                    *ngIf="kind !== 'employees'"
+                    (click)="selected = row"
+                    aria-label="View record details"
+                  >
+                    <ui-icon name="eye"></ui-icon></button
+                  ><ng-container
+                    *ngIf="
+                      kind === 'requests' &&
+                      row.status === 'pending' &&
+                      auth.allowed('requests:review')
+                    "
+                    ><button
+                      class="button small secondary"
+                      (click)="review(row, 'approved')"
+                      [disabled]="saving"
+                    >
+                      Approve</button
+                    ><button
+                      class="button small danger"
+                      (click)="review(row, 'rejected')"
+                      [disabled]="saving"
+                    >
+                      Decline
+                    </button></ng-container
+                  >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="person-grid" *ngIf="view === 'grid' && kind === 'employees'">
+        <article *ngFor="let row of rows" class="person-card">
+          <div class="card-top">
+            <span class="avatar">{{ initials(row) }}</span
+            ><span
+              class="tag"
+              [ngClass]="display(row, 'status').toLowerCase()"
+              >{{ display(row, "status") }}</span
+            >
+          </div>
+          <h3>{{ row.firstName }} {{ row.lastName }}</h3>
+          <span class="muted">{{ row.roleName }}</span>
+          <p>{{ row.email }}</p>
+          <a
+            [routerLink]="['/admin/employees/view-employee', row.empId]"
+            class="button secondary small"
+            >View profile <ui-icon name="arrow"></ui-icon
+          ></a>
+        </article>
+      </div>
+      <div class="pagination">
+        <span>{{ count }} records · Page {{ page }} of {{ lastPage }}</span>
+        <div>
+          <button
+            class="button secondary"
+            (click)="changePage(page - 1)"
+            [disabled]="page <= 1"
+          >
+            Previous</button
+          ><span>{{ page }}</span
+          ><button
+            class="button secondary"
+            (click)="changePage(page + 1)"
+            [disabled]="page >= lastPage"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section *ngIf="selected" class="panel" aria-label="Record details">
+    <div class="panel-heading">
+      <h2>{{ selected.name || "Record details" }}</h2>
+      <button
+        class="icon-button"
+        (click)="selected = null"
+        aria-label="Close details"
+      >
+        <ui-icon name="close"></ui-icon>
+      </button>
+    </div>
+    <div class="detail-grid">
+      <dl *ngFor="let item of selected | keyvalue">
+        <dt>{{ item.key }}</dt>
+        <dd>{{ item.value === null ? "—" : item.value }}</dd>
+      </dl>
+    </div>
+  </section></ng-container
+>

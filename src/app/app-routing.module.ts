@@ -1,7 +1,7 @@
+import { environment } from '../environments/environment';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundPageComponent } from './admin/pages/not-found-page/not-found-page.component';
-import { DynamicOrgChartComponent } from './admin/pages/dynamic-org-chart/dynamic-org-chart.component';
 
 const routes: Routes = [
 	{
@@ -21,7 +21,7 @@ const routes: Routes = [
 	{
 		path: 'user-hierarchy',
 		// component: UserHierarchyComponent
-		component: DynamicOrgChartComponent
+		redirectTo: '/admin/dashboard', pathMatch: 'full'
 	},
 
 	{
@@ -31,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }

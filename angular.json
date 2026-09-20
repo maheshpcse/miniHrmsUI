@@ -29,19 +29,9 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/primeng/resources/themes/nova/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeicons/primeicons.css",
-              "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "node_modules/angular2-multiselect-dropdown/themes/default.theme.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -77,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "miniHrmsUI:build"
+            "browserTarget": "miniHrmsUI:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -134,6 +125,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "miniHrmsUI"
 }

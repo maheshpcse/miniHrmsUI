@@ -6,6 +6,7 @@ import { serverIP } from '../assets/env';
 
 export const environment = {
   production: false,
+  useHash: false,
   apiUrl: serverIP.apiUrl
 };
 

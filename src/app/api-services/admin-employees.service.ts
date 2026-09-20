@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { APIURL } from './api-url.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import * as moment from 'moment';
 
 @Injectable({
@@ -12,6 +12,9 @@ export class AdminEmployeesService {
 
     public role: any = sessionStorage.getItem('role');
     bSubject: any = new BehaviorSubject('default');
+
+    private userDataSource: BehaviorSubject<any> = new BehaviorSubject({});
+    // userData = this.userDataSource.asObservable();
 
 	constructor(
 		private http: HttpClient,
@@ -37,5 +40,27 @@ export class AdminEmployeesService {
     
     getLoginHistoryData(data?: any) {
         return this.http.post<any>(APIURL.GET_LOGIN_HISTORY_DATA, data);
+    }
+
+    // Demo service call
+    GetPortfolioBreakUpDetailsCount() {
+
+        return Observable.create((observer: Observer<any>) => {
+            setTimeout(() => {
+                observer.next({
+                    "status": true,
+                    "data": { records_count: 1236 },
+                    "message": ""
+                });
+                observer.complete();
+            }, 10);
+        });
+
+        // this.userDataSource.next({
+        //     "status": true,                   
+        //     "data": { records_count: 1236 },
+        //     "message": ""
+        // });
+        // return this.userDataSource.asObservable();
     }
 }

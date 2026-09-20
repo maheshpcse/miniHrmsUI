@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng --port 7200",
-    "start": "ng serve --port 7200",
-    "build": "ng build",
+    "start": "npx --yes --package=node@12.22.12 -- node node_modules/@angular/cli/bin/ng serve --port 7200",
+    "build": "npx --yes --package=node@12.22.12 -- node node_modules/@angular/cli/bin/ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:pages": "npx --yes --package=node@12.22.12 -- node scripts/build-pages.js"
   },
   "private": true,
   "dependencies": {

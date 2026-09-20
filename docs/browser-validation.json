@@ -1,0 +1,153 @@
+{
+  "checks": 27,
+  "errors": [],
+  "failures": [],
+  "results": [
+    {
+      "route": "/admin/employees/all-employees",
+      "alert": 0,
+      "overflow": false,
+      "title": "People directory"
+    },
+    {
+      "route": "/admin/employees/view-employee/TEST002",
+      "alert": 0,
+      "overflow": false,
+      "title": "Employee profile"
+    },
+    {
+      "route": "/admin/employees/login-history",
+      "alert": 0,
+      "overflow": false,
+      "title": "Login activity"
+    },
+    {
+      "route": "/admin/forms/menus",
+      "alert": 0,
+      "overflow": false,
+      "title": "Menu directory"
+    },
+    {
+      "route": "/admin/forms/roles",
+      "alert": 0,
+      "overflow": false,
+      "title": "Roles"
+    },
+    {
+      "route": "/admin/forms/permissions",
+      "alert": 0,
+      "overflow": false,
+      "title": "Permissions"
+    },
+    {
+      "route": "/admin/forms/attendance-types",
+      "alert": 0,
+      "overflow": false,
+      "title": "Attendance types"
+    },
+    {
+      "route": "/admin/forms/leave-types",
+      "alert": 0,
+      "overflow": false,
+      "title": "Leave types"
+    },
+    {
+      "route": "/admin/forms/login-encrypt-decrypt",
+      "alert": 0,
+      "overflow": false,
+      "title": "Login encryption"
+    },
+    {
+      "route": "/admin/requests",
+      "alert": 0,
+      "overflow": false,
+      "title": "Requests"
+    },
+    {
+      "route": "/admin/notifications",
+      "alert": 0,
+      "overflow": false,
+      "title": "Notification center"
+    },
+    {
+      "route": "/admin/dashboard",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/employees/all-employees",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/employees/view-employee/TEST002",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/employees/login-history",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forms/menus",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forms/roles",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forms/permissions",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forms/attendance-types",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forms/leave-types",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forms/login-encrypt-decrypt",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/requests",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/notifications",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/login",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/signup",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/forgot-password",
+      "mobile": true,
+      "overflow": false
+    },
+    {
+      "route": "/admin/reset-password",
+      "mobile": true,
+      "overflow": false
+    }
+  ]
+}
