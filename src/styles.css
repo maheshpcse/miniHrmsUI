@@ -36,7 +36,7 @@
 }
 html {
   scroll-behavior: smooth;
-  scrollbar-color: #a7b9b1 var(--page);
+  scrollbar-color: #b5b5ce var(--page);
   scrollbar-width: thin;
 }
 body {
@@ -84,7 +84,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #176b61;
+  outline: 3px solid #1400c3;
   outline-offset: 3px;
 }
 h1,
@@ -116,7 +116,7 @@ img {
   max-width: 100%;
 }
 ::selection {
-  background: #d7eae3;
+  background: #e3dfff;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -126,7 +126,7 @@ img {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #a7b9b1;
+  background: #b5b5ce;
   border-radius: 20px;
 }
 input,
@@ -205,10 +205,10 @@ textarea {
 .button.primary {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 5px 12px #176b6118;
+  box-shadow: 0 5px 12px #1400c318;
 }
 .button.primary:hover:not(:disabled) {
-  background: #10554d;
+  background: #10009b;
   transform: translateY(-1px);
 }
 .button.secondary {
@@ -217,7 +217,7 @@ textarea {
   border-color: var(--line);
 }
 .button.secondary:hover {
-  border-color: #b7ccc4;
+  border-color: #c4bff0;
   background: var(--primary-soft);
 }
 .button.ghost {
@@ -426,7 +426,7 @@ textarea {
 .nav-group a.active {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 4px 10px #176b6116;
+  box-shadow: 0 4px 10px #1400c316;
 }
 .active-dot {
   display: none;
@@ -981,7 +981,7 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px #176b6110;
+  box-shadow: 0 0 0 3px #1400c310;
   outline: none;
 }
 .ng-invalid.ng-touched {
@@ -1404,7 +1404,7 @@ label small {
   left: 40px;
   width: 10px;
   height: 10px;
-  background: #176b6133;
+  background: #1400c333;
   border-radius: 50%;
 }
 .check-row {
@@ -1892,14 +1892,14 @@ fieldset {
 :root[data-theme="tech"] .button.primary:hover:not(:disabled) {
   background: #075994;
 }
-/* HR product: quiet neutral surfaces, teal actions, compact controls. */
+/* HR product: cobalt actions, orange accents and calm neutral surfaces. */
 :root,
 :root[data-theme] {
-  --primary: #176b61;
-  --primary-soft: #e8f3f0;
-  --cream: #edf3f1;
-  --orange: #176b61;
-  --sage: #eaf1ee;
+  --primary: #1400c3;
+  --primary-soft: #efedff;
+  --cream: #f8f2d8;
+  --orange: #ff4e02;
+  --sage: #fff0e8;
   --page: #f3f5f7;
   --surface: #fff;
   --ink: #22313b;
@@ -1944,7 +1944,7 @@ h4 {
   border-radius: 10px;
 }
 .brand-mark span {
-  color: #b8e0d2;
+  color: #ffb294;
 }
 .workspace-header {
   position: sticky;
@@ -1961,7 +1961,7 @@ h4 {
   box-shadow: var(--shadow);
 }
 .workspace-switch {
-  background: #f4f7f6;
+  background: #f6f5fc;
 }
 .nav-group a.active {
   background: var(--primary-soft);
@@ -1972,7 +1972,7 @@ h4 {
 }
 .button.primary:hover:not(:disabled),
 :root[data-theme] .button.primary:hover:not(:disabled) {
-  background: #10554d;
+  background: #10009b;
 }
 input,
 select,
@@ -2006,18 +2006,18 @@ a:focus-visible {
   outline-color: var(--primary);
 }
 .hero-panel {
-  background: #eaf2ef;
+  background: #f0efff;
   border-radius: 16px;
 }
 .hero-copy .eyebrow,
 .growth-card .eyebrow {
-  color: #456252;
+  color: #514777;
 }
 .hero-copy h1 {
   font-size: 34px;
 }
 .hero-copy p {
-  color: #4b6158;
+  color: #535069;
 }
 .auth-main {
   height: 100vh;
@@ -2082,7 +2082,7 @@ a:focus-visible {
   min-height: 0;
   height: 100%;
   border-radius: 16px;
-  background: #e8f0eb;
+  background: #f8f2d8;
 }
 .auth-art-heading {
   padding: 8px 32px;
@@ -2092,10 +2092,10 @@ a:focus-visible {
   letter-spacing: -1.5px;
 }
 .auth-art-heading p {
-  color: #53665a;
+  color: #625c70;
 }
 .art-footer {
-  color: #4b6158;
+  color: #535069;
 }
 .auth-signup .auth-form-content {
   padding: 10px 0;
@@ -2178,4 +2178,37 @@ a:focus-visible {
   .auth-art-side {
     display: none;
   }
+}
+/* Give routed custom elements a definite layout box rather than inline height. */
+app-root, app-portal-shell, app-auth-page {display:block}
+.auth-main {display:block;background:#fff}
+.auth-layout {height:100vh;height:100dvh;width:100%;min-height:0;align-items:stretch}
+.auth-art-side {display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;min-height:0;height:100%;background:var(--cream)}
+.auth-art-side .art-topline {padding:22px 32px 12px}
+.auth-art-side .auth-art-heading {padding:8px 32px 0}
+.auth-art-side .auth-art-heading h2 {font-size:clamp(30px,3.1vw,48px);margin-bottom:12px;color:var(--primary)}
+.auth-art-side .auth-art-heading p {margin-bottom:0;line-height:1.55}
+.auth-scene {position:relative;min-height:0;overflow:hidden;margin:8px 12px 0}
+.auth-scene .auth-people {inset:0;width:100%;height:100%;object-fit:contain;object-position:center;mask-image:none;mix-blend-mode:multiply}
+.auth-scene .note-one {top:auto;bottom:16px;left:16px;transform:none;padding:10px 12px}
+.auth-scene .note-two {bottom:16px;right:16px;transform:none;padding:10px 12px}
+.auth-art-side .art-footer {position:relative;inset:auto;padding:12px 32px 18px;gap:16px;color:#625c70}
+.note-icon {background:#fff0e8;color:#ba0001}
+.brand-mark span {color:#ffb294}
+.nav-group a.active .active-dot {background:var(--orange)}
+.auth-orbit:after {background:#ff4e0233}
+@media(max-width:1200px) {.auth-scene .note-two{display:none}}
+@media(max-height:760px) {
+ .auth-art-side .art-topline {padding:12px 24px 4px}
+ .auth-art-side .auth-art-heading {padding:4px 24px 0}
+ .auth-art-side .auth-art-heading h2 {font-size:30px;margin-bottom:6px}
+ .auth-art-side .art-footer {padding:8px 24px 12px}
+ .auth-scene .floating-note {display:none}
+}
+@media(max-width:767px) {.auth-art-side{display:none}}
+/* Blend the illustration's own backdrop into the panel without enlarging it. */
+.auth-scene .auth-people {
+ width:auto;max-width:100%;left:50%;right:auto;transform:translateX(-50%);
+ mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent),linear-gradient(to bottom,transparent,#000 9%,#000 94%,transparent);
+ mask-composite:intersect;
 }
