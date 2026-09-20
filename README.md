@@ -52,3 +52,7 @@ See [the implementation and validation report](docs/workspace-redesign.md) for p
 
 See [the GitHub Pages and Railway setup guide](docs/DEPLOYMENT.md). The Pages build uses the public Railway API URL and hash routing; it does not use the local development proxy.
 
+
+## Start the complete local application
+
+Run `npm.cmd run start:all` from this UI folder to start the sibling backend and then Angular. See [home, authentication and API fixes](docs/home-auth-api-update.md) for connection troubleshooting and validation.

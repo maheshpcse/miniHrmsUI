@@ -1,6 +1,6 @@
 <a href="#main-content" class="skip-link">Skip to content</a>
 <header class="workspace-header" *ngIf="!authMode">
-  <a routerLink="/admin/dashboard" class="brand" aria-label="MiNi HRMS home"
+  <a routerLink="/admin/dashboard" class="brand" aria-label="MiNi HRMS Overview"
     ><span class="brand-mark">m<span>·</span></span
     ><span
       >mini<span class="brand-light">hrms</span
@@ -13,13 +13,32 @@
     ><span class="muted">Your team. One workspace.</span>
   </div>
   <div class="header-actions">
+    <button
+      type="button"
+      class="icon-button desktop-nav-toggle"
+      (click)="toggleNav()"
+      [attr.aria-expanded]="!collapsed"
+      aria-controls="workspace-nav"
+      [attr.aria-label]="collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+    >
+      <ui-icon name="menu"></ui-icon>
+    </button>
     <span class="header-date">{{ today | date : "EEE, MMM d" }}</span
     ><a
-      class="icon-button"
+      class="icon-button notification-button"
       routerLink="/admin/notifications"
-      aria-label="Notifications"
-      ><ui-icon name="bell"></ui-icon></a
-    ><span class="avatar small">{{ initials }}</span
+      [attr.aria-label]="
+        'Notifications' + (unread ? ', ' + unread + ' unread' : '')
+      "
+      ><ui-icon name="bell"></ui-icon
+      ><span class="notification-count" *ngIf="unread" aria-hidden="true">{{
+        unread > 99 ? "99+" : unread
+      }}</span></a
+    ><a
+      routerLink="/admin/profile"
+      class="avatar small"
+      aria-label="My profile"
+      >{{ initials }}</a
     ><button
       class="icon-button mobile-menu"
       (click)="mobileOpen = !mobileOpen"
@@ -41,6 +60,7 @@
   id="workspace-nav"
   class="workspace-nav"
   [class.open]="mobileOpen"
+  [class.collapsed]="collapsed"
   *ngIf="!authMode"
   aria-label="Main navigation"
 >
@@ -65,6 +85,8 @@
         ><a
           *ngIf="visible(item)"
           [routerLink]="item.url"
+          [attr.title]="item.label"
+          [attr.aria-label]="item.label"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           [attr.aria-current]="router.url === item.url ? 'page' : null"
@@ -72,7 +94,7 @@
           ><span class="active-dot"></span></a
       ></ng-container>
     </section>
-    <section class="nav-group" *ngIf="shortcuts.length">
+    <section class="nav-group nav-shortcuts" *ngIf="shortcuts.length">
       <h2>WORKSPACE SHORTCUTS</h2>
       <a *ngFor="let item of shortcuts" [routerLink]="item.path"
         ><ui-icon name="arrow"></ui-icon>{{ item.name }}</a
@@ -80,20 +102,31 @@
     </section>
   </nav>
   <div class="nav-bottom">
-    <button class="logout-button" (click)="logout()">
-      <ui-icon name="logout"></ui-icon>Sign out
+    <button
+      class="logout-button"
+      title="Sign out"
+      aria-label="Sign out"
+      (click)="logout()"
+    >
+      <ui-icon name="logout"></ui-icon><span>Sign out</span>
     </button>
   </div>
 </aside>
 <main
   id="main-content"
   [class.workspace-main]="!authMode"
-  [class.auth-main]="authMode"
+  [class.nav-collapsed]="collapsed"
+  [class.auth-main]="authMode && !homeMode"
+  [class.home-main]="homeMode"
   tabindex="-1"
 >
   <ng-content></ng-content>
 </main>
-<footer class="workspace-footer" *ngIf="!authMode">
+<footer
+  [class.nav-collapsed]="collapsed"
+  class="workspace-footer"
+  *ngIf="!authMode"
+>
   <span
     ><span class="small-dot"></span> A little more human. A lot more
     connected.</span
@@ -103,3 +136,5 @@
     >Manage requests <ui-icon name="arrow"></ui-icon
   ></a>
 </footer>
+
+<ui-feedback></ui-feedback>

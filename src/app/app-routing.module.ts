@@ -1,3 +1,4 @@
+import { HomeComponent } from './home/home.component';
 import { environment } from '../environments/environment';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -6,7 +7,7 @@ import { NotFoundPageComponent } from './admin/pages/not-found-page/not-found-pa
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'admin',
+		component: HomeComponent,
 		pathMatch: 'full'
 	},
 

@@ -1,3 +1,4 @@
+import { FeedbackService } from './feedback.service';
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
@@ -24,6 +25,7 @@ export class AuthPageComponent implements OnInit {
   showPassword = false;
   step = 1;
   constructor(
+    private feedback: FeedbackService,
     private api: PortalService,
     private auth: AuthAdminService,
     private router: Router,
@@ -35,6 +37,13 @@ export class AuthPageComponent implements OnInit {
       this.challenge = this.route.snapshot.queryParamMap.get("challenge") || "";
     }
   }
+  readonly artwork: any = {
+    login: { image: 'auth-login.png', title: 'Your workday starts here.', description: 'Secure access to your people and your HR workspace.', alt: 'Employee signing in at a laptop with a security shield', badge: 'Your workspace, protected.', note: 'Secure employee access' },
+    signup: { image: 'auth-signup.png', title: 'A warm welcome awaits.', description: 'Create your employee account and join your team.', alt: 'HR colleague welcoming a new employee with an identity badge', badge: 'A place on the team.', note: 'A thoughtful first step' },
+    forgot: { image: 'auth-forgot.png', title: 'Let us get you back in.', description: 'Recover access with a verification code sent to your email.', alt: 'Employee checking an account recovery email on her phone', badge: 'Help is close at hand.', note: 'Recover your account' },
+    reset: { image: 'auth-reset.png', title: 'A fresh start. Securely.', description: 'Choose a new password and return to your HR workspace.', alt: 'Employee holding a new key beside a secure padlock', badge: 'Ready for a fresh start.', note: 'A stronger password' }
+  };
+  get art() { return this.artwork[this.mode] || this.artwork.login; }
   get title() {
     return this.mode === "login"
       ? "Welcome back."
@@ -110,6 +119,7 @@ export class AuthPageComponent implements OnInit {
             this.confirmation = "";
             this.message =
               "Your account has been created and is awaiting HR approval. We look forward to welcoming you.";
+            this.feedback.saved(this.message);
           },
           (e) => this.fail(e)
         );
@@ -140,6 +150,7 @@ export class AuthPageComponent implements OnInit {
             this.confirmation = "";
             this.message =
               "Your password is updated. You can now sign in with your new password.";
+            this.feedback.saved(this.message);
           },
           (e) => this.fail(e)
         );

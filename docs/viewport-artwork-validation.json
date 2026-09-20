@@ -1,0 +1,639 @@
+{
+  "checks": 36,
+  "errors": [],
+  "failures": [],
+  "results": [
+    {
+      "size": {
+        "width": 1918,
+        "height": 909
+      },
+      "route": "/",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/people-at-work.png"
+    },
+    {
+      "size": {
+        "width": 1918,
+        "height": 909
+      },
+      "route": "/admin/login",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-login.png"
+    },
+    {
+      "size": {
+        "width": 1918,
+        "height": 909
+      },
+      "route": "/admin/signup",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-signup.png"
+    },
+    {
+      "size": {
+        "width": 1918,
+        "height": 909
+      },
+      "route": "/admin/forgot-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-forgot.png"
+    },
+    {
+      "size": {
+        "width": 1918,
+        "height": 909
+      },
+      "route": "/admin/reset-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-reset.png"
+    },
+    {
+      "size": {
+        "width": 1918,
+        "height": 909
+      },
+      "route": "/not-found",
+      "pageScroll": true,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      }
+    },
+    {
+      "size": {
+        "width": 1536,
+        "height": 727
+      },
+      "route": "/",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/people-at-work.png"
+    },
+    {
+      "size": {
+        "width": 1536,
+        "height": 727
+      },
+      "route": "/admin/login",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-login.png"
+    },
+    {
+      "size": {
+        "width": 1536,
+        "height": 727
+      },
+      "route": "/admin/signup",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-signup.png"
+    },
+    {
+      "size": {
+        "width": 1536,
+        "height": 727
+      },
+      "route": "/admin/forgot-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-forgot.png"
+    },
+    {
+      "size": {
+        "width": 1536,
+        "height": 727
+      },
+      "route": "/admin/reset-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-reset.png"
+    },
+    {
+      "size": {
+        "width": 1536,
+        "height": 727
+      },
+      "route": "/not-found",
+      "pageScroll": true,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      }
+    },
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "route": "/",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/people-at-work.png"
+    },
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "route": "/admin/login",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-login.png"
+    },
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "route": "/admin/signup",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-signup.png"
+    },
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "route": "/admin/forgot-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-forgot.png"
+    },
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "route": "/admin/reset-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-reset.png"
+    },
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "route": "/not-found",
+      "pageScroll": true,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      }
+    },
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "route": "/",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/people-at-work.png"
+    },
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "route": "/admin/login",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-login.png"
+    },
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "route": "/admin/signup",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-signup.png"
+    },
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "route": "/admin/forgot-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-forgot.png"
+    },
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "route": "/admin/reset-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-reset.png"
+    },
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "route": "/not-found",
+      "pageScroll": true,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 26,
+        "y": 20,
+        "height": 42,
+        "width": 195.390625
+      }
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "/",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/people-at-work.png"
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "/admin/login",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-login.png"
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "/admin/signup",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-signup.png"
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "/admin/forgot-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-forgot.png"
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "/admin/reset-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-reset.png"
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "/not-found",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      }
+    },
+    {
+      "size": {
+        "width": 375,
+        "height": 667
+      },
+      "route": "/",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/people-at-work.png"
+    },
+    {
+      "size": {
+        "width": 375,
+        "height": 667
+      },
+      "route": "/admin/login",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-login.png"
+    },
+    {
+      "size": {
+        "width": 375,
+        "height": 667
+      },
+      "route": "/admin/signup",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-signup.png"
+    },
+    {
+      "size": {
+        "width": 375,
+        "height": 667
+      },
+      "route": "/admin/forgot-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-forgot.png"
+    },
+    {
+      "size": {
+        "width": 375,
+        "height": 667
+      },
+      "route": "/admin/reset-password",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      },
+      "image": "assets/art/auth-reset.png"
+    },
+    {
+      "size": {
+        "width": 375,
+        "height": 667
+      },
+      "route": "/not-found",
+      "pageScroll": false,
+      "horizontal": false,
+      "panelScroll": false,
+      "brand": {
+        "x": 20,
+        "y": 18,
+        "height": 42,
+        "width": 195.390625
+      }
+    }
+  ],
+  "accessibility": [
+    {
+      "route": "/",
+      "violations": []
+    },
+    {
+      "route": "/admin/login",
+      "violations": []
+    },
+    {
+      "route": "/admin/signup",
+      "violations": []
+    },
+    {
+      "route": "/admin/forgot-password",
+      "violations": []
+    },
+    {
+      "route": "/admin/reset-password",
+      "violations": []
+    },
+    {
+      "route": "/not-found",
+      "violations": []
+    }
+  ]
+}

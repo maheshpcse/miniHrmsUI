@@ -13,7 +13,7 @@
       >
         <ui-icon name="arrow"></ui-icon>Export page</button
       ><button class="button primary" *ngIf="canWrite" (click)="start()">
-        <ui-icon name="plus"></ui-icon>Add {{ config.singular }}
+        <ui-icon name="plus"></ui-icon>Add new
       </button>
     </div>
   </div>
@@ -70,16 +70,14 @@
             [attr.autocomplete]="
               field.type === 'password' ? 'new-password' : 'off'
             "
-          /><select
+          /><ui-select
             *ngIf="field.type === 'select'"
             [name]="field.key"
             [(ngModel)]="model[field.key]"
             [required]="field.required"
-          >
-            <option value="" disabled>Choose an option</option>
-            <option *ngFor="let option of field.options" [value]="option.value">
-              {{ option.label }}
-            </option></select
+            [options]="field.options"
+            [ariaLabel]="field.label"
+          ></ui-select
           ><textarea
             *ngIf="field.type === 'textarea'"
             [name]="field.key"
@@ -120,18 +118,20 @@
           aria-label="Search records"
       /></label>
       <div class="toolbar-actions">
-        <select
-          [(ngModel)]="status"
-          (change)="filter()"
-          aria-label="Filter by status"
-          *ngIf="kind === 'employees'"
+        <button
+          class="button secondary"
+          *ngIf="kind === 'notifications'"
+          (click)="markRead()"
         >
-          <option value="">All statuses</option>
-          <option value="1">Active</option>
-          <option value="2">Pending</option>
-          <option value="0">Inactive</option>
-          <option value="3">Notice period</option>
-        </select>
+          Mark all as read
+        </button>
+        <ui-select
+          [(ngModel)]="status"
+          (ngModelChange)="filter()"
+          ariaLabel="Filter by status"
+          [options]="statusOptions"
+          *ngIf="kind === 'employees'"
+        ></ui-select>
         <div class="segmented" *ngIf="kind === 'employees'">
           <button
             (click)="view = 'table'"
@@ -179,15 +179,32 @@
         <table>
           <thead>
             <tr>
-              <th *ngIf="kind !== 'login-history'">
+              <th
+                *ngIf="kind !== 'login-history'"
+                [attr.aria-sort]="sortState(nameKey())"
+              >
                 <button
-                  (click)="order(kind === 'employees' ? 'firstName' : 'name')"
+                  *ngIf="sortable(nameKey()); else unsortedName"
+                  (click)="order(nameKey())"
                 >
-                  {{ kind === "employees" ? "Employee" : "Name" }} ↕
+                  {{ kind === "employees" ? "Employee" : "Name" }}
+                  <span aria-hidden="true">{{ sortIcon(nameKey()) }}</span>
                 </button>
+                <ng-template #unsortedName>Name</ng-template>
               </th>
-              <th *ngFor="let column of config.columns">
-                <button (click)="order(column[0])">{{ column[1] }} ↕</button>
+              <th
+                *ngFor="let column of config.columns"
+                [attr.aria-sort]="sortState(column[0])"
+              >
+                <button
+                  *ngIf="sortable(column[0]); else unsortedColumn"
+                  (click)="order(column[0])"
+                >
+                  {{ column[1] }}
+                  <span aria-hidden="true">{{
+                    sortIcon(column[0])
+                  }}</span></button
+                ><ng-template #unsortedColumn>{{ column[1] }}</ng-template>
               </th>
               <th>Details</th>
             </tr>

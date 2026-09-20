@@ -1,6 +1,6 @@
 <div class="auth-layout" [class.auth-signup]="mode === 'signup'">
   <section class="auth-form-side">
-    <a routerLink="/admin/login" class="brand"
+    <a routerLink="/" class="brand"
       ><span class="brand-mark">m<span>·</span></span
       ><span
         >mini<span class="brand-light">hrms</span
@@ -94,6 +94,7 @@
               type="button"
               class="icon-button"
               (click)="showPassword = !showPassword"
+              [attr.aria-pressed]="showPassword"
               [attr.aria-label]="
                 showPassword ? 'Hide password' : 'Show password'
               "
@@ -157,30 +158,30 @@
       ><span class="tiny-star">✳</span>
     </div>
     <div class="auth-art-heading">
-      <h2>Good people.<br />Great things.</h2>
-      <p>One connected space to work,<br />grow, and bring out your best.</p>
+      <h2>{{ art.title }}</h2>
+      <p>{{ art.description }}</p>
     </div>
     <div class="auth-scene">
     <img
-      src="assets/art/people-at-work.png"
-      alt="Three smiling colleagues collaborating around a laptop"
+      [src]="'assets/art/' + art.image"
+      [alt]="art.alt"
       class="auth-people"
       fetchpriority="high"
     />
     <div class="floating-note note-one">
       <span class="note-icon"><ui-icon name="heart"></ui-icon></span>
       <div>
-        <strong>People, at the heart.</strong
+        <strong>{{ art.badge }}</strong
         ><small>A little more connected.</small>
       </div>
     </div>
     <div class="floating-note note-two">
-      <span class="small-dot"></span> Room for everyone to grow
+      <span class="small-dot"></span> {{ art.note }}
       <ui-icon name="arrow"></ui-icon>
     </div>
     </div>
     <div class="art-footer">
-      <span>LESS FRICTION. MORE HUMAN.</span><span>01 / 03</span>
+      <span>LESS FRICTION. MORE HUMAN.</span>
     </div>
   </section>
 </div>

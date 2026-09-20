@@ -1,0 +1,67 @@
+{
+  "errors": [],
+  "a11y": [
+    {
+      "route": "profile",
+      "violations": []
+    },
+    {
+      "route": "profile-settings",
+      "violations": []
+    },
+    {
+      "route": "settings",
+      "violations": []
+    },
+    {
+      "route": "notifications",
+      "violations": []
+    },
+    {
+      "route": "forms/leave-types dropdown",
+      "violations": []
+    },
+    {
+      "route": "forms/leave-types",
+      "violations": []
+    },
+    {
+      "route": "employees/all-employees",
+      "violations": []
+    }
+  ],
+  "responsive": [
+    {
+      "size": {
+        "width": 1024,
+        "height": 768
+      },
+      "overflow": false
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": false
+    },
+    {
+      "size": {
+        "width": 320,
+        "height": 640
+      },
+      "overflow": false
+    }
+  ],
+  "checks": [
+    "badge/read",
+    "sort direction/reset",
+    "filter dimensions",
+    "input icon alignment",
+    "keyboard dropdown",
+    "sidebar width",
+    "brand Overview navigation",
+    "profile save",
+    "resource save dialog"
+  ]
+}
