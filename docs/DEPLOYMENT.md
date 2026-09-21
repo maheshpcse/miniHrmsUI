@@ -40,7 +40,7 @@ In the **miniHrmsUI repository**:
 3. Open **Settings ? Secrets and variables ? Actions ? Variables**, and add `API_URL=https://YOUR-SERVICE.up.railway.app/api`. This is a public URL, not a secret.
 4. Push to `main`/`master`, or run **Deploy HRMS to GitHub Pages** from Actions. Adjust the workflow branch list if needed.
 
-The workflow derives the repository base path from Pages settings. Routes use hashes in this build, for example `https://YOUR-ACCOUNT.github.io/miniHrmsUI/#/admin/login`, so refreshing a page does not require server rewrite rules. A custom Pages domain is supported; include its exact HTTPS origin in Railway `CORS_ORIGINS` (comma-separated if keeping both domains).
+The workflow derives the repository base path from Pages settings. Routes use clean paths in this build, for example `https://YOUR-ACCOUNT.github.io/miniHrmsUI/admin/login`. The generated `404.html` redirects a direct route request to the app entry point, and `assets/pages-routing.js` restores the original path, query and anchor before Angular starts. Old `#/` links are converted automatically. GitHub Pages initially returns HTTP 404 for deep links before this JavaScript fallback runs; it is not a server-side rewrite. A custom Pages domain is supported; include its exact HTTPS origin in Railway `CORS_ORIGINS` (comma-separated if keeping both domains).
 
 The workflow installs locked packages with Node 24 and builds this Angular 10 application using its pinned Node 12 build runtime. Node 12 is used only for the existing legacy build toolchain; Railway uses Node 24. Upgrading Angular remains separate work.
 
@@ -52,7 +52,7 @@ $env:PAGES_BASE_PATH='/miniHrmsUI/'
 npm.cmd run build:pages
 ```
 
-Output: `dist/miniHrmsUI`. The artifact contains a public `assets/runtime-config.js` and `.nojekyll`. Missing or invalid HTTPS API URLs fail the build. Normal `npm start` continues using the local Angular proxy; normal production builds retain `/api` unless runtime configuration is supplied.
+Output: `dist/miniHrmsUI`. The artifact contains a public `assets/runtime-config.js`, a generated `404.html`, and `.nojekyll`. Missing or invalid HTTPS API URLs fail the build. Normal `npm start` continues using the local Angular proxy; normal production builds retain `/api` unless runtime configuration is supplied.
 
 ## Repository layout
 
@@ -90,3 +90,6 @@ The workflow validates the URL before installing dependencies. `node scripts/bui
 After saving the GitHub variable, rerun the workflow. Local workflow/script fixes must be committed and pushed by you before GitHub can use them.
 
 Database targets: local development uses `NODE_ENV=development` with `DB_NAME=mini_hrms`; production uses `NODE_ENV=production` with `DB_NAME=railway`. These settings select a database; they do not rename or copy existing data.
+
+
+Clean URL validation: `node scripts/pages-routing.test.js` covers root/project bases, query strings, anchors, old hash links and redirect boundaries. The production Pages build and a browser test with a Pages-like 404 server passed for direct login/signup/reset links, refreshes, internal navigation and browser Back. No live deployment was performed.

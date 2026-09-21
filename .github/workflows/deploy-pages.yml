@@ -21,6 +21,8 @@ jobs:
           cache: npm
       - name: Validate backend URL
         run: node scripts/build-pages.js --check-config
+      - name: Test Pages routing
+        run: node scripts/pages-routing.test.js
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5

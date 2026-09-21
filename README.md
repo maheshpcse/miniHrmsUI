@@ -50,7 +50,7 @@ See [the implementation and validation report](docs/workspace-redesign.md) for p
 
 ## GitHub Pages deployment
 
-See [the GitHub Pages and Railway setup guide](docs/DEPLOYMENT.md). The Pages build uses the public Railway API URL and hash routing; it does not use the local development proxy.
+See [the GitHub Pages and Railway setup guide](docs/DEPLOYMENT.md). The Pages build uses the public Railway API URL and clean path routing with a GitHub Pages 404 fallback; it does not use the local development proxy.
 
 
 ## Start the complete local application
