@@ -8,7 +8,7 @@
   OnChanges,
 } from '@angular/core';
 let tooltipId = 0;
-@Directive({ selector: '[uiTooltip],button[aria-label],a[aria-label]' })
+@Directive({ selector: '[uiTooltip]' })
 export class TooltipDirective implements OnDestroy, OnChanges {
   @Input() uiTooltip = '';
   @Input() uiTooltipDisabled = false;
@@ -33,7 +33,7 @@ export class TooltipDirective implements OnDestroy, OnChanges {
       return false;
     const nav = element.closest('.workspace-nav');
     return (
-      !nav ||
+      !!nav &&
       (nav.classList.contains('collapsed') &&
         matchMedia('(min-width:768px)').matches)
     );
@@ -94,15 +94,13 @@ export class TooltipDirective implements OnDestroy, OnChanges {
       'left',
       Math.max(
         8,
-        Math.min(innerWidth - t.width - 8, r.left + (r.width - t.width) / 2)
+        Math.min(innerWidth - t.width - 8, r.right + 12)
       ) + 'px'
     );
     this.renderer.setStyle(
       this.popup,
       'top',
-      (r.bottom + t.height + 12 < innerHeight
-        ? r.bottom + 8
-        : Math.max(8, r.top - t.height - 8)) + 'px'
+      Math.max(8, Math.min(innerHeight - t.height - 8, r.top + (r.height - t.height) / 2)) + 'px'
     );
     this.listeners = [
       this.renderer.listen(this.popup, 'mouseenter', () =>

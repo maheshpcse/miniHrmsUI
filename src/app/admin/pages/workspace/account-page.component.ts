@@ -180,23 +180,16 @@ import { FeedbackService } from '../../../ui/feedback.service';
       >
         <h2 id="password-settings-title">Change Password</h2>
         <p class="muted">
-          Verify your current password. Other signed-in sessions will be signed
-          out.
+          Set a new password for your account. Other signed-in sessions will be
+          signed out.
         </p>
         <form
           #passwordForm="ngForm"
           (ngSubmit)="changePassword(passwordForm)"
           novalidate
         >
-          <div class="form-grid three">
+          <div class="form-grid">
             <label
-              >Current Password<input
-                type="password"
-                name="currentPassword"
-                [(ngModel)]="currentPassword"
-                required
-                autocomplete="current-password" /></label
-            ><label
               >New Password<input
                 type="password"
                 name="newPassword"
@@ -274,7 +267,6 @@ import { FeedbackService } from '../../../ui/feedback.service';
 export class AccountPageComponent implements OnInit, OnDestroy {
   titleValue = titleValue;
   today = new Date().toISOString().slice(0, 10);
-  currentPassword = '';
   newPassword = '';
   confirmPassword = '';
   passwordError = '';
@@ -298,14 +290,13 @@ export class AccountPageComponent implements OnInit, OnDestroy {
     this.subs.add(
       this.api
         .post('/me/password', {
-          currentPassword: this.currentPassword,
           password: this.newPassword,
         })
         .subscribe(
           () => {
             this.changingPassword = false;
             form.resetForm();
-            this.currentPassword = this.newPassword = this.confirmPassword = '';
+            this.newPassword = this.confirmPassword = '';
             this.feedback.saved(
               'Your password has been changed. Other sessions have been signed out.'
             );

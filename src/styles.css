@@ -2454,13 +2454,14 @@ a:not(.button):not(.brand):not(.icon-button):not(.avatar):not(.skip-link):hover,
 .toolbar.has-filters .toolbar-actions {flex:1 1 0;min-width:0;flex-wrap:nowrap}
 .toolbar.has-filters .toolbar-actions>ui-select {flex:1 1 0;width:auto;min-width:140px}
 .toolbar .toolbar-actions>.icon-button:last-child {flex:0 0 44px}
-/* Pointer for input selection; text cursor while entering text. */
-a[href],button:not(:disabled),select:not(:disabled),input:not(:disabled):not([readonly]),textarea:not(:disabled):not([readonly]),.select-trigger {cursor:pointer}
-input:not(:disabled):not([readonly]):focus,textarea:not(:disabled):not([readonly]):focus {cursor:text}
+/* Text fields retain the insertion cursor before and during editing. */
+a[href],button:not(:disabled),select:not(:disabled),.select-trigger {cursor:pointer}
+input:not(:disabled):not([readonly]),textarea:not(:disabled):not([readonly]) {cursor:text}
 input[type=date],input[type=time],input[type=file],input[type=checkbox],input[type=radio],input[type=date]:focus,input[type=time]:focus,input[type=file]:focus,input[type=checkbox]:focus,input[type=radio]:focus {cursor:pointer}
 input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator {cursor:pointer}
 a:not(.button):not(.brand):not(.icon-button):not(.avatar):not(.skip-link):not(.home-explore-link) {padding:4px 7px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background-color .15s,color .15s}
-.workspace-nav .nav-group a {padding:9px 11px}
+.workspace-nav .nav-group a {padding:9px 11px;margin:6px 0}
+@media(min-width:768px){.workspace-nav.collapsed .nav-group a {padding:12px 8px}}
 .settings-links a {padding:12px}
 @media(max-width:1050px){.toolbar.has-filters {flex-wrap:nowrap}.toolbar.has-filters .search-field {flex:0 1 calc(50% - 6px);min-width:120px}.toolbar.has-filters .toolbar-actions {flex:1 1 0}.toolbar.has-filters .toolbar-actions>ui-select {min-width:120px}}
 @media(max-width:767px){.toolbar.has-filters {flex-wrap:wrap}.toolbar.has-filters .search-field {flex:1 0 100%;width:100%;min-width:0}.toolbar.has-filters .toolbar-actions {flex:1 0 100%;width:100%}.toolbar.has-filters .toolbar-actions>ui-select {min-width:100px}.toolbar:not(.has-filters) .toolbar-actions {margin-left:auto}}

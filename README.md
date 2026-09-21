@@ -56,3 +56,7 @@ See [the GitHub Pages and Railway setup guide](docs/DEPLOYMENT.md). The Pages bu
 ## Start the complete local application
 
 Run `npm.cmd run start:all` from this UI folder to start the sibling backend and then Angular. See [home, authentication and API fixes](docs/home-auth-api-update.md) for connection troubleshooting and validation.
+
+## Project analysis and development context
+
+Start with [Project Analysis](docs/PROJECT_ANALYSIS.md) for the guide-derived documentation index and source-based findings. See [development rules](RULES.md), [prioritized tasks](TASKS.md) and the [public build environment example](.env.example). Requirements, architecture, design, testing, security, decisions and project memory are maintained under docs.
