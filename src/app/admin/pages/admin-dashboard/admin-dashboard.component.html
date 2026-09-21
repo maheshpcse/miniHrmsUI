@@ -1,3 +1,119 @@
-<div class="page-heading"><div><span class="eyebrow">YOUR WORKSPACE, AT A GLANCE</span><h1>Hello, {{name}} <span style="font-weight:400">☀</span></h1><p>Here’s what’s happening with your people today.</p></div><a class="button secondary" routerLink="/admin/requests"><ui-icon name="calendar"></ui-icon>View requests</a></div>
-<section class="hero-panel"><div class="hero-copy"><span class="eyebrow"><span class="small-dot"></span> PEOPLE AND OPERATIONS</span><h1>A good day starts<br>with your people.</h1><p>Manage employee records, review requests, and keep your team informed.</p><a class="button primary" [routerLink]="auth.allowed('employees:read')?'/admin/employees/all-employees':'/admin/requests'">{{auth.allowed('employees:read')?'Meet your people':'View your requests'}}<ui-icon name="arrow"></ui-icon></a></div><img class="hero-image" src="assets/art/people-at-work.png" alt="Three colleagues working together"></section>
-<ui-state [loading]="loading" [error]="error" (retry)="load()"></ui-state><ng-container *ngIf="!loading&&!error"><div class="stats-grid"><article class="stat-card" *ngFor="let stat of stats"><div class="stat-top"><span>{{stat.label}}</span><span class="stat-icon"><ui-icon [name]="stat.icon"></ui-icon></span></div><div class="stat-value">{{stat.value}}</div><span class="stat-note">{{stat.note}}</span></article></div><div class="dashboard-grid"><section class="panel"><div class="panel-heading"><div><h2>A few familiar faces</h2><p>The newest people in your workspace.</p></div><a *ngIf="auth.allowed('employees:read')" routerLink="/admin/employees/all-employees">View all ↗</a></div><div class="list-person" *ngFor="let person of data.recent"><span class="avatar">{{initials(person)}}</span><div class="person-text"><strong>{{person.firstName}} {{person.lastName}}</strong><small>{{person.roleName}} · {{person.empId}}</small></div><span class="tag" [class.active]="person.status===1">{{person.status===1?'Active':person.status===2?'Pending':person.status===3?'Notice period':'Inactive'}}</span></div><ui-state [empty]="!data.recent?.length" title="Your team starts here" description="New employees will appear as they join your workspace."></ui-state></section><div><section class="panel"><div class="panel-heading"><h2>Your team, together</h2><span class="tag">By role</span></div><div class="role-bar" *ngFor="let role of data.roles"><div><span>{{role.roleName}}</span><strong>{{role.count}}</strong></div><div class="bar-track"><span [style.width.%]="data.people ? role.count/data.people*100:0"></span></div></div><p class="muted" *ngIf="!data.roles?.length">Your team overview will appear here.</p></section><section class="growth-card"><span class="eyebrow">EMPLOYEE SERVICES</span><h2>Keep work<br>moving forward.</h2><p>Track requests and keep up with updates from your HR team.</p><a class="button secondary small" routerLink="/admin/requests">Manage requests <ui-icon name="arrow"></ui-icon></a></section></div></div></ng-container>
+<div class="page-heading">
+  <div>
+    <span class="eyebrow">YOUR WORKSPACE, AT A GLANCE</span>
+    <h1>Overview</h1>
+    <p>Here’s what’s happening with your people today.</p>
+  </div>
+  <a class="button secondary" routerLink="/admin/requests"
+    ><ui-icon name="calendar"></ui-icon>View requests</a
+  >
+</div>
+<section class="hero-panel">
+  <div class="hero-copy">
+    <span class="eyebrow"
+      ><span class="small-dot"></span> PEOPLE AND OPERATIONS</span
+    >
+    <h1>A good day starts<br />with your people.</h1>
+    <p>
+      Manage employee records, review requests, and keep your team informed.
+    </p>
+    <a
+      class="button primary"
+      [routerLink]="
+        auth.allowed('employees:read')
+          ? '/admin/employees/all-employees'
+          : '/admin/requests'
+      "
+      >{{
+        auth.allowed("employees:read")
+          ? "Meet your people"
+          : "View your requests"
+      }}<ui-icon name="arrow"></ui-icon
+    ></a>
+  </div>
+  <img
+    class="hero-image"
+    src="assets/art/people-at-work.png"
+    alt="Three colleagues working together"
+  />
+</section>
+<ui-state [loading]="loading" [error]="error" (retry)="load()"></ui-state
+><ng-container *ngIf="!loading && !error"
+  ><div class="stats-grid">
+    <article class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-top">
+        <span>{{ stat.label }}</span
+        ><span class="stat-icon"><ui-icon [name]="stat.icon"></ui-icon></span>
+      </div>
+      <div class="stat-value">{{ stat.value }}</div>
+      <span class="stat-note">{{ stat.note }}</span>
+    </article>
+  </div>
+  <div class="dashboard-grid">
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>A few familiar faces</h2>
+          <p>The newest people in your workspace.</p>
+        </div>
+        <a
+          *ngIf="auth.allowed('employees:read')"
+          routerLink="/admin/employees/all-employees"
+          >View all ↗</a
+        >
+      </div>
+      <div class="list-person" *ngFor="let person of data.recent">
+        <span class="avatar">{{ initials(person) }}</span>
+        <div class="person-text">
+          <strong>{{ person.firstName }} {{ person.lastName }}</strong
+          ><small>{{ titleValue(person.roleName) }} · {{ person.empId }}</small>
+        </div>
+        <span class="tag" [class.active]="person.status === 1">{{
+          person.status === 1
+            ? "Active"
+            : person.status === 2
+            ? "Pending"
+            : person.status === 3
+            ? "Notice period"
+            : "Inactive"
+        }}</span>
+      </div>
+      <ui-state
+        [empty]="!data.recent?.length"
+        title="Your team starts here"
+        description="New employees will appear as they join your workspace."
+      ></ui-state>
+    </section>
+    <div>
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>Your team, together</h2>
+          <span class="tag">By role</span>
+        </div>
+        <div class="role-bar" *ngFor="let role of data.roles">
+          <div>
+            <span>{{ titleValue(role.roleName) }}</span
+            ><strong>{{ role.count }}</strong>
+          </div>
+          <div class="bar-track">
+            <span
+              [style.width.%]="
+                data.people ? (role.count / data.people) * 100 : 0
+              "
+            ></span>
+          </div>
+        </div>
+        <p class="muted" *ngIf="!data.roles?.length">
+          Your team overview will appear here.
+        </p>
+      </section>
+      <section class="growth-card">
+        <span class="eyebrow">EMPLOYEE SERVICES</span>
+        <h2>Keep work<br />moving forward.</h2>
+        <p>Track requests and keep up with updates from your HR team.</p>
+        <a class="button secondary small" routerLink="/admin/requests"
+          >Manage requests <ui-icon name="arrow"></ui-icon
+        ></a>
+      </section>
+    </div></div
+></ng-container>

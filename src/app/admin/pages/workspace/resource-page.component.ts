@@ -1,3 +1,9 @@
+import {
+  detailRows,
+  displayValue,
+  titleValue,
+  revealDetails,
+} from '../../../ui/presentation';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -16,7 +22,7 @@ const field = (
   type = 'text',
   required = true,
   options: any[] = []
-) => ({ key, label, type, required, options });
+) => ({ key, label: titleValue(label), type, required, options });
 export const RESOURCE_CONFIG: any = {
   employees: {
     title: 'People directory',
@@ -478,35 +484,22 @@ export class ResourcePageComponent implements OnInit, OnDestroy {
       }
     );
   }
+  titleValue = titleValue;
+  get selectedDetails() {
+    return detailRows(this.selected);
+  }
+  viewRecord(row: any) {
+    this.selected = row;
+    revealDetails('record-details');
+  }
   display(row: any, key: string) {
-    const value = row[key];
-    if (key === 'status') {
-      return (
-        (
-          {
-            '0': 'Inactive',
-            '1': 'Active',
-            '2': 'Pending',
-            '3': 'Notice period',
-          } as any
-        )[String(value)] || value
-      );
-    }
-    if (key === 'loginType') {
+    if (key === 'loginType')
       return (
         ({ '1': 'Normal', '2': 'Settings', '3': 'Social' } as any)[
-          String(value)
-        ] || value
+          String(row[key])
+        ] || displayValue(row[key], key)
       );
-    }
-    if (value === null || value === undefined || value === '') {
-      return '—';
-    }
-    if (key.includes('Time') || key === 'createdAt') {
-      const d = new Date(value);
-      return isNaN(d.getTime()) ? String(value) : d.toLocaleString();
-    }
-    return String(value);
+    return displayValue(row[key], key);
   }
   initials(row: any) {
     return (

@@ -16,6 +16,11 @@ const protectedResource = (path: string, resource: string) => ({
   data: { resource },
 });
 const routes: Routes = [
+  {
+    path: 'profile/employment',
+    component: ViewEmployeeComponent,
+    canActivate: [AuthGuardService],
+  },
   ...['profile', 'profile-settings', 'settings'].map((account) => ({
     path: account,
     component: AccountPageComponent,

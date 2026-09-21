@@ -1,0 +1,31 @@
+{
+  "errors": [],
+  "accessibility": [
+    {
+      "mode": "profile",
+      "violations": []
+    },
+    {
+      "mode": "profile-settings",
+      "violations": []
+    },
+    {
+      "mode": "settings",
+      "violations": []
+    }
+  ],
+  "checks": [
+    "profile width",
+    "employment button spacing",
+    "avatar upload and reload",
+    "initials",
+    "detail labels and metadata exclusion",
+    "nested address",
+    "formatted dates",
+    "compact equal overlay width",
+    "hover timer",
+    "keyboard persistence",
+    "view focus and scroll",
+    "mobile overflow"
+  ]
+}

@@ -34,11 +34,8 @@
       ><span class="notification-count" *ngIf="unread" aria-hidden="true">{{
         unread > 99 ? "99+" : unread
       }}</span></a
-    ><a
-      routerLink="/admin/profile"
-      class="avatar small"
-      aria-label="My profile"
-      >{{ initials }}</a
+    ><a routerLink="/admin/profile" class="avatar small" aria-label="My profile"
+      ><ui-icon name="people"></ui-icon></a
     ><button
       class="icon-button mobile-menu"
       (click)="mobileOpen = !mobileOpen"
@@ -85,7 +82,8 @@
         ><a
           *ngIf="visible(item)"
           [routerLink]="item.url"
-          [attr.title]="item.label"
+          [uiTooltip]="item.label"
+          [uiTooltipDisabled]="!collapsed"
           [attr.aria-label]="item.label"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -104,7 +102,8 @@
   <div class="nav-bottom">
     <button
       class="logout-button"
-      title="Sign out"
+      uiTooltip="Sign out"
+      [uiTooltipDisabled]="!collapsed"
       aria-label="Sign out"
       (click)="logout()"
     >

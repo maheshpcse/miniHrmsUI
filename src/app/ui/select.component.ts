@@ -1,9 +1,11 @@
+import { titleValue } from './presentation';
 import {
   Component,
   Input,
   forwardRef,
   ViewChild,
   ElementRef,
+  OnDestroy,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Overlay } from '@angular/cdk/overlay';
@@ -34,6 +36,8 @@ let nextId = 0;
       (click)="toggle()"
       (keydown)="key($event)"
       (blur)="touched()"
+      (mouseenter)="pauseClose()"
+      (mouseleave)="scheduleClose()"
     >
       <span>{{ label }}</span
       ><ui-icon name="chevron"></ui-icon>
@@ -51,6 +55,8 @@ let nextId = 0;
     >
       <div
         class="select-options"
+        (mouseenter)="pauseClose()"
+        (mouseleave)="scheduleClose()"
         role="listbox"
         [id]="id"
         [attr.aria-label]="ariaLabel"
@@ -66,13 +72,27 @@ let nextId = 0;
           (mousedown)="$event.preventDefault()"
           (click)="choose(i)"
         >
-          {{ option.label
+          {{ titleValue(option.label)
           }}<ui-icon *ngIf="value === option.value" name="check"></ui-icon>
         </div>
       </div>
     </ng-template>`,
 })
-export class SelectComponent implements ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor, OnDestroy {
+  titleValue = titleValue;
+  closeTimer: any;
+  keyboardMode = false;
+  pauseClose() {
+    clearTimeout(this.closeTimer);
+  }
+  scheduleClose() {
+    this.pauseClose();
+    if (this.open && !this.keyboardMode)
+      this.closeTimer = setTimeout(() => this.close(), 4000);
+  }
+  ngOnDestroy() {
+    this.pauseClose();
+  }
   @Input() options: { value: string; label: string }[] = [];
   @Input() ariaLabel = 'Choose an option';
   @Input() placeholder = 'Choose an option';
@@ -89,7 +109,7 @@ export class SelectComponent implements ControlValueAccessor {
   constructor(private overlay: Overlay) {}
   get label() {
     const option = this.options.find((o) => o.value === this.value);
-    return option ? option.label : this.placeholder;
+    return titleValue(option ? option.label : this.placeholder);
   }
   writeValue(value: any) {
     this.value = value == null ? '' : String(value);
@@ -117,8 +137,11 @@ export class SelectComponent implements ControlValueAccessor {
       this.options.findIndex((o) => o.value === this.value)
     );
     this.open = true;
+    this.keyboardMode = false;
+    this.scheduleClose();
   }
   close() {
+    this.pauseClose();
     this.open = false;
     this.touched();
     this.trigger.nativeElement.focus();
@@ -132,6 +155,8 @@ export class SelectComponent implements ControlValueAccessor {
     this.close();
   }
   key(event: KeyboardEvent) {
+    this.pauseClose();
+    this.keyboardMode = true;
     if (event.key === 'Tab') {
       this.open = false;
       return;
@@ -147,6 +172,8 @@ export class SelectComponent implements ControlValueAccessor {
       event.preventDefault();
       if (!this.open) {
         this.toggle();
+        this.keyboardMode = true;
+        this.pauseClose();
         return;
       }
       if (event.key === 'Enter' || event.key === ' ') {
@@ -165,6 +192,8 @@ export class SelectComponent implements ControlValueAccessor {
     } else if (event.key.length === 1) {
       if (!this.open) {
         this.toggle();
+        this.keyboardMode = true;
+        this.pauseClose();
       }
       const index = this.options.findIndex(
         (o, i) =>

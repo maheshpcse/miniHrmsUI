@@ -2401,3 +2401,67 @@ html[data-motion=reduced] *,html[data-motion=reduced] *::before,html[data-motion
  .toolbar .toolbar-actions {display:contents}
  .toolbar .search-field,.toolbar .toolbar-actions>ui-select {flex:1 1 180px;min-width:160px;width:auto;max-width:none}
 }
+/* Profile layout and readable details. */
+.account-panel {width:100%;max-width:none}
+.profile-actions {border-top:1px solid var(--line);padding-top:24px;margin-top:28px;display:flex;justify-content:flex-end}
+.profile-identity {gap:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.person-avatar {width:56px;height:56px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;border-radius:50%;background:#ece8ff;color:#1400c3;font-size:20px;font-weight:700;border:3px solid white;box-shadow:0 4px 16px #1400c312}
+.person-avatar.large {width:104px;height:104px;font-size:32px}
+.person-avatar img {width:100%;height:100%;object-fit:cover;border-radius:50%}
+ui-avatar {display:inline-flex;flex-shrink:0}
+.profile-hero {display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:28px;scroll-margin-top:100px}
+.profile-summary {flex:1;min-width:180px}.profile-summary h2 {font-size:28px;margin-bottom:8px}.profile-summary p {margin:0 0 8px}
+.profile-status {display:inline-flex;align-items:center;background:#eeeaff;color:#1400c3;border-radius:9px;padding:7px 12px;font-size:14px;font-weight:600;line-height:1.4;text-transform:none}
+.tag {text-transform:none;font-size:12px}
+.detail-grid dt {text-transform:none;font-size:13px;font-weight:600;letter-spacing:0;color:var(--muted)}
+.detail-grid dd {font-size:14px;line-height:1.65;overflow-wrap:anywhere;white-space:pre-line}
+.avatar-editor {display:flex;align-items:center;gap:24px;padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--line)}
+.avatar-editor h2 {margin:0 0 8px}.avatar-editor p {color:var(--muted);margin-bottom:12px}.avatar-editor .button {margin-right:10px}
+.avatar-upload {position:relative;overflow:hidden;cursor:pointer}
+.avatar-upload input[type=file] {position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.avatar-upload:focus-within {outline:2px solid var(--primary);outline-offset:3px}
+#record-details {scroll-margin-top:104px}
+/* Dropdowns size to their visible label; overlays use the measured trigger width. */
+ui-select,.toolbar .toolbar-actions>ui-select {width:max-content;max-width:100%;min-width:0;flex:0 1 auto;justify-self:start}
+.select-trigger {width:auto;max-width:100%;min-width:140px;white-space:nowrap}
+.toolbar .search-field {flex:0 1 280px}
+.select-options {width:100%;overflow-x:hidden}
+.select-options [role=option] {white-space:normal;overflow-wrap:anywhere}
+@media(max-width:767px) {.profile-hero {padding:22px;gap:18px}.avatar-editor {align-items:flex-start;flex-wrap:wrap}.profile-actions {justify-content:flex-start}.profile-actions .button {width:100%;justify-content:center}.toolbar .search-field {width:100%}.person-avatar.large {width:88px;height:88px}.toolbar .toolbar-actions>ui-select {width:max-content;min-width:0;flex:0 1 auto}}
+/* Reports keep filters together; form dropdowns match their input columns. */
+.toolbar {display:flex;justify-content:flex-start;align-items:center;flex-wrap:nowrap;gap:12px}
+.toolbar .toolbar-actions {display:flex;justify-content:flex-start;align-items:center;gap:12px;flex:0 0 auto}
+.toolbar .search-field {flex:1 1 auto;width:auto;min-width:0;max-width:none}
+.toolbar.has-filters .search-field {flex:0 1 50%;width:50%;min-width:160px}
+.toolbar .toolbar-actions>ui-select {flex:0 0 auto;width:180px;min-width:0;margin:0}
+.toolbar .select-trigger {width:100%}
+.form-grid ui-select {width:100%;max-width:none;justify-self:stretch}
+.form-grid .select-trigger {width:100%;min-width:0}
+.workspace-switch {align-items:center;justify-content:center;gap:10px;padding:12px 4px;min-height:64px;box-sizing:border-box}
+.workspace-switch>div {display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0}
+.workspace-switch strong,.workspace-switch small {line-height:1.35;margin:0}
+.workspace-switch .workspace-symbol {flex-shrink:0;margin:0}.workspace-switch>ui-icon {flex-shrink:0;margin:0}
+.hr-tooltip {position:fixed;z-index:1500;max-width:min(260px,calc(100vw - 16px));padding:8px 12px;border-radius:9px;background:#1400c3;color:#fff;font:500 12px/1.5 var(--body);box-shadow:0 6px 20px #1400c32b;pointer-events:auto;animation:feedback-fade .12s ease}
+a:not(.button):not(.brand):not(.icon-button):not(.avatar):not(.skip-link):hover,a:not(.button):not(.brand):not(.icon-button):not(.avatar):not(.skip-link):focus-visible {background:#eeeaff;color:#1400c3;border-radius:5px;text-decoration:none}
+.nav-group a.active:hover {background:#10009b!important;color:white!important}
+.avatar-upload,.avatar-upload input[type=file],.avatar-upload input[type=file]::file-selector-button {cursor:pointer!important}
+.password-settings {border-top:1px solid var(--line);padding-top:28px;margin-top:32px}
+@media(max-width:1050px){.toolbar.has-filters {flex-wrap:wrap}.toolbar.has-filters .search-field {flex:1 1 50%}.toolbar.has-filters .toolbar-actions {flex:0 1 auto}}
+@media(max-width:767px){.toolbar {flex-wrap:wrap}.toolbar .search-field,.toolbar.has-filters .search-field {flex:1 0 100%;width:100%;min-width:0}.toolbar .toolbar-actions {flex-wrap:wrap}.toolbar .toolbar-actions>ui-select {width:180px}.workspace-nav.collapsed .workspace-switch {padding:12px 4px}}
+/* Fill report rows without spreading fixed controls apart. */
+.toolbar {width:100%;gap:12px}
+.toolbar.has-filters .search-field {flex:0 1 calc(50% - 6px);width:calc(50% - 6px)}
+.toolbar.has-filters .toolbar-actions {flex:1 1 0;min-width:0;flex-wrap:nowrap}
+.toolbar.has-filters .toolbar-actions>ui-select {flex:1 1 0;width:auto;min-width:140px}
+.toolbar .toolbar-actions>.icon-button:last-child {flex:0 0 44px}
+/* Pointer for input selection; text cursor while entering text. */
+a[href],button:not(:disabled),select:not(:disabled),input:not(:disabled):not([readonly]),textarea:not(:disabled):not([readonly]),.select-trigger {cursor:pointer}
+input:not(:disabled):not([readonly]):focus,textarea:not(:disabled):not([readonly]):focus {cursor:text}
+input[type=date],input[type=time],input[type=file],input[type=checkbox],input[type=radio],input[type=date]:focus,input[type=time]:focus,input[type=file]:focus,input[type=checkbox]:focus,input[type=radio]:focus {cursor:pointer}
+input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator {cursor:pointer}
+a:not(.button):not(.brand):not(.icon-button):not(.avatar):not(.skip-link):not(.home-explore-link) {padding:4px 7px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background-color .15s,color .15s}
+.workspace-nav .nav-group a {padding:9px 11px}
+.settings-links a {padding:12px}
+@media(max-width:1050px){.toolbar.has-filters {flex-wrap:nowrap}.toolbar.has-filters .search-field {flex:0 1 calc(50% - 6px);min-width:120px}.toolbar.has-filters .toolbar-actions {flex:1 1 0}.toolbar.has-filters .toolbar-actions>ui-select {min-width:120px}}
+@media(max-width:767px){.toolbar.has-filters {flex-wrap:wrap}.toolbar.has-filters .search-field {flex:1 0 100%;width:100%;min-width:0}.toolbar.has-filters .toolbar-actions {flex:1 0 100%;width:100%}.toolbar.has-filters .toolbar-actions>ui-select {min-width:100px}.toolbar:not(.has-filters) .toolbar-actions {margin-left:auto}}
+@media(max-width:767px){.toolbar:not(.has-filters) .toolbar-actions {justify-content:flex-end}}

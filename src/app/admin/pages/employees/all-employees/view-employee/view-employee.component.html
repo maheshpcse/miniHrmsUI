@@ -1,1 +1,92 @@
-<div class="page-heading"><div><span class="eyebrow">THE PERSON BEHIND THE PROFILE</span><h1>Employee profile</h1></div><a class="button secondary" routerLink="/admin/employees/all-employees">← Back to people</a></div><ui-state [loading]="loading" [error]="error" (retry)="load()"></ui-state><ng-container *ngIf="!loading&&!error"><section class="profile-hero"><span class="avatar large">{{employee.firstName?.charAt(0)}}{{employee.lastName?.charAt(0)}}</span><div><h1>{{employee.firstName}} {{employee.lastName}}</h1><p>{{employee.roleName}} · {{employee.empId}}</p><small>{{employee.email}}</small></div><span class="tag" [class.active]="employee.status===1">{{employee.status===1?'Active':employee.status===2?'Pending approval':employee.status===3?'Notice period':'Inactive'}}</span></section><section class="panel"><div class="tabs" role="tablist" aria-label="Employee details"><button *ngFor="let item of tabs" [class.selected]="tab===item" (click)="tab=item" role="tab" [attr.aria-selected]="tab===item">{{item}}</button></div><div class="detail-grid" role="tabpanel"><dl *ngFor="let item of details"><dt>{{item.key}}</dt><dd *ngIf="!item.object">{{format(item.value)}}</dd><dd *ngIf="item.object"><pre>{{item.value | json}}</pre></dd></dl></div><ui-state [empty]="!details.length" title="A little more to know" description="These details have not been added yet."></ui-state></section><section class="panel" *ngIf="tab==='Onboarding'"><div class="panel-heading"><h2>The onboarding journey</h2><ui-icon name="workflow"></ui-icon></div><div class="timeline"><div class="timeline-row" *ngFor="let step of data.empProcessInfo"><span class="stat-icon"><ui-icon name="check"></ui-icon></span><div><strong>{{step.approvedBy || step.rejectedBy || 'Awaiting review'}}</strong><p>{{step.approvedRemarks || step.rejectedRemarks || 'No remarks added'}}</p><small class="muted">{{step.approvedDate || step.rejectedDate || step.onBoardStartDate}}</small></div></div></div><ui-state [empty]="!data.empProcessInfo?.length" title="The journey is just beginning" description="Approval and onboarding events will appear here."></ui-state></section></ng-container>
+﻿<div class="page-heading">
+  <div>
+    <span class="eyebrow">THE PERSON BEHIND THE PROFILE</span>
+    <h1>{{ ownProfile ? "My Employment Details" : "Employee Profile" }}</h1>
+  </div>
+  <a
+    class="button secondary"
+    [routerLink]="
+      ownProfile ? '/admin/profile' : '/admin/employees/all-employees'
+    "
+    >Back to {{ ownProfile ? "My Profile" : "People" }}</a
+  >
+</div>
+<ui-state [loading]="loading" [error]="error" (retry)="load()"></ui-state>
+<ng-container *ngIf="!loading && !error">
+  <section id="employee-profile" tabindex="-1" class="profile-hero">
+    <ui-avatar [person]="employee" [large]="true"></ui-avatar>
+    <div class="profile-summary">
+      <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
+      <p>{{ titleValue(employee.roleName) }} &middot; {{ employee.empId }}</p>
+      <p>{{ employee.email }}</p>
+      <span class="profile-status" [class.active]="employee.status === 1">{{
+        displayValue(employee.status, "status")
+      }}</span>
+    </div>
+    <a
+      *ngIf="ownProfile"
+      class="button secondary"
+      routerLink="/admin/profile-settings"
+      >Edit Profile Photo</a
+    >
+  </section>
+  <section class="panel">
+    <div class="tabs" aria-label="Employee details">
+      <button
+        *ngFor="let item of tabs"
+        [class.selected]="tab === item"
+        (click)="tab = item"
+        [attr.aria-pressed]="tab === item"
+      >
+        {{ item }}
+      </button>
+    </div>
+    <div class="detail-grid">
+      <dl *ngFor="let item of details">
+        <dt>{{ item.label }}</dt>
+        <dd>{{ item.value }}</dd>
+      </dl>
+    </div>
+    <ui-state
+      [empty]="!details.length"
+      title="A little more to know"
+      description="These details have not been added yet."
+    ></ui-state>
+  </section>
+  <section class="panel" *ngIf="tab === 'Onboarding'">
+    <div class="panel-heading">
+      <h2>The Onboarding Journey</h2>
+      <ui-icon name="workflow"></ui-icon>
+    </div>
+    <div class="timeline">
+      <div class="timeline-row" *ngFor="let step of data.empProcessInfo">
+        <span class="stat-icon"><ui-icon name="check"></ui-icon></span>
+        <div>
+          <strong>{{
+            step.approvedDate
+              ? "Approved"
+              : step.rejectedDate
+              ? "Declined"
+              : "Awaiting Review"
+          }}</strong>
+          <p>
+            {{
+              step.approvedRemarks || step.rejectedRemarks || "No remarks added"
+            }}
+          </p>
+          <small class="muted">{{
+            displayValue(
+              step.approvedDate || step.rejectedDate || step.onBoardStartDate,
+              "eventDate"
+            )
+          }}</small>
+        </div>
+      </div>
+    </div>
+    <ui-state
+      [empty]="!data.empProcessInfo?.length"
+      title="The journey is just beginning"
+      description="Approval and onboarding events will appear here."
+    ></ui-state>
+  </section>
+</ng-container>

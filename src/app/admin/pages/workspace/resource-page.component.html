@@ -108,7 +108,7 @@
     </form>
   </section>
   <section class="panel">
-    <div class="toolbar">
+    <div class="toolbar" [class.has-filters]="kind === 'employees'">
       <label class="search-field"
         ><ui-icon name="search"></ui-icon
         ><input
@@ -258,7 +258,7 @@
                   ><button
                     class="icon-button"
                     *ngIf="kind !== 'employees'"
-                    (click)="selected = row"
+                    (click)="viewRecord(row)"
                     aria-label="View record details"
                   >
                     <ui-icon name="eye"></ui-icon></button
@@ -299,7 +299,7 @@
             >
           </div>
           <h3>{{ row.firstName }} {{ row.lastName }}</h3>
-          <span class="muted">{{ row.roleName }}</span>
+          <span class="muted">{{ titleValue(row.roleName) }}</span>
           <p>{{ row.email }}</p>
           <a
             [routerLink]="['/admin/employees/view-employee', row.empId]"
@@ -329,7 +329,13 @@
       </div>
     </div>
   </section>
-  <section *ngIf="selected" class="panel" aria-label="Record details">
+  <section
+    *ngIf="selected"
+    id="record-details"
+    tabindex="-1"
+    class="panel"
+    aria-label="Record details"
+  >
     <div class="panel-heading">
       <h2>{{ selected.name || "Record details" }}</h2>
       <button
@@ -341,8 +347,8 @@
       </button>
     </div>
     <div class="detail-grid">
-      <dl *ngFor="let item of selected | keyvalue">
-        <dt>{{ item.key }}</dt>
+      <dl *ngFor="let item of selectedDetails">
+        <dt>{{ item.label }}</dt>
         <dd>{{ item.value === null ? "—" : item.value }}</dd>
       </dl>
     </div>

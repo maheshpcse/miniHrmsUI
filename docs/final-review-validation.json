@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "50% search and 12px filter gaps",
+    "Form status dropdown matches other inputs",
+    "Themed tooltip and Escape",
+    "Single search fills report width",
+    "Editable profile and 5 MB client limit",
+    "Separate password form, mismatch/error/success states",
+    "No overflow at 1024, 390 and 320px"
+  ],
+  "errors": [],
+  "accessibility": []
+}

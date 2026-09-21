@@ -10,8 +10,12 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
 import { SelectComponent } from './select.component';
 import { FeedbackComponent } from './feedback.component';
+import { AvatarComponent } from './avatar.component';
+import { TooltipDirective } from './tooltip.directive';
 @NgModule({
   declarations: [
+    TooltipDirective,
+    AvatarComponent,
     SelectComponent,
     FeedbackComponent,
     IconComponent,
@@ -21,6 +25,8 @@ import { FeedbackComponent } from './feedback.component';
   ],
   imports: [OverlayModule, A11yModule, CommonModule, FormsModule, RouterModule],
   exports: [
+    TooltipDirective,
+    AvatarComponent,
     SelectComponent,
     FeedbackComponent,
     IconComponent,
