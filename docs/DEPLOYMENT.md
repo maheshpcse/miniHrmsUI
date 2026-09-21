@@ -75,3 +75,16 @@ Files are prepared locally; no GitHub repository settings, Railway services or l
 - Backend migration/authentication/employee/request regression tests passed using MySQL2 against an isolated MySQL database.
 - Production backend startup, database readiness, allowed-origin preflight, rejected origins and protected API responses passed.
 - Docker image building and actual hosted deployment were not exercised locally; Docker is unavailable in this environment. The existing Angular HammerJS optimization warning is nonfatal.
+
+### Troubleshooting: empty API_URL / ERR_INVALID_URL
+
+The Pages build needs `API_URL` in the **miniHrmsUI GitHub repository**, even if the backend URL is already configured in Railway. Add it under **Settings > Secrets and variables > Actions > Variables > New repository variable**:
+
+- Name: `API_URL`
+- Value: your actual public Railway backend URL ending in `/api` (for example, `https://your-service.up.railway.app/api`; replace the example hostname).
+
+Use a repository variable, not a variable scoped only to the `github-pages` deployment environment: the build job runs before that deployment job. A repository secret named `API_URL` is also accepted as a fallback, but this URL is public and is included in the generated frontend asset. If both exist, the repository variable takes precedence.
+
+The workflow validates the URL before installing dependencies. `node scripts/build-pages.js --check-config` performs the same check locally without building. Regression checks: `node scripts/pages-config.test.js`.
+
+After saving the GitHub variable, rerun the workflow. Local workflow/script fixes must be committed and pushed by you before GitHub can use them.
