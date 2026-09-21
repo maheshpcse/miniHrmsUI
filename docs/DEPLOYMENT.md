@@ -6,7 +6,7 @@ The Angular frontend runs on GitHub Pages. Express and MySQL run on Railway; Git
 
 Connect the **miniHrmsServer repository** to a Railway service. The checked-in `Dockerfile` and `railway.json` select Node 24, run `npm run db:migrate` before deployment, start `node index.js`, and check `/api/health/ready`.
 
-Add a MySQL 8 service in the same Railway project. Ensure a database named `mini_hrms` exists before deploying the API: migrations create tables, not the database. Set the database service's `MYSQL_DATABASE=mini_hrms` before its first initialization, or create that database using the database console. An existing volume is not renamed by changing that variable.
+Add a MySQL 8 service in the same Railway project. Ensure a database named `railway` exists before deploying the API: migrations create tables, not the database. Set the database service's `MYSQL_DATABASE=railway` before its first initialization, or create that database using the database console. An existing volume is not renamed by changing that variable.
 
 Set these variables on the **API service**:
 
@@ -19,7 +19,7 @@ Set these variables on the **API service**:
 | `DB_PORT` | Reference `MYSQLPORT` |
 | `DB_USER` | Reference `MYSQLUSER` |
 | `DB_PASSWORD` | Reference `MYSQLPASSWORD` |
-| `DB_NAME` | `mini_hrms` |
+| `DB_NAME` | `railway` |
 | `CORS_ORIGINS` | `https://YOUR-ACCOUNT.github.io` (origin only, no repository path) |
 | `TRUST_PROXY` | `1` for Railway's ingress |
 | `SECURITY_KEY` | A strong random secret; preserve the existing key when migrating encrypted records |
@@ -88,3 +88,5 @@ Use a repository variable, not a variable scoped only to the `github-pages` depl
 The workflow validates the URL before installing dependencies. `node scripts/build-pages.js --check-config` performs the same check locally without building. Regression checks: `node scripts/pages-config.test.js`.
 
 After saving the GitHub variable, rerun the workflow. Local workflow/script fixes must be committed and pushed by you before GitHub can use them.
+
+Database targets: local development uses `NODE_ENV=development` with `DB_NAME=mini_hrms`; production uses `NODE_ENV=production` with `DB_NAME=railway`. These settings select a database; they do not rename or copy existing data.
