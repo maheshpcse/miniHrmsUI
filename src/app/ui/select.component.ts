@@ -62,7 +62,7 @@ let nextId = 0;
         [attr.aria-label]="ariaLabel"
       >
         <div
-          *ngFor="let option of options; let i = index"
+          *ngFor="let option of options; let i = index; trackBy: optionIdentity"
           role="option"
           [id]="id + '-' + i"
           [attr.aria-selected]="value === option.value"
@@ -92,6 +92,9 @@ export class SelectComponent implements ControlValueAccessor, OnDestroy {
   }
   ngOnDestroy() {
     this.pauseClose();
+  }
+  optionIdentity(_: number, option: { value: string; label: string }) {
+    return option.value;
   }
   @Input() options: { value: string; label: string }[] = [];
   @Input() ariaLabel = 'Choose an option';

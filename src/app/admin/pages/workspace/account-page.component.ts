@@ -161,6 +161,33 @@ import { FeedbackService } from '../../../ui/feedback.service';
               autocomplete="postal-code"
           /></label>
         </div>
+        <fieldset class="delivery-preferences" *ngIf="user.deliveryPreferences">
+          <legend>HR notification delivery</legend>
+          <p class="muted">
+            Choose where to receive a sign-in reminder when an HR update is
+            available. Sensitive details stay inside your workspace.
+          </p>
+          <label
+            ><input
+              type="checkbox"
+              name="emailDelivery"
+              [(ngModel)]="user.deliveryPreferences.email"
+            />
+            Email notifications</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              name="smsDelivery"
+              [(ngModel)]="user.deliveryPreferences.sms"
+            />
+            SMS notifications</label
+          >
+          <small class="muted"
+            >For SMS, enter a mobile number including country code. Delivery
+            requires your organization to configure its provider.</small
+          >
+        </fieldset>
         <p class="muted">
           Work email, employee ID and workspace access are managed by HR.
         </p>

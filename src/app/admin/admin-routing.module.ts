@@ -1,3 +1,5 @@
+import { CorePageComponent } from './pages/hr-core/core-page.component';
+import { OrganizationTreeComponent } from './pages/hr-core/organization-tree.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from '../api-services/auth-guard.service';
@@ -16,6 +18,16 @@ const protectedResource = (path: string, resource: string) => ({
   data: { resource },
 });
 const routes: Routes = [
+  {
+    path: 'hr/:module',
+    component: CorePageComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'organization',
+    component: OrganizationTreeComponent,
+    canActivate: [AuthGuardService],
+  },
   {
     path: 'profile/employment',
     component: ViewEmployeeComponent,

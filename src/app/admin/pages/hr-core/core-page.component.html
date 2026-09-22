@@ -1,0 +1,545 @@
+﻿<div class="page-heading" *ngIf="module">
+  <div>
+    <span class="eyebrow">YOUR HR WORKSPACE</span>
+    <h1>{{ module.title }}</h1>
+    <p>{{ module.description }}</p>
+  </div>
+  <div class="heading-actions">
+    <button
+      class="button secondary"
+      (click)="export()"
+      [disabled]="!rows.length || workspaceView !== 'reports'"
+    >
+      Export page</button
+    ><button *ngIf="canCreate" class="button primary" (click)="startEntry()">
+      <ui-icon name="plus"></ui-icon>Add new
+    </button>
+  </div>
+</div>
+<nav class="core-tabs" aria-label="Module sections">
+  <button
+    [class.active]="workspaceView === 'dashboard'"
+    (click)="showDashboard()"
+  >
+    Module overview
+  </button>
+  <button
+    *ngFor="let t of tabs"
+    [class.active]="tab === t && workspaceView !== 'dashboard'"
+    [attr.aria-current]="
+      tab === t && workspaceView !== 'dashboard' ? 'page' : null
+    "
+    (click)="changeTab(t)"
+  >
+    {{ t.title }}
+  </button>
+</nav>
+<section
+  *ngIf="workspaceView === 'dashboard' && !loading"
+  class="module-dashboard"
+>
+  <ui-state
+    [loading]="dashboardLoading"
+    [error]="error"
+    (retry)="loadDashboard()"
+  ></ui-state>
+  <div class="module-card-grid" *ngIf="!dashboardLoading && !error">
+    <article class="panel module-summary" *ngFor="let section of dashboard">
+      <ui-icon [name]="module.icon"></ui-icon>
+      <h2>{{ section.tab.title }}</h2>
+      <strong class="module-total">{{ section.count }}</strong>
+      <p>Records available within your permitted scope.</p>
+      <button class="core-link" (click)="changeTab(section.tab)">
+        View report <span aria-hidden="true">?</span>
+      </button>
+      <button
+        class="core-link"
+        *ngIf="
+          section.tab.fields &&
+          (!(
+            section.tab.create === 'manage' ||
+            section.tab.create === 'leave/adjustments'
+          ) ||
+            context.canManage)
+        "
+        (click)="startEntry(section.tab)"
+      >
+        Add new
+      </button>
+      <div class="module-recent" *ngIf="section.recent.length">
+        <h3>Recent records</h3>
+        <div *ngFor="let record of section.recent">
+          <span
+            >{{ label(section.tab.columns[0]) }}:
+            {{ cell(record, section.tab.columns[0]) }}</span
+          >
+          <small>{{ cell(record, section.tab.columns[1]) }}</small>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+<div class="notice error" *ngIf="formError" role="alert">{{ formError }}</div>
+<section
+  class="panel core-punch"
+  *ngIf="moduleKey === 'attendance' && tab && tab.key === 'daily'"
+>
+  <div>
+    <span class="eyebrow">YOUR WORKDAY</span>
+    <h2>{{ punch ? label(punch.event_type) : 'Ready when you are' }}</h2>
+    <p>
+      Web punches are timestamped by the server. Corrections follow approval.
+    </p>
+  </div>
+  <div class="core-actions">
+    <button
+      class="button primary"
+      (click)="punchAction('IN')"
+      [disabled]="saving || !canPunch('IN')"
+    >
+      Punch in</button
+    ><button
+      class="button secondary"
+      (click)="punchAction('OUT')"
+      [disabled]="saving || !canPunch('OUT')"
+    >
+      Punch out</button
+    ><button
+      class="button secondary"
+      (click)="punchAction('BREAK_OUT')"
+      [disabled]="saving || !canPunch('BREAK_OUT')"
+    >
+      Start break</button
+    ><button
+      class="button secondary"
+      (click)="punchAction('BREAK_IN')"
+      [disabled]="saving || !canPunch('BREAK_IN')"
+    >
+      End break
+    </button>
+  </div>
+</section>
+<section class="panel core-form" *ngIf="formOpen && tab">
+  <div class="core-section-heading">
+    <h2>Add {{ tab.title }}</h2>
+    <button class="icon-button" aria-label="Close form" (click)="closeEntry()">
+      <ui-icon name="close"></ui-icon>
+    </button>
+  </div>
+  <form #entryForm="ngForm" (ngSubmit)="save(entryForm)" novalidate>
+    <div class="form-grid">
+      <label
+        *ngFor="let f of fields"
+        [class.span-two]="f.type === 'textarea' || f.type === 'file'"
+        ><span>{{ f.label }}</span
+        ><ui-select
+          *ngIf="f.type === 'select'"
+          [name]="f.key"
+          [(ngModel)]="model[f.key]"
+          [options]="options(f)"
+          [required]="f.required"
+          [ariaLabel]="f.label"
+        ></ui-select
+        ><textarea
+          *ngIf="f.type === 'textarea'"
+          [name]="f.key"
+          [(ngModel)]="model[f.key]"
+          [required]="f.required"
+          rows="4"
+          maxlength="8000"
+        ></textarea
+        ><input
+          *ngIf="f.type === 'file'"
+          type="file"
+          accept="application/pdf,image/png,image/jpeg"
+          (change)="pickFile($event)" /><input
+          *ngIf="
+            f.type !== 'select' && f.type !== 'textarea' && f.type !== 'file'
+          "
+          [type]="f.type || 'text'"
+          [name]="f.key"
+          [(ngModel)]="model[f.key]"
+          [required]="f.type !== 'checkbox' && f.required"
+          [maxlength]="180"
+      /></label>
+    </div>
+    <div class="form-actions">
+      <button class="button secondary" type="button" (click)="formOpen = false">
+        Cancel</button
+      ><button class="button primary" [disabled]="saving">
+        {{ saving ? 'Saving...' : 'Save changes' }}
+      </button>
+    </div>
+  </form>
+</section>
+<section
+  class="panel core-import"
+  *ngIf="
+    moduleKey === 'salary' &&
+    context.canPayroll &&
+    tab &&
+    tab.key === 'payslips'
+  "
+>
+  <div class="core-section-heading">
+    <div>
+      <h2>Finalized payroll import</h2>
+      <p>
+        Decimal amounts, source snapshots and unique external references.
+        Imported results cannot be edited.
+      </p>
+    </div>
+    <button class="button secondary" (click)="importing = !importing">
+      {{ importing ? 'Close import' : 'Import results' }}
+    </button>
+  </div>
+  <div *ngIf="importing">
+    <label
+      >Finalized payroll JSON<textarea
+        [(ngModel)]="importText"
+        rows="12"
+        spellcheck="false"
+        aria-label="Finalized payroll JSON"
+      ></textarea>
+    </label>
+    <div class="form-actions">
+      <button class="button secondary" (click)="sampleImport()">
+        Load example</button
+      ><button
+        class="button primary"
+        (click)="importPayroll()"
+        [disabled]="saving"
+      >
+        Validate & import
+      </button>
+    </div>
+  </div>
+</section>
+<ui-state [loading]="loading" [error]="!tab ? error : null"></ui-state>
+<section
+  class="panel core-report"
+  *ngIf="tab && !loading && workspaceView === 'reports'"
+  [attr.aria-busy]="reportLoading"
+>
+  <form class="toolbar" (ngSubmit)="search()">
+    <label class="search-field"
+      ><ui-icon name="search"></ui-icon
+      ><input
+        [(ngModel)]="query"
+        name="query"
+        placeholder="Search this page..."
+        aria-label="Search records"
+    /></label>
+    <div class="toolbar-actions">
+      <button class="icon-button" type="submit" aria-label="Search records">
+        <ui-icon name="search"></ui-icon></button
+      ><button
+        class="icon-button"
+        type="button"
+        (click)="load()"
+        aria-label="Refresh records"
+      >
+        <ui-icon name="clock"></ui-icon>
+      </button>
+    </div>
+  </form>
+  <ui-state
+    [loading]="reportLoading"
+    [error]="error"
+    (retry)="load()"
+  ></ui-state>
+  <div [hidden]="reportLoading || !!error">
+    <p class="muted core-sort-note" *ngIf="rows.length">
+      {{ count }} records · Column sorting applies to this page.
+    </p>
+    <div class="table-scroll" *ngIf="rows.length">
+      <table>
+        <thead>
+          <tr>
+            <th
+              *ngFor="let c of tab.columns"
+              [attr.aria-sort]="
+                sortKey === c
+                  ? descending
+                    ? 'descending'
+                    : 'ascending'
+                  : 'none'
+              "
+            >
+              <button class="core-sort" (click)="sort(c)">
+                {{ label(c) }}
+                <span aria-hidden="true">{{
+                  sortKey === c ? (descending ? '↓' : '↑') : '↕'
+                }}</span>
+              </button>
+            </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of sortedRows">
+            <td *ngFor="let c of tab.columns">
+              <span [class.core-status]="c === 'status'">{{
+                cell(row, c)
+              }}</span>
+            </td>
+            <td>
+              <div class="core-row-actions">
+                <button class="core-link" (click)="view(row)">View</button
+                ><button
+                  class="core-link"
+                  *ngIf="
+                    tab.action === 'complete' && row.status !== 'completed'
+                  "
+                  [disabled]="saving"
+                  (click)="act(tab.endpoint + '/' + row.id + '/complete')"
+                >
+                  Complete</button
+                ><button
+                  class="core-link"
+                  *ngIf="tab.action === 'document'"
+                  (click)="download(row)"
+                >
+                  Download</button
+                ><button
+                  class="core-link"
+                  *ngIf="
+                    tab.action === 'salary' &&
+                    context.canPayroll &&
+                    !row.published_at
+                  "
+                  (click)="act('salary/' + row.id + '/publish')"
+                  [disabled]="saving"
+                >
+                  Publish
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="core-empty" *ngIf="!rows.length">
+      <ui-icon [name]="module.icon"></ui-icon>
+      <h2>A little space for what's next</h2>
+      <p>Records will appear here as your team uses this module.</p>
+    </div>
+    <div class="core-pagination">
+      <span>{{ count }} records</span
+      ><button
+        class="button secondary"
+        [disabled]="page === 1"
+        (click)="page = page - 1; load()"
+      >
+        Previous</button
+      ><span>Page {{ page }}</span
+      ><button
+        class="button secondary"
+        [disabled]="page * 20 >= count"
+        (click)="page = page + 1; load()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</section>
+<section
+  #detailPanel
+  class="panel core-detail"
+  tabindex="-1"
+  *ngIf="selected && tab"
+>
+  <div class="core-section-heading">
+    <h2>{{ tab.action === 'salary' ? 'Payslip' : 'Record details' }}</h2>
+    <button
+      class="icon-button"
+      aria-label="Close details"
+      (click)="selected = null"
+    >
+      <ui-icon name="close"></ui-icon>
+    </button>
+  </div>
+  <div class="detail-grid">
+    <dl *ngFor="let key of detailKeys">
+      <dt>{{ label(key) }}</dt>
+      <dd>{{ cell(selected, key) }}</dd>
+    </dl>
+  </div>
+  <div class="core-actions" *ngIf="tab.action === 'review'">
+    <button
+      class="button primary"
+      [disabled]="saving"
+      (click)="
+        act('approvals/' + selected.id, { action: 'approved' }); selected = null
+      "
+    >
+      Approve</button
+    ><button
+      class="button secondary"
+      [disabled]="saving"
+      (click)="
+        act('approvals/' + selected.id, { action: 'rejected' }); selected = null
+      "
+    >
+      Decline
+    </button>
+  </div>
+  <button
+    class="button secondary"
+    *ngIf="
+      tab.action === 'cancel' &&
+      selected.employee_id === currentUserId &&
+      ['pending', 'approved'].includes(selected.status)
+    "
+    (click)="act('leave/' + selected.id + '/cancel')"
+    [disabled]="saving"
+  >
+    Cancel leave request
+  </button>
+  <div class="core-actions" *ngIf="tab.action === 'document'">
+    <button
+      class="button secondary"
+      *ngIf="context.canManage || selected.employee_id === currentUserId"
+      (click)="openVersion(selected)"
+    >
+      Upload new version</button
+    ><button
+      class="button secondary"
+      *ngIf="context.canManage"
+      [disabled]="saving"
+      (click)="act('documents/' + selected.id + '/archive'); selected = null"
+    >
+      Archive
+    </button>
+  </div>
+  <button
+    class="button primary"
+    *ngIf="tab.action === 'document'"
+    [disabled]="saving"
+    (click)="act('documents/' + selected.id + '/acknowledge')"
+  >
+    Acknowledge document
+  </button>
+  <button
+    class="button primary"
+    *ngIf="tab.action === 'notice'"
+    [disabled]="saving"
+    (click)="act('notices/' + selected.id + '/read', { acknowledge: true })"
+  >
+    Mark read & acknowledge
+  </button>
+  <div class="core-actions" *ngIf="tab.action === 'rsvp'">
+    <button
+      class="button primary"
+      [disabled]="saving"
+      (click)="
+        act('events/' + selected.id + '/rsvp', { response: 'attending' })
+      "
+    >
+      I'll attend</button
+    ><button
+      class="button secondary"
+      [disabled]="saving"
+      (click)="act('events/' + selected.id + '/rsvp', { response: 'declined' })"
+    >
+      Decline
+    </button>
+  </div>
+  <div *ngIf="tab.action === 'survey'">
+    <p>{{ selected.question }}</p>
+    <div class="core-actions" *ngIf="!selected.responded">
+      <button
+        *ngFor="let option of selected.options; let i = index"
+        class="button secondary"
+        [disabled]="saving"
+        (click)="
+          act('surveys/' + selected.id + '/respond', { answer: i });
+          selected = null
+        "
+      >
+        {{ option }}
+      </button>
+    </div>
+    <p class="muted" *ngIf="!selected.results">
+      Results appear only after the privacy threshold is reached.
+    </p>
+    <p *ngFor="let result of selected.results">
+      {{ selected.options[result.answer] }}: {{ result.count }}
+    </p>
+  </div>
+  <div *ngIf="tab.action === 'exit'">
+    <h3>Clearance checklist</h3>
+    <div class="core-clearance" *ngFor="let item of extra">
+      <span>{{ item.title }} · {{ label(item.status) }}</span
+      ><label *ngIf="context.canManage && item.status !== 'completed'"
+        >Completion evidence<input [(ngModel)]="item.evidence" /></label
+      ><button
+        *ngIf="context.canManage && item.status !== 'completed'"
+        class="button secondary"
+        [disabled]="saving || !item.evidence"
+        (click)="act('clearance/' + item.id, { remarks: item.evidence })"
+      >
+        Complete clearance
+      </button>
+    </div>
+    <button
+      *ngIf="context.canManage && selected.status === 'approved'"
+      class="button primary"
+      [disabled]="saving"
+      (click)="act('exit/' + selected.id + '/close')"
+    >
+      Close exit & revoke access
+    </button>
+  </div>
+  <div
+    *ngIf="tab.action === 'salary' && selected.components"
+    class="core-payslip"
+  >
+    <h3>
+      {{ selected.employee.firstName }} {{ selected.employee.lastName }} ·
+      {{ selected.period }}
+    </h3>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Type</th>
+            <th>Amount ({{ selected.currency }})</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of selected.components">
+            <td>
+              {{ line.name }}<small>{{ line.explanation }}</small>
+            </td>
+            <td>{{ label(line.type) }}</td>
+            <td>{{ line.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="core-pay-total">
+      Net pay <strong>{{ selected.currency }} {{ selected.net }}</strong>
+    </div>
+    <button class="button secondary" (click)="print()">Print / save PDF</button>
+  </div>
+  <div *ngIf="tab.action === 'query' && context.canPayroll">
+    <label
+      >Reply<textarea
+        [(ngModel)]="selected.newReply"
+        rows="3"
+      ></textarea></label
+    ><button
+      class="button primary"
+      [disabled]="saving || !selected.newReply"
+      (click)="
+        act('salary-queries/' + selected.id + '/reply', {
+          reply: selected.newReply
+        })
+      "
+    >
+      Send reply
+    </button>
+  </div>
+</section>

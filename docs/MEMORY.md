@@ -26,3 +26,11 @@ UI .env is tracked; contents were not printed and exposure is not established. C
 Start at [analysis](PROJECT_ANALYSIS.md), then [tasks](../TASKS.md). HR-001 is first proposed review; HR-002/003 establish regression gates before broad refactoring. Remote settings, production health/data and hosting credentials were not checked. Earlier validation files describe previous runs only.
 
 Update this file after work sessions with completed task IDs, checks actually run, remaining limits and next bounded action. Keep personal data, secrets and transient transcripts out.
+
+
+## 22 September 2026: HR core modules
+
+Added connected HR module pages and role-scoped organization hierarchy, with core backend workflows, policy enforcement and local database migration. Payroll mode chosen by user: import finalized results. See hr-core-implementation.md for actual coverage, tests and advanced features not yet implemented. Earlier statements about the absence of these modules describe the prior snapshot. No commits/pushes or production deployment.
+
+## 22 September 2026 � module workspace revision
+See [revision notes](module-workspace-revision.md) for stable hierarchy rendering, module dashboards/entry/report views, active navigation, scoped people data, module folders and opt-in email/SMS queue. Credentials/provider configuration and production deployment remain external setup. No commits, pushes or image previews.

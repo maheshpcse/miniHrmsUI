@@ -1,3 +1,4 @@
+import { CORE_MODULES } from '../admin/pages/hr-core/core-config';
 import {
   Component,
   Input,
@@ -14,6 +15,8 @@ import { PortalService } from '../api-services/portal.service';
   templateUrl: './portal-shell.component.html',
 })
 export class PortalShellComponent implements OnDestroy, OnChanges {
+  capabilities: any = {};
+  capabilityRequest: Subscription;
   shortcuts: any[] = [];
   shortcutRequest: Subscription;
   @Input() authMode = false;
@@ -76,6 +79,22 @@ export class PortalShellComponent implements OnDestroy, OnChanges {
       ],
     },
     {
+      label: 'HR MODULES',
+      items: [
+        { label: 'Organization', icon: 'people', url: '/admin/organization' },
+        { label: 'People operations', icon: 'people', url: '/admin/hr/people' },
+        { label: 'Attendance', icon: 'clock', url: '/admin/hr/attendance' },
+        { label: 'Leave', icon: 'calendar', url: '/admin/hr/leave' },
+        { label: 'Documents', icon: 'request', url: '/admin/hr/documents' },
+        { label: 'Notice board', icon: 'mail', url: '/admin/hr/messages' },
+        { label: 'Engagement', icon: 'heart', url: '/admin/hr/engagement' },
+        { label: 'Events', icon: 'calendar', url: '/admin/hr/events' },
+        { label: 'Exit & handover', icon: 'logout', url: '/admin/hr/exit' },
+        { label: 'Salary & payslips', icon: 'shield', url: '/admin/hr/salary' },
+        { label: 'Approvals', icon: 'request', url: '/admin/hr/approvals' },
+      ],
+    },
+    {
       label: 'YOUR ACCOUNT',
       items: [
         { label: 'My profile', icon: 'people', url: '/admin/profile' },
@@ -90,6 +109,18 @@ export class PortalShellComponent implements OnDestroy, OnChanges {
     {
       label: 'CONFIGURATION',
       items: [
+        {
+          label: 'HR policies',
+          icon: 'settings',
+          url: '/admin/hr/policies',
+          permission: 'hr:manage',
+        },
+        {
+          label: 'HR audit',
+          icon: 'shield',
+          url: '/admin/hr/audit',
+          permission: 'hr:manage',
+        },
         {
           label: 'Menus',
           icon: 'menu',
@@ -161,6 +192,11 @@ export class PortalShellComponent implements OnDestroy, OnChanges {
     } catch (_) {}
     if (!this.authMode && this.auth.isLoggedIn()) {
       this.refreshNotifications();
+      if (this.capabilityRequest) this.capabilityRequest.unsubscribe();
+      this.capabilityRequest = this.api.get('/core/context').subscribe(
+        (c) => (this.capabilities = c),
+        () => {}
+      );
       if (this.shortcutRequest) {
         this.shortcutRequest.unsubscribe();
       }
@@ -182,8 +218,32 @@ export class PortalShellComponent implements OnDestroy, OnChanges {
   get section() {
     return 'Human resources';
   }
+  isMenuActive(item: any) {
+    const path = this.router.url.split(/[?#]/)[0];
+    return (
+      path === item.url ||
+      (item.url.startsWith('/admin/hr/') && path.startsWith(item.url + '/'))
+    );
+  }
+  sections(item: any) {
+    const module = CORE_MODULES[item.url.split('/').pop()];
+    return module
+      ? module.tabs.filter(
+          (t) =>
+            (!t.manage || this.capabilities.canManage) &&
+            (!t.payroll || this.capabilities.canPayroll)
+        )
+      : [];
+  }
+  sectionActive(item: any, key: string) {
+    return (
+      this.isMenuActive(item) &&
+      this.router.parseUrl(this.router.url).queryParams.tab === key
+    );
+  }
   visible(item: any) {
     return (
+      (item.url !== '/admin/hr/approvals' || this.capabilities.canReview) &&
       (!item.permission || this.auth.allowed(item.permission)) &&
       item.label.toLowerCase().includes(this.navSearch.toLowerCase())
     );
@@ -201,6 +261,7 @@ export class PortalShellComponent implements OnDestroy, OnChanges {
     this.mobileOpen = false;
   }
   ngOnDestroy() {
+    if (this.capabilityRequest) this.capabilityRequest.unsubscribe();
     this.notificationUpdates.unsubscribe();
     this.notificationPoll.unsubscribe();
     if (this.notificationRequest) {

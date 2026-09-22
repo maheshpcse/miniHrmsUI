@@ -18,3 +18,9 @@ Created 21 September 2026. All tasks are open proposals, not implemented by this
 ## Completion rule
 
 Close a task only with its acceptance evidence, source revision and remaining limits. Update MEMORY and affected specialist docs. Existing code or old passing reports alone do not prove completion. Commit, push and deployment remain outside automatic execution.
+
+## 22 September module workspace review
+- Verified: stable organization tree/filter expansion; tab/sidebar selection; scoped module overviews, separate entry/report views; report-only loading; responsive organization filters; module feature folders; transactional opt-in email/SMS queue and local forward migration.
+- Evidence: docs/module-workspace-revision.md and backend tests/module-revision.integration.js; synthetic browser checks in tests/module-workspaces.browser.cjs.
+- External setup remaining: confirm SMS provider, configure SMTP/SMS credentials, schedule the delivery batch worker and validate real delivery. Delivery is disabled by default; no live messages were sent.
+- Architecture boundary: module route handlers outside Organization still own their transactional command logic; full repository/domain separation is not claimed.

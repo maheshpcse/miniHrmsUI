@@ -23,7 +23,7 @@
     >
       <ui-icon name="menu"></ui-icon>
     </button>
-    <span class="header-date">{{ today | date : "EEE, MMM d" }}</span
+    <span class="header-date">{{ today | date : 'EEE, MMM d' }}</span
     ><a
       class="icon-button notification-button"
       routerLink="/admin/notifications"
@@ -32,7 +32,7 @@
       "
       ><ui-icon name="bell"></ui-icon
       ><span class="notification-count" *ngIf="unread" aria-hidden="true">{{
-        unread > 99 ? "99+" : unread
+        unread > 99 ? '99+' : unread
       }}</span></a
     ><a routerLink="/admin/profile" class="avatar small" aria-label="My profile"
       ><ui-icon name="people"></ui-icon></a
@@ -85,12 +85,32 @@
           [uiTooltip]="item.label"
           [uiTooltipDisabled]="!collapsed"
           [attr.aria-label]="item.label"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [attr.aria-current]="router.url === item.url ? 'page' : null"
+          [class.active]="isMenuActive(item)"
+          [attr.aria-current]="isMenuActive(item) ? 'page' : null"
           ><ui-icon [name]="item.icon"></ui-icon><span>{{ item.label }}</span
-          ><span class="active-dot"></span></a
-      ></ng-container>
+          ><span class="active-dot"></span
+        ></a>
+        <div
+          class="module-subnav"
+          *ngIf="
+            !collapsed &&
+            visible(item) &&
+            isMenuActive(item) &&
+            sections(item).length > 1
+          "
+        >
+          <a
+            *ngFor="let section of sections(item)"
+            [routerLink]="item.url"
+            [queryParams]="{ tab: section.key, view: 'reports' }"
+            [class.active]="sectionActive(item, section.key)"
+            [attr.aria-current]="
+              sectionActive(item, section.key) ? 'page' : null
+            "
+            >{{ section.title }}</a
+          >
+        </div></ng-container
+      >
     </section>
     <section class="nav-group nav-shortcuts" *ngIf="shortcuts.length">
       <h2>WORKSPACE SHORTCUTS</h2>

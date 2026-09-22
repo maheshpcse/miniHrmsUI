@@ -22,7 +22,7 @@ const routes: Routes = [
 	{
 		path: 'user-hierarchy',
 		// component: UserHierarchyComponent
-		redirectTo: '/admin/dashboard', pathMatch: 'full'
+		redirectTo: '/admin/organization', pathMatch: 'full'
 	},
 
 	{

@@ -60,3 +60,9 @@ Run `npm.cmd run start:all` from this UI folder to start the sibling backend and
 ## Project analysis and development context
 
 Start with [Project Analysis](docs/PROJECT_ANALYSIS.md) for the guide-derived documentation index and source-based findings. See [development rules](RULES.md), [prioritized tasks](TASKS.md) and the [public build environment example](.env.example). Requirements, architecture, design, testing, security, decisions and project memory are maintained under docs.
+
+## Integrated HR modules
+
+See [HR core implementation and tested coverage](docs/hr-core-implementation.md) for the new module routes, role hierarchy, database migration, payroll-import contract and explicit scope limits. The implementation uses the supplied core-module and payroll architecture documents; payroll uses the selected finalized-result import mode.
+
+Module workspace fixes and email/SMS setup: [Revision notes](docs/module-workspace-revision.md).

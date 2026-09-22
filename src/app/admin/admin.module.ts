@@ -1,3 +1,5 @@
+import { CorePageComponent } from './pages/hr-core/core-page.component';
+import { OrganizationTreeComponent } from './pages/hr-core/organization-tree.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +15,8 @@ import { ViewEmployeeComponent } from './pages/employees/all-employees/view-empl
 import { AccountPageComponent } from './pages/workspace/account-page.component';
 @NgModule({
   declarations: [
+    CorePageComponent,
+    OrganizationTreeComponent,
     AccountPageComponent,
     AdminLoginComponent,
     AdminForgotPasswordComponent,
